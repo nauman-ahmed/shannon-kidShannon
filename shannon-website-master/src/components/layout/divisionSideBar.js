@@ -9,7 +9,7 @@ function DivisionSideBar(props) {
   const dispatch = useDispatch();
   const  {keywordReducer} = useSelector(state=>state);
   useEffect(()=>{
-    dispatch(keywordDataApi(props.kid))
+    dispatch(keywordDataApi())
   },[])
 
   return (
@@ -26,14 +26,14 @@ function DivisionSideBar(props) {
 
        {keywordReducer.keyword!==null?keywordReducer.map((item,key)=>(
           <div key={key}>
-          {item.type === 2?(<Link to={props.kid?"/kidshanon/divisions/"+item._id:"/divisions/"+item._id}  className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
+          {item.type === 2?(<Link to={props.kid?"/divisions/"+item._id:"/divisions/"+item._id}  className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
           
           </div>
        )):""}
         <span className="sidebarlink spacing"><br /></span>
         {keywordReducer.keyword!==null?keywordReducer.map((item,key)=>(
           <div key={key}>
-          {item.type === 1?(<Link to={props.kid?"/kidshanon/divisions/"+item._id:"/divisions/"+item._id} className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
+          {item.type === 1?(<Link to={props.kid?"/divisions/"+item._id:"/divisions/"+item._id} className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
           
           </div>
        )):""}

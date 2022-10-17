@@ -6,7 +6,7 @@ export const ArtistImageSliceData = createAsyncThunk(
     'artist/ArtistImageData',
     async (payload) => {
         return axios
-        .post(BASE_URL+(payload==="kid"?"artistImageKid/getAllStatusOneKid":"artistImage/getAllStatusOne"))
+        .post(BASE_URL+("artistImageKid/getAllStatusOneKid"))
         .then((response) => response.data)
     } 
 )

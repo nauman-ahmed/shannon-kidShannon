@@ -32,7 +32,7 @@ function  Artists(props) {
         :  artistImageDataSlice.artistImages && props.searchArtist === "" ? 
           artistImageDataSlice.artistImages.map((val,ind)=>
           <>
-          <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022" data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7" to={"/kidshanon/artists/"+val.artistId.firstname} className="artistcard w-inline-block">
+          <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022" data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7" to={"/artists/"+val.artistId.firstname} className="artistcard w-inline-block">
             <img src={String(val.mainImage[0].subImage[0]&&val.mainImage[0].subImage[0].path)} loading="lazy" alt="" className="image"/>
             <div className="artistnamediv">
               <div className="artistnametext-v2">{val.artistId.firstname} {val.artistId.lastname}</div>
@@ -84,7 +84,7 @@ function  Artists(props) {
         )
         :
         props.tempArtist.map((val,key)=>(
-          <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022" data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7" to={"/kidshanon/artists/"+val.artistId.firstname} className="artistcard w-inline-block">
+          <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022" data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7" to={"/artists/"+val.artistId.firstname} className="artistcard w-inline-block">
             <img src={String(val.mainImage[0].subImage[0].path)} loading="lazy" alt="" className="image"/>
             <div className="artistnamediv">
               <div className="artistnametext-v2">{val.artistId.firstname} {val.artistId.lastname}</div>

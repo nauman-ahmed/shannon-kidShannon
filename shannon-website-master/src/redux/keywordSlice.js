@@ -6,7 +6,7 @@ export const keywordDataApi = createAsyncThunk(
     'artist/keywordDataApi',
     async (payload) => {
         return axios
-        .post(BASE_URL+(payload === "kid"? "keywordKid/getAllClientKid":"keyword/getAllClient"))
+        .post(BASE_URL+("keywordKid/getAllClientKid"))
         .then((response) => response.data)
         .catch((response) => logouterArtist())
     } 

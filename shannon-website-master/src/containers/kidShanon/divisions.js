@@ -66,7 +66,7 @@ function Divisions(props) {
                   ))}
                 </div>
                 <div className="divisionbuttoncontainer mb-5">
-                <Link to={"/kidshanon/divisions/"+item.Id} className="talentbutton w-button">SEE MORE</Link>
+                <Link to={"/divisions/"+item.Id} className="talentbutton w-button">SEE MORE</Link>
                 </div> 
 
               </>):""}
@@ -95,7 +95,7 @@ function Divisions(props) {
                   ))}
                 </div>
                 <div className="divisionbuttoncontainer mb-5">
-                <Link to={"/kidshanon/divisions/"+item.keyword} className="talentbutton w-button">SEE MORE</Link>
+                <Link to={"/divisions/"+item.keyword} className="talentbutton w-button">SEE MORE</Link>
                 </div> 
   
               </>):""}

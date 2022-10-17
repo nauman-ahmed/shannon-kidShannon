@@ -7,7 +7,7 @@ function Navbar(props) {
         <div className="div-block-11">
             <div className="filterhomebox div-block-5">
                 {props.navList.map((item,key)=>(
-                    <Link key={key} to={"/kidshanon/illustration-artists/"+item} className={"filterhomelink v2 "+(props.aciveBtn === item?"w--current":"")}>{item}</Link>
+                    <Link key={key} to={"/illustration-artists/"+item} className={"filterhomelink v2 "+(props.aciveBtn === item?"w--current":"")}>{item}</Link>
                 ))}
                 
                 {/* <Link to={"/kidshanon/illustration-artists"} className={"filterhomelink v2 "+(props.aciveBtn === "illustration-artists"?"w--current":"")}>PICTURE BOOK</Link>

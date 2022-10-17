@@ -7,7 +7,7 @@ export const ArtistDataAPI = createAsyncThunk(
     async (payload) => {
         console.log(payload)
         return axios
-        .post(BASE_URL+(payload==="kid"?"artistUserKid/getAllClientKid":"artistUser/getAllClient"))
+        .post(BASE_URL+("artistUserKid/getAllClientKid"))
         .then((response) => response.data)
     } 
 )
