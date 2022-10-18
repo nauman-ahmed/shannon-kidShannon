@@ -115,11 +115,11 @@ function Contact() {
 }
   useEffect(()=>{
     function getLocalStorage(){
-      if(localStorage.getItem("artistViewed") !== null){
-        setDataViewed(JSON.parse(localStorage.getItem("artistViewed")));
+      if(localStorage.getItem("artistViewedKidKid") !== null){
+        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKidKid")));
       }
     }
-    const tempval = JSON.parse(localStorage.getItem("artistViewed"));
+    const tempval = JSON.parse(localStorage.getItem("artistViewedKidKid"));
     let tempChecker = {};
     tempval && Object.keys(tempval ).forEach((key)=>{
       tempChecker[tempval[key].id]=false;
@@ -193,7 +193,7 @@ function Contact() {
         <p className="contactp"><strong>Shannon Associates - USA<br/></strong>333 West 57th Street<br/>New York, NY 10019<br/>info@shannonassociates.com</p>
       </div>
       <div id="w-node-_8490408e-ad22-b194-846b-3bfd23bb2d1e-85f2d07d" className="div-block-10">
-        <h2 className="contacth2 h">My List</h2>
+        <h2 className="contacth2 h">MY LIST</h2>
         <div className="grid-area-contacts mt-3">
           { AddToCart.cartInfo &&  ( Object.keys( AddToCart.cartInfo).map((oneKey,i)=>
             {

@@ -16,13 +16,13 @@ function DivisionSideBar(props) {
     <div id="w-node-_783b3b4a-9daa-ecbf-356e-d84dbb36f4cc-bb36f4cc" className="respdivhide">
       <h3 className="homeh3">DIVISIONS</h3>
       <div className="allartist v2">
-        <Link to="/illustration-artists" className={"divisionslink"+(props.activeBtn === "illustration-artists"?" w--current":"")}><span className="sidebarlink">ILLUSTRATION<br /></span></Link>
+        {/* <Link to="/illustration-artists" className={"divisionslink"+(props.activeBtn === "illustration-artists"?" w--current":"")}><span className="sidebarlink">ILLUSTRATION<br /></span></Link>
         <Link to="/bipoc" className={"divisionslink"+(props.activeBtn === "bipoc"?" w--current":"")}><span className="sidebarlink">BIPOC<br /></span></Link>
         <Link to="/cgi" className={"divisionslink"+(props.activeBtn === "cgi"?" w--current":"")}><span className="sidebarlink">CGI</span></Link>
         <span className="sidebarlink"><br /></span>
         <span className="sidebarlink">KIDSHANNON<br /></span>
         <span className="sidebarlink">MOTION<br /></span>
-        <span className="sidebarlink spacing">MEDICAL</span>
+        <span className="sidebarlink spacing">MEDICAL</span> */}
 
        {keywordReducer.keyword!==null?keywordReducer.map((item,key)=>(
           <div key={key}>
