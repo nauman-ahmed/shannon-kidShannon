@@ -22,7 +22,7 @@ function Header(props) {
               className="brand w-nav-brand w--current"
             >
               <img
-                src={images + "/Frame.svg"}
+                src={images + "/Frame.png"}
                 loading="lazy"
                 alt=""
                 className="logov2"
