@@ -288,10 +288,10 @@ function Contact() {
           </div>
         </div>
       </div>
-      <div id="artistCont" className="artistcont w-node-_3ea1885f-5610-a267-b100-5eb12e177818-85f2d07d">
+      <div id="artistCont" className="artistcont pt-2 w-node-_3ea1885f-5610-a267-b100-5eb12e177818-85f2d07d">
         <h3 className="artistconth">Interested in one of our Illustrators</h3>
         <div className="w-form">
-          <div className="contactpartist">Previosly Viewed Artists</div>
+          <div className="contactpartist">Previously Viewed Artists</div>
           
                       
           {dataViewed!== null?Object.keys(dataViewed).map(key=>(

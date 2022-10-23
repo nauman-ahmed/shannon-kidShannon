@@ -12,7 +12,7 @@ function Header(props) {
           data-easing="ease"
           data-easing2="ease"
           role="banner"
-          className="navbar w-nav"
+          className="navbar w-nav pt-4"
           style={{ marginLeft: -35 }}
         >
           <div className="container w-container d-inline">

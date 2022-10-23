@@ -47,7 +47,7 @@ function Bipoc() {
       <div className="bipoc2cols">
         <Link id="w-node-d7c7bef6-bf4c-3929-b7f7-7a0cd0fdac21-58f2d07a" to="#" className="artistcard bipoc w-inline-block"><img src={images+"/Rectangle-114.png"} loading="lazy" alt="" className="image bipoc"/>
           <div className="artistnamediv">
-            <div className="artistnametext-v2">LONNIE OLLIVIERRE</div>
+            <div className="artistnametext-v3">LONNIE OLLIVIERRE</div>
           </div>
         </Link>
         <div id="w-node-_85a7ddb0-1565-6609-f698-06fa7db97dd9-58f2d07a" className="bipocinfo">

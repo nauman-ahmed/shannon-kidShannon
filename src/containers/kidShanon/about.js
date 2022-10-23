@@ -10,7 +10,7 @@ function About() {
       <div className="bipoc2cols">
         <Link id="w-node-f29d90d7-09f6-7cad-9c63-f3e68a26341c-d6f2d062" to="#" className="artistcard bipoc w-inline-block"><img src={images + "/IMG15.png"} loading="lazy" alt="" className="image bipoc" />
           <div className="artistnamediv">
-            <div className="artistnametext-v2">ANNA &amp; ELENA BALBUSSO</div>
+            <div className="artistnametext-v3">ANNA &amp; ELENA BALBUSSO</div>
           </div>
         </Link>
         <div id="w-node-f29d90d7-09f6-7cad-9c63-f3e68a263421-d6f2d062" className="bipocinfo">

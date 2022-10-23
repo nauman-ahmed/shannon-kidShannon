@@ -66,7 +66,11 @@ html.w-mod-touch * {
   display: block;
 }
 .w-inline-block {
-  max-width: 100%;
+  max-width: 98.4%;
+  display: inline-block;
+}
+.w-inline-block-banner {
+  max-width: 99.8%;
   display: inline-block;
 }
 .w-clearfix:before,
@@ -335,6 +339,7 @@ label {
   vertical-align: middle;
   background-color: #ffffff;
   border: 1px solid #cccccc;
+  font-size: 14px !important;
 }
 .w-input:-moz-placeholder,
 .w-select:-moz-placeholder {
@@ -385,10 +390,12 @@ textarea.w-select {
   height: auto;
 }
 .w-form-label {
+  font-family: 'Roboto Condensed', sans-serif;
   display: inline-block;
   cursor: pointer;
   font-weight: normal;
   margin-bottom: 0px;
+  color:#000;
 }
 .w-radio {
   display: block;
@@ -1620,13 +1627,25 @@ textarea.w-select {
   text-decoration: none;
   color: #333333;
 }
-.w-nav-link {
+/* .w-nav-link {
   position: relative;
   display: inline-block;
   vertical-align: top;
   text-decoration: none;
   color: #222222;
   padding: 1.55vw;
+  text-align: left;
+  margin-left: auto;
+  margin-right: auto;
+} */
+.w-nav-link {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  text-decoration: none;
+  color: #222222;
+  padding: 20px;
+  /* padding-top: 2.55vw; */
   text-align: left;
   margin-left: auto;
   margin-right: auto;
@@ -1739,6 +1758,9 @@ textarea.w-select {
   }
 }
 @media screen and (max-width: 479px) {
+  .w-nav-link {
+      padding: 3.77vw;
+  }
   .w-nav[data-collapse="tiny"] .w-nav-menu {
     display: none;
   }
