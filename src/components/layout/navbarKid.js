@@ -20,7 +20,7 @@ function Navbar(props) {
                     </div>
 
                     <div className='w-100 d-flex align-items-center justify-content-center' style={{marginTop:10}}>
-                        <Link to="/illustration-artists/BLACK AND WHITE CULTURAL" className={"filterhomelink v2 "+(props.aciveBtn === "BLACK AND WHITE CULTURAL"?"w--current":"")}>BLACK AND WHITE CULTURAL</Link>
+                        <Link to="/illustration-artists/BLACK AND WHITE CULTURAL" className={"filterhomelink v2 "+(props.aciveBtn === "BLACK AND WHITE CULTURAL"?"w--current":"")}>BLACK AND WHITE INTERIOR </Link>
                         <Link to="/illustration-artists/CHARACTER DEVELOPMENT" className={"filterhomelink v2 "+(props.aciveBtn === "CHARACTER DEVELOPMENT"?"w--current":"")}>CHARACTER DEVELOPMENT</Link>
                     </div>
                     <div className='w-100 d-flex align-items-center justify-content-center' style={{marginTop:10}}>
@@ -33,7 +33,7 @@ function Navbar(props) {
                 <Link to="/illustration-artists/MIDDLE GRADE" className={"filterhomelink v2 "+(props.aciveBtn === "MIDDLE GRADE"?"w--current":"")}>MIDDLE GRADE</Link>
                 <Link to="/illustration-artists/PICTURE BOOK" className={"filterhomelink v2 "+(props.aciveBtn === "PICTURE BOOK"?"w--current":"")}>PICTURE BOOK</Link>              
                 <Link to="/illustration-artists/MULTICULTURAL" className={"filterhomelink v2 "+(props.aciveBtn === "MULTICULTURAL"?"w--current":"")}>MULTICULTURAL</Link>
-                <Link to="/illustration-artists/BLACK AND WHITE CULTURAL" className={"filterhomelink v2 "+(props.aciveBtn === "BLACK AND WHITE CULTURAL"?"w--current":"")}>BLACK AND WHITE CULTURAL</Link>
+                <Link to="/illustration-artists/BLACK AND WHITE CULTURAL" className={"filterhomelink v2 "+(props.aciveBtn === "BLACK AND WHITE CULTURAL"?"w--current":"")}>BLACK AND WHITE INTERIOR</Link>
                 <Link to="/illustration-artists/CHARACTER DEVELOPMENT" className={"filterhomelink v2 "+(props.aciveBtn === "CHARACTER DEVELOPMENT"?"w--current":"")}>CHARACTER DEVELOPMENT</Link>
                 <Link to="/illustration-artists/EDUCATIONAL" className={"filterhomelink v2 "+(props.aciveBtn === "EDUCATIONAL"?"w--current":"")}>EDUCATIONAL</Link>
                 </div>
