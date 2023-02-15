@@ -19,7 +19,7 @@ function  Artists(props) {
   const  {bannerImages} = useSelector(state=>state);
 
   useEffect(()=>{
-    dispatch(ArtistImageSliceData("kid"));
+    dispatch(ArtistImageSliceData("kid")); 
     dispatch(bannerLoader());
   },[])
 

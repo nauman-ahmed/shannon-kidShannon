@@ -7,8 +7,9 @@ import axios from "axios";
 // export const IMAGE_ROUTE = "http://127.0.0.1:5000/";
 
 
-export const BASE_URL = "https://shannon-nodejsart.herokuapp.com/api/"
-export const IMAGE_ROUTE = "https://shannon-nodejsart.herokuapp.com/";
+export const BASE_URL = "http://3.132.94.46:5000/api/"
+export const IMAGE_ROUTE = "http://3.132.94.46:5000/";
+
 
 export const logouter = () => {
     localStorage.removeItem('authorization');
