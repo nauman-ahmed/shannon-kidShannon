@@ -13,13 +13,13 @@
     background-image: linear-gradient(#FFB71B,#EC297B);
     border-radius: 100px;
 }
-.artistcard{
+/* .artistcard{
     margin-bottom: 10px;
-}
-.artistcard>.image{
+} */
+/* .artistcard>.image{
     object-fit: cover;
     width: 100%;
-}
+} */
 .artistcard.addImageBtn{
     display: flex;
     justify-content: center;

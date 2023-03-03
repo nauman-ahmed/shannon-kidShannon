@@ -4,8 +4,8 @@ import { Link, useParams } from 'react-router-dom'
 function Navbar(props) {
     
     return (
-        <div className="div-block-11">
-            <div className="filterhomebox div-block-5">
+        <div className="div-block-11 filterhomebox">
+            <div className=" div-block-5">
                 {/* {props.navList.map((item,key)=>(
                     <Link key={key} to={"/illustration-artists/"+item} className={"filterhomelink v2 "+(props.aciveBtn === item?"w--current":"")}>{item}</Link>
                 ))} */}

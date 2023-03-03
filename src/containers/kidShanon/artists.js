@@ -24,7 +24,16 @@ function  Artists(props) {
   },[])
 
   return ( 
-    <div className="_2cols">
+    <>
+     <div class="sortingcont right pt-0  me-0 ">
+          <a class="filter-button w-inline-block  mt-0" onClick={""}>
+            <div >DEFAULT</div>
+          </a>
+          <a class="filter-button  mt-0 me-0" onClick={""}>
+            <div >ALPHABETICAL A-Z</div>
+          </a>
+        </div>
+    <div className="_2cols" style={{clear:"both"}} >
       {props.children}
       <div id="w-node-a284be2a-4b91-3177-03eb-6614b24879c1-4bf2d022" className="_4cols-v2">
         {artistImageDataSlice.loading?
@@ -39,7 +48,7 @@ function  Artists(props) {
             </div>
           </Link>
           {ind===11 ?bannerImages.bannerData.length > 0? 
-            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879ea-4bf2d022" to="#" className="banner _1 v2 w-inline-block">
+            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879ea-4bf2d022" to="#" className="banner _1 v2 w-inline-block-banner">
             <div className="bannerletters _1 v2" style={{backgroundImage: "url(" + images +"/BIPOC.png)"}}></div>
             {/* <img id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" alt="banner " src={IMAGE_ROUTE+bannerImages.bannerData[0].imagePath}  className="bannerletters _1 v2"/> */}
             <div id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" className="bannerhome _1 v2"  style={{backgroundImage: "url(" + setImageRoute(bannerImages.bannerData[0].imagePath) + ")"}} ></div>
@@ -48,11 +57,11 @@ function  Artists(props) {
           "":""}
           {ind===29 ?bannerImages.bannerData.length > 0? 
             <>
-            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a29-4bf2d022" to="http://www.shannonassociates.com/kidshannon/" className="banner _2 v2 w-inline-block">
+            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a29-4bf2d022" to="http://www.shannonassociates.com/kidshannon/" className="banner _2 v2 w-inline-block-banner2">
               <div className="bannerletters _2 v2"></div>
               <div id="w-node-a284be2a-4b91-3177-03eb-6614b2487a2b-4bf2d022" className="bannerhome _2 v2" style={{backgroundImage: "url(" + setImageRoute(bannerImages.bannerData[1].imagePath) + ")"}} ></div>
             </Link>
-            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a2c-4bf2d022" to="medical.html" className="banner _3 v2 w-inline-block">
+            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a2c-4bf2d022" to="medical.html" className="banner _3 v2 w-inline-block-banner2">
               <div className="bannerletters _3 v2"></div>
               <div id="w-node-a284be2a-4b91-3177-03eb-6614b2487a2e-4bf2d022" className="bannerhome _3 v2" style={{backgroundImage: "url(" + setImageRoute(bannerImages.bannerData[2].imagePath) + ")"}} ></div>
             </Link>
@@ -60,7 +69,7 @@ function  Artists(props) {
           :
           "":""}
           {ind===41 ?bannerImages.bannerData.length > 0? 
-            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879ea-4bf2d022" to="#" className="banner _1 v2 w-inline-block">
+            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879ea-4bf2d022" to="#" className="banner _1 v2 w-inline-block-banner">
               <div className="bannerletters _4 v2"></div>
               <div id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" className="bannerhome _1 v2"  style={{backgroundImage: "url(" + setImageRoute(bannerImages.bannerData[3].imagePath) + ")"}} ></div>
             </Link>         
@@ -69,11 +78,11 @@ function  Artists(props) {
           }
           {ind===53 ?bannerImages.bannerData.length > 0? 
             <>
-            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a29-4bf2d022" to="#" className="banner _2 v2 w-inline-block">
+            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a29-4bf2d022" to="#" className="banner _2 v2 w-inline-block-banner2">
             <div className="bannerletters _5 v2"></div>
               <div id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" className="bannerhome _1 v2"  style={{backgroundImage: "url(" + setImageRoute(bannerImages.bannerData[4].imagePath) + ")"}} ></div>
             </Link>
-            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a2c-4bf2d022" to="#" className="banner _3 v2 w-inline-block">
+            <Link id="w-node-a284be2a-4b91-3177-03eb-6614b2487a2c-4bf2d022" to="#" className="banner _3 v2 w-inline-block-banner2">
             <div className="bannerletters _6 v2"></div>
               <div id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" className="bannerhome _1 v2"  style={{backgroundImage: "url(" + setImageRoute(bannerImages.bannerData[5].imagePath) + ")"}} ></div>
             </Link>
@@ -93,7 +102,7 @@ function  Artists(props) {
         ))
         }
         </div>
-    </div>
+    </div></>
   )
 }
 

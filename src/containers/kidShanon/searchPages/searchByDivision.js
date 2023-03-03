@@ -21,61 +21,89 @@ import loading from '../../../assets/loading.gif';
 //     }
 // }
 function SearchByDivision(props) {
-    const {search} = useParams();
-    const [data,setData] =  useState({})
-    const [loader,setLoading] = useState(false);
-    useEffect(()=>{
-        function dataLoader(){
-            setLoading(true);
-            artistKeywordBased({Id:search}).then((res)=>{
+  const { search } = useParams();
+  const [data, setData] = useState({})
+  const [loader, setLoading] = useState(false);
+  useEffect(() => {
+    function dataLoader() {
+      setLoading(true);
+      artistKeywordBased({ Id: search }).then((res) => {
 
-                if(res !== undefined){
-                    let listData = [];
-                    let tempData = {};
-                    res.data.forEach((item,key)=>{
-                        listData.push({href:item.mainImage[0].path,title:item.mainImage[0].title,imgSrc:item.mainImage[0].path})
-                    })
-                    tempData[search] = {title:res.keywordData[0].keyword,list:listData}
-                    setData(tempData)
-                }
-                setLoading(false);
-            })
-    
-
-    
+        if (res !== undefined) {
+          let listData = [];
+          let tempData = {};
+          res.data.forEach((item, key) => {
+            listData.push({ href: item.mainImage[0].path, title: item.mainImage[0].title, imgSrc: item.mainImage[0].path })
+          })
+          tempData[search] = { title: res.keywordData[0].keyword, list: listData }
+          setData(tempData)
         }
-        dataLoader();
-    },[])
-  return (
-    <div className="_2cols">
-        {props.children}
-        
-        {loader ?
-            <div style={{position:"absolute",top:"50%",left:"50%"}}><img className="mb-3" alt="loading" src={loading} style={{width:"50px"}}/></div>:
-            data[search] !== undefined ?
-         ( 
-        <div id="w-node-_836ff364-6701-deed-80f1-e641575ae996-3cf2d075" className="divisionscolumn">
-            <div id="w-node-_836ff364-6701-deed-80f1-e641575ae997-3cf2d075" className="divisioncontainer">
-                <div className="divisiondivider grad">
-                    <h2 className="divisionh2">{data[search].title}</h2>
-                </div> 
-                 <div id="w-node-_836ff364-6701-deed-80f1-e641575ae99b-3cf2d075" className="_4cols divisions">
-                    {
-                        data[search].list.map((row,key)=>
-                  
-                            <Link key={key} id="w-node-_836ff364-6701-deed-80f1-e641575ae99c-3cf2d075" to={row.href} className="artistcard bipoc w-inline-block"><img src={row.imgSrc} loading="lazy" alt="" className="image"/>
-                                <div className="artistnamediv">
-                                    <div className="artistnametext">{row.title}</div>
-                                </div>
-                            </Link>
-                   
-                        )
-                    }
-                </div>
-            </div>
-        </div>):("")}
-       
+        setLoading(false);
+      })
+
+
+
+    }
+    dataLoader();
+  }, [])
+  return (<>
+    <div class="sortingcont right pt-0 mt-0">
+      <a class="filter-button w-inline-block  mt-0" >
+        <div >DEFAULT</div>
+      </a>
+      <a class="filter-button w-inline-block  mt-0" >
+        <div >ALPHABETICAL A-Z</div>
+      </a>
     </div>
+    <div className="_2cols">
+      {props.children}
+
+      {loader ?
+        <div style={{ position: "absolute", top: "50%", left: "50%" }}><img className="mb-3" alt="loading" src={loading} style={{ width: "50px" }} /></div> :
+        data[search] !== undefined ?
+          (
+            <div id="w-node-_836ff364-6701-deed-80f1-e641575ae996-3cf2d075" className="divisionscolumn">
+              <div id="w-node-_836ff364-6701-deed-80f1-e641575ae997-3cf2d075" className="divisioncontainer">
+                <div className="d-flex mt-0 mb-2">
+                  <h5 className=" mt-0" style={{
+                    display: 'flex', whiteSpace: 'nowrap',
+                    fontFamily: 'Roboto, sans-serif',
+                    color: '#ce651e',
+                    fontSize: '1vw',
+                    lineHeight: 1,
+                    fontWeight: '500',
+                    textAlign: 'left'
+                  }}>
+
+
+                    {data[search].title}
+
+                  </h5> <span style={{ width: "100%", height: "1px", color: "#ce651e", border: "1px solid #ce651e", marginTop: "8.5px", marginLeft: 6 }}></span>
+                </div>
+                {/* <div className="divisiondivider grad">
+                    <h2 className="divisionh2">{data[search].title}</h2>
+                    hlo
+                </div>  */}
+                <div id="w-node-_836ff364-6701-deed-80f1-e641575ae99b-3cf2d075" className="_4cols-v2">
+                  {
+                    data[search].list.map((row, key) =>
+
+                      <Link key={key} id="w-node-_836ff364-6701-deed-80f1-e641575ae99c-3cf2d075" to={row.href} className="artistcard w-inline-block"><img src={row.imgSrc} loading="lazy" alt="" className="image" />
+                        <div className="artistnamediv">
+                          <div className="artistnametext-v3">
+                            {row.title}
+                          </div>
+                        </div>
+
+                      </Link>
+
+                    )
+                  }
+                </div>
+              </div>
+            </div>) : ("")}
+
+    </div></>
   )
 }
 

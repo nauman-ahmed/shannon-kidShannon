@@ -250,7 +250,7 @@ export function SliderItem(props) {
                 OObjectFit: props.fillMode,
                 objectFit: props.fillMode,
               }
-            : { OObjectFit: "cover", objectFit: "cover", width: "100%" }
+            : { OObjectFit: "contain", objectFit: "contain", width: "100%" }
         }
       />
       {"label" in props ? (

@@ -73,6 +73,10 @@ html.w-mod-touch * {
   max-width: 99.8%;
   display: inline-block;
 }
+.w-inline-block-banner2 {
+  max-width: 99.5%;
+  display: inline-block;
+}
 .w-clearfix:before,
 .w-clearfix:after {
   content: " ";
@@ -1644,7 +1648,7 @@ textarea.w-select {
   vertical-align: top;
   text-decoration: none;
   color: #222222;
-  padding: 20px;
+  padding:20px 20px 20px 0px;
   /* padding-top: 2.55vw; */
   text-align: left;
   margin-left: auto;
@@ -1656,6 +1660,7 @@ textarea.w-select {
 .w-nav-menu {
   position: relative;
   float: right;
+  margin-right: -30px;
 }
 [data-nav-menu-open] {
   display: block !important;
