@@ -1,275 +1,126 @@
-import React, { useState, useEffect } from "react";
+import React, { Children, useEffect, useState } from 'react';
 import { Link, useHistory, useParams } from "react-router-dom";
+import Slider from "react-slick";
 import "./slider.css";
-import { setImageRoute } from "../../UserServices/Services";
-import Header from "../layout/header";
-import Navbar from "../layout/navbar";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { useDispatch, useSelector } from "react-redux";
+
+import { artistImageDetailedSliceData } from '../../AxiosFunctions/Axiosfunctionality';
+
+import { ArtistImageSliceData } from "../../redux/artistImageDataSlice";
+
+import { addCart } from "../../redux/addToCart";
+import { updateMessage, updateOpen } from "../../redux/message";
 
 const images = window.location.origin + "/assets/images";
-export default function Slider(props) {
-  const { location } = useHistory();
-  const sm = "576";
-  const md = "768";
-  const lg = "992";
-  const xl = "1200";
-  const id = new Date().getTime();
 
-  useEffect(() => {
-    let slider = document.querySelector("#slideScroller" + id);
-    let slideTotalAmount = 0;
-    let slideDetail = getSliderSize(slider);
-    let backBtn = document.querySelector("#left" + id);
-    let nextBtn = document.querySelector("#right" + id);
-    if (backBtn) {
-      backBtn.addEventListener("click", () => {
-        if (slideTotalAmount > 0) {
-          slideTotalAmount -= slideDetail.slideAmount;
-        } else {
-          slideTotalAmount = slideDetail.frameWidth - slideDetail.slideWidth;
-        }
-        slider.scrollLeft = slideTotalAmount;
-      });
-    }
-    if (nextBtn) {
-      nextBtn.addEventListener("click", () => {
-        if (
-          slideDetail.frameWidth <=
-          slideTotalAmount + slideDetail.slideWidth
-        ) {
-          slideTotalAmount = 0;
-        } else {
-          slideTotalAmount += slideDetail.slideAmount;
-        }
-        slider.scrollLeft = slideTotalAmount;
-      });
-    }
-    let slider1 = null;
-    if (!"disableAutoPlay" in props) {
-      window.addEventListener(
-        "focus",
-        () =>
-          (slider1 = setInterval(
-            () => {
-              if (
-                slideDetail.frameWidth <=
-                slideTotalAmount + slideDetail.slideWidth
-              ) {
-                slideTotalAmount = 0;
-              } else {
-                slideTotalAmount += slideDetail.slideAmount;
-              }
-              slider.scrollLeft = slideTotalAmount;
-            },
-            "interval" in props ? props.interval : 2000
-          ))
-      );
-      window.addEventListener("blur", () => clearInterval(slider1));
-    }
-    window.addEventListener("resize", () => {
-      slideDetail = getSliderSize(slider);
-      slideTotalAmount = 0;
-    });
-    return () => {
-      clearInterval(slider1);
-    };
-  }, []);
-  const getSliderSize = (slider) => {
-    let slideAmount = 0;
-    slider.scrollLeft = 0;
-    let slideWidth = slider.clientWidth;
-    let frameWidth = slider.scrollWidth;
-    let winSize = window.innerWidth;
-    slideAmount = slideWidth;
-    // if(lg < winSize){
-    //     slideAmount = slideWidth/6
-    // }
-    // else if(md < winSize){
-    //     slideAmount = slideWidth/4
-    // }
-    // else if(sm < winSize){
-    //     slideAmount = slideWidth/3
-    // }
-    // else{
-    //     slideAmount = slideWidth/2
-    // }
-    return { slideAmount, frameWidth, slideWidth };
-  };
-  return (
-    <div
-      className="slider"
-      style={{
-        width: "width" in props ? props.width : "100%",
-        height: "height" in props ? props.height : "100%",
-      }}
-    >
-      <div id={"slideScroller" + id} className="slideScroller h-100">
-        <div className="slideContent h-100">{props.children}</div>
-      </div>
-      {"controllEnabled" in props ? (
-        <>
-          {location.pathname == "/bipoc" ? (
-            <button
-              className={
-                props.controllEnabled === "outside-dark"
-                  ? "arrow2 left"
-                  : "arrow left"
-              }
-            >
-              <img
-                src={images + "/bi_arrow-down-right-circle-fill2.svg"}
-                loading="lazy"
-                alt=""
-                class="image-3"
-              />
-            </button>
-          ) : (
-            <>
-              {props.show && (
-                <button
-                  id={"left" + id}
-                  className={
-                    props.controllEnabled === "outside-dark"
-                      ? "arrow3 left"
-                      : "arrow left"
-                  }
-                >
-                  <i
-                    id={"left" + id}
-                    onClick={() => {
-                      props.setSliderIndex(
-                        props.sliderIndex === 0 || props.sliderIndex === null
-                          ? 0
-                          : props.sliderIndex - 1
-                      );
-                      props.setSliderImages(
-                        props.images[
-                          props.sliderIndex === 0 ? 0 : props.sliderIndex - 1
-                        ]
-                      );
-                    }}
-                    className={"icon w-icon-slider-left"}
-                  ></i>
-                </button>
-              )}
-              {!props.show && (
-                <button
-                  id={"left" + id}
-                  className={
-                    props.controllEnabled === "outside-dark"
-                      ? "arrow3 left"
-                      : "arrow left"
-                  }
-                >
-                  <i id={"left" + id} className={"icon w-icon-slider-left"}></i>
-                </button>
-              )}
-            </>
-          )}
-          {props.show && (
-            <button
-              id={"right" + id}
-              className={
-                props.controllEnabled === "outside-dark"
-                  ? "arrow2 right"
-                  : "arrow right"
-              }
-            >
-              {location.pathname == "/bipoc" ? (
-                <img
-                  src={images + "/bi_arrow-down-right-circle-fill.svg"}
-                  loading="lazy"
-                  alt=""
-                  class="image-3"
-                />
-              ) : (
-                <i
-                  id={"left" + id}
-                  onClick={() => {
-                    props.setSliderIndex(
-                      props.sliderIndex === props.length
-                        ? props.sliderIndex
-                        : props.sliderIndex + 1
-                    );
-                    props.setSliderImages(
-                      props.images[
-                        props.sliderIndex === props.length
-                          ? props.sliderIndex
-                          : props.sliderIndex + 1
-                      ]
-                    );
-                  }}
-                  className={"icon w-icon-slider-right"}
-                ></i>
-              )}
-            </button>
-          )}
-          {!props.show && (
-            <button
-              id={"right" + id}
-              className={
-                props.controllEnabled === "outside-dark"
-                  ? "arrow2 right"
-                  : "arrow right"
-              }
-            >
-              {location.pathname == "/bipoc" ? (
-                <img
-                  src={images + "/bi_arrow-down-right-circle-fill.svg"}
-                  loading="lazy"
-                  alt=""
-                  class="image-3"
-                />
-              ) : (
-                <i id={"left" + id} className={"icon w-icon-slider-right"}></i>
-              )}
-            </button>
-          )}
-        </>
-      ) : null}
-    </div>
-  );
-}
 
-export function SliderItem(props) {
-  return "src" in props ? (
-    <div
-      className={
-        "col" in props ? props.col + " slideItem  " : "col-12 p-0 slideItem talentslide "
+export const SliderShow=  (props) => {
+
+    const [slider,setSlider] = useState(null)
+
+    useEffect(()=>{
+      
+      if(props.sliderIndex !== null){
+        if(slider){
+          slider.slickGoTo(props.sliderIndex)
+        }
       }
-      id={"id" in props ? props.id + "" : "1"}
-      style={{ padding: 1 }}
-    >
-      <img
-        onClick={() => ("onClick" in props ? props.onClick(props.src) : null)}
-        src={props.src}
-        alt=""
-        style={
-          "fillMode" in props
-            ? {
-                OObjectFit: props.fillMode,
-                objectFit: props.fillMode,
-              }
-            : { OObjectFit: "contain", objectFit: "contain", width: "100%" }
-        }
-      />
-      {"label" in props ? (
-        <div
-          className="w-100 text-center position-absolute artistnametext-v2"
-          style={{
-            textTransform: "uppercase",
-            lineHeight: "1",
-            fontSize: "0.74vw",
-          }}
+    },[props.sliderIndex,slider])
+    
+
+    return(
+        <Slider  className="slider"
+        style={{
+          width: "width" in props ? props.width : "90%",
+          height: "height" in props ? props.height : "100%",
+        }}
+        {...props.settings}
+        ref={slider => setSlider(slider)}
         >
-          {props.label}
+          {props.children}
+        </Slider>
+    )
+};
+
+export const SliderItems = (props)=>{
+  const dispatch = useDispatch();
+  
+  const addToCartArtist = (id, firstname) => {
+    dispatch(addCart({ key: id, data: { id: id, Name: firstname } }));
+    dispatch(updateOpen(true));
+    dispatch(updateMessage("Add Artist in Cart"));
+  };
+    return(
+        <div  className={
+          "col" in props ? props.col + " slideItemNew" : "slideItemNew"
+        }
+          style={{ padding: 1 }}
+       >
+          <img 
+            onClick={() => ("onClick" in props ? props.onClick(props.src) : null)}
+            src={props.src}
+            alt=""
+            style={
+              "col" in props
+                ? { objectFit: "contain", objectFit: "contain", margin:"auto",width:"100%",height:"auto" }
+                : { bjectFit: "contain", objectFit: "contain", margin:"auto",height:'auto' }
+            }
+          />
+
+            <div className="hide_detail mb-1 mt-2 pt-3">
+                  <h4 className="mb-1" style={{ fontWeight: "500", fontSize: "22px" }}>{props?props.data1[props.search].title:null}</h4>
+                  <div
+                    className="F large hide_detail pt-2 mt-1"
+                    style={{
+                      fontSize: "17px",
+                      marginTop: "20px",
+                      lineHeight: "2"
+                    }}
+                  >
+                    <div style={{fontFamily: 'Roboto',fontSize:17,color: '#373530',lineHeight:1.4}} dangerouslySetInnerHTML={{ __html: props ? props?.data1[props.search].detail : null}}>
+
+                    </div>
+
+                  </div>
+
+                  <div className="d-flex" style={{
+                    position: "relative",
+                    paddingTop: "10px",
+                  }}>
+                    <Link
+                      to="#"
+                      // style={{ fontSize: "16px", fontWeight: '600', minWidth: "60px", maxWidth: "70px" }}
+                      className={props.windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton  mr-3"}
+                    >
+                      CALL
+                    </Link>
+                    <Link
+                      to="/contact"
+                      // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
+                      className={props.windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton  mr-3"}
+                    >
+                      GET ESTIMATE
+                    </Link>
+                    <Link
+                      data-w-id="e04f643e-f302-16e2-74ee-4bc7e85391d8"
+                      to="#"
+                      // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
+                      className="talentbutton hide "
+                      onClick={() => addToCartArtist(props ? props.data1[props.search].id : null, props ? props.data1[props.search].title : null)}
+                    >
+                      ADD TO MY LIST
+                    </Link>
+                  </div>
+                </div>
         </div>
-      ) : null}
-    </div>
-  ) : null;
+    )
 }
 
 export function FullScreenSliderItem(props) {
   const { pages } = useParams();
+  const history = useHistory()
 
   return (
     <>
@@ -289,7 +140,7 @@ export function FullScreenSliderItem(props) {
           >
             {props.currentData.title}
           </h2>
-          <p className="mb-5">Baby Alpaca Children's Book</p>
+          <p className="mb-5">{props.currentData.pictureTitle[props.fullscreen.key]}</p>
 
           <p
             style={{ fontSize: "22px", fontWeight: 700 }}
@@ -314,7 +165,7 @@ export function FullScreenSliderItem(props) {
             </div>
           </div>
           <div className="d-flex align-items-center mt-5">
-            <div>
+            {/* <div>
               <button
                 className="text-uppercase"
                 style={{
@@ -331,8 +182,8 @@ export function FullScreenSliderItem(props) {
               >
                 Learn More
               </button>
-            </div>
-            <div className="mx-3">
+            </div> */}
+            <div>
               <button
                 className=" text-uppercase"
                 style={{
@@ -393,8 +244,11 @@ export function FullScreenSliderItem(props) {
                   fontSize: "0.7vw",
                   fontWeight: 600,
                 }}
+                onClick = {()=>history.push("/contact")}
+                // href="http://localhost:3000/#/contact"
+                // href="http://18.191.86.110/#/contact"
               >
-                Get estimated
+                Get an estimated
               </button>
             </div>
           </div>

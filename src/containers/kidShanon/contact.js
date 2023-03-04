@@ -10,6 +10,7 @@ import SnackbarCustom from '../../components/snackBar/SnackbarCustom';
 import { ArtistDataAPI } from '../../redux/artistDataSlice';
 import  { ArtistImageSliceData } from '../../redux/artistImageDataSlice'
 import { IMAGE_ROUTE } from '../../AxiosFunctions/Axiosfunctionality';
+import MyPopup from "../../components/myPopup/myPopup";
 
 const images = window.location.origin+"/assets/images"
 
@@ -17,6 +18,8 @@ function Contact() {
   const number = [1,2,3,4,5,,6,7,78,99,0,0,]
   let history = useHistory();
   const dispatch = useDispatch()
+
+  const [isPopupShow, setIsPopupShow] = useState(false);
   const [artistImages,setArtistImages] = useState("");
   const [Name,setName] = useState("");
   const [company,setCompany] = useState("");
@@ -33,6 +36,7 @@ function Contact() {
   const [isChecked,setIsChecked] = useState({});
   const [artistData,setArtistData] = useState({});
   const [isCheckedArtist,setIsCheckedArtist] = useState({});
+  const [msg, setMsg] = useState("");
   
   // const [artistId,setArtistId] = useState([]);
   // const [status,setStatus] = useState("");
@@ -42,41 +46,53 @@ function Contact() {
   const contactCreate = ()=>{
     // eslint-disable-next-line react-hooks/rules-of-hooks
     let Id = [];
-    Object.keys(AddToCart.cartInfo).forEach((key,value)=>{
-      Id.push(AddToCart.cartInfo[key].id)
-    })
-    if(Id.length >0 ){
-      if( email == "" || Name == ""){
-        dispatch(updateOpen(true))
-        dispatch(updateMessage("Please Fill Required Fields"));
-      }else{
+    Object.keys(AddToCart.cartInfo).forEach((key, value) => {
+      Id.push(AddToCart.cartInfo[key].id);
+    });
+    if (Id.length > 0) {
+      if (email == "" || Name == "") {
+        setIsPopupShow(true);
+        setMsg("Please Fill Required Fields");
+        // dispatch(updateOpen(true))
+        // dispatch(updateMessage("Please Fill Required Fields"));
+      } else {
         let data = {
-          Name:Name,
-          company:company,
-          email:email,
-          phone:phone,
-          address:address,
-          city:city,
-          state:state,
-          purposeOfInquiry:purposeOfInquiry,
-          findUs:findUs,
-          message:message,
-          artistId:Id,
-        }
+          Name: Name,
+          company: company,
+          email: email,
+          phone: phone,
+          address: address,
+          city: city,
+          state: state,
+          purposeOfInquiry: purposeOfInquiry,
+          findUs: findUs,
+          message: message,
+          artistId: Id,
+        };
         setHolder(true);
-        createContact(data).then((res)=>{
+        let tempMsg = "Thank you! Your submission has been received!"
+        if (data.purposeOfInquiry) {
+          if (data.purposeOfInquiry == "Looking for representation") {
+            tempMsg = `Thank you ${data.Name}. A Shannon Associates representative will be responding to your inquiry as soon as possible.`
+          } else {
+            tempMsg = `Hi ${data.Name}, Thank you for your submission. We appreciate your interest in Shannon Associates. Due to the extremely high volume of applicants we receive, we are unfortunately unable to reply to all. Please feel free to try again if you have new samples to present. We hope you understand and wish you the best in all that is ahead. Your Friends at Shannon Associates`
+          }
+        }
+        createContact(data).then((res) => {
           setHolder(false);
-          dispatch(updateOpen(true))
-        dispatch(updateMessage(res));
-        history.push('/')
-        })
+          // dispatch(updateOpen(true))
+          setIsPopupShow(true);
+          setMsg(tempMsg);
+          // dispatch(updateMessage(res));
+        });
       }
+    } else {
+      setIsPopupShow(true);
+      setMsg("select atleast one artist");
+      // dispatch(updateOpen(true))
+      // dispatch(updateMessage("select atleast one artist"));
     }
-    else{
-      dispatch(updateOpen(true))
-      dispatch(updateMessage("select atleast one artist"));
-    }
-  }
+  };
   const removeKey = (id)=>{
     dispatch(removeCartItem(id));
 
@@ -736,7 +752,16 @@ function Contact() {
         </div>
       </div>
     </div> */}
-    <SnackbarCustom  />
+    {isPopupShow ? (
+          <MyPopup
+            BackClose
+            onClose={() => {
+              setIsPopupShow(false);
+            }}
+          >
+            <div className="mx-5 my-4">{msg}</div>
+          </MyPopup>
+        ) : null}
 
     </>
   )
