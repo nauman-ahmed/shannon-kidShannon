@@ -3,12 +3,12 @@ import axios from "axios";
 //for Contacts Functionality
 
 
-// export const BASE_URL = "http://127.0.0.1:5000/api/"
-// export const IMAGE_ROUTE = "http://127.0.0.1:5000/";
+export const BASE_URL = "http://127.0.0.1:5001/api/"
+export const IMAGE_ROUTE = "http://127.0.0.1:5001/";
 
 
-export const BASE_URL = "http://3.132.94.46:5000/api/"
-export const IMAGE_ROUTE = "http://3.132.94.46:5000/";
+// export const BASE_URL = "http://3.132.94.46:5000/api/"
+// export const IMAGE_ROUTE = "http://3.132.94.46:5000/";
 
 
 export const logouter = () => {
@@ -21,6 +21,24 @@ export const logouterArtist = () => {
     // window.location.href = '/#/artist/signin/'
 }
 
+export const getArtistCategoryTypeTwo = async (keyword) => {
+    try {
+        const response = await axios.post(BASE_URL + 'keywordKid/artistCategory',keyword);
+        return response.data;
+    } catch (error) {
+        logouter();
+    }
+}
+
+export const getCategoryTypeTwo = async (data) => {
+    try {
+        const response = await axios.post(BASE_URL + 'keywordKid/getAllClientKid', data);
+        return response.data;
+    } catch (error) {
+        logouter();
+    }
+}
+
 export const getImageBaseURL = async (data) => {
     try {
         const response = await axios.post(BASE_URL + 'artistImage/base64', data);
@@ -30,6 +48,23 @@ export const getImageBaseURL = async (data) => {
     }
 }
 
+export const artistImageKidDetailedSliceData = async (data) => {
+    try {
+        const response = await axios.post(BASE_URL+"artistImageKid/getAllStatusOneDetailed",data);
+        return response.data;
+    } catch (error) {
+        logouter();
+    }
+}
+
+export const artistImageNavSliceData = async (data) => {
+    try {
+        const response = await axios.post(BASE_URL+"keywordKid/getAllArtist",data);
+        return response.data;
+    } catch (error) {
+        logouter();
+    }
+}
 
 export const getWorldData = async (data) => {
     try {

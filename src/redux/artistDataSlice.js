@@ -5,7 +5,6 @@ import { BASE_URL, logouterArtist } from '../AxiosFunctions/Axiosfunctionality';
 export const ArtistDataAPI = createAsyncThunk(
     'artist/ArtistDataAPI',
     async (payload) => {
-        console.log(payload)
         return axios
         .post(BASE_URL+("artistUserKid/getAllClientKid"))
         .then((response) => response.data)

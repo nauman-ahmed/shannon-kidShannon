@@ -40,7 +40,6 @@ export default function Slider(props) {
         } else {
           slideTotalAmount += slideDetail.slideAmount;
         }
-        console.log("slideTotalAmount-right", slideTotalAmount);
         slider.scrollLeft = slideTotalAmount;
       });
     }

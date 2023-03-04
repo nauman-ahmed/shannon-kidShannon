@@ -7,14 +7,13 @@ import Header from '../../components/layout/header'
 import Navbar from '../../components/layout/navbarKid'
 import About from './about'
 import Artists from './artists'
-import Bipoc from './bipoc'
-import CGI from './cgi'
 import Contact from './contact'
 import Divisions from './divisions'
-import IllustrationArtists from './illustration-artists'
-import Photography from './photography'
+import Categories from './categories'
+import NavBarArtist from './navBarPagesArtist'
 import SearchByArtist from './searchPages/searchByArtist'
 import SearchByDivision from './searchPages/searchByDivision'
+import SearchByCategories from './searchPages/searchByCategories'
 
 
 import { useSelector } from 'react-redux'
@@ -23,7 +22,7 @@ import SnackbarCustom from '../../components/snackBar/SnackbarCustom'
 import { ArtistDataAPI } from '../../redux/artistDataSlice'
 import { ArtistImageSliceData } from '../../redux/artistImageDataSlice'
 import { keywordDataApi } from '../../redux/keywordSlice'
-import IllustrationSidebar from '../../components/layout/IllustratorSidebar'
+import Sidebar from '../../components/layout/sidebar'
 import { getKeywordKidShanon } from '../../AxiosFunctions/Axiosfunctionality'
 
 function IndexKid(props) {
@@ -61,7 +60,6 @@ function IndexKid(props) {
             tempData = data;
             localStorage.setItem("filter","DEFAULT")
         }
-        console.log(tempData)
         setData(tempData);
     }
     useEffect(()=>{
@@ -71,6 +69,9 @@ function IndexKid(props) {
         })
     },[search])
     
+    useEffect(() => {
+        setSearchArtist("")
+    }, [pages,search])
 
     const dispatch = useDispatch();
     const  {artistImageDataSlice} = useSelector(state=>state);
@@ -107,41 +108,59 @@ function IndexKid(props) {
         dispatch(keywordDataApi("kid"));
     }, [])
 
-
     return (
         <>
             <Header aciveBtn={pages} kid={"kid"} />
             <div className={(pages === "artists"?"talentsection":"homesection")+" wf-section "+(pages?"divisions":"")}>
                 <div className={"containerhome "+(pages !== "artists"?"home":"")}>
-                    {pages === "artists" && search?null: <Navbar navList={navList} aciveBtn={search} searchBar={pages?false:true}  searchArtist={searchArtist} kid={"kid"} updateTempArtist={updateTempArtist}/>}
+                    <Navbar navList={navList} aciveBtn={pages} searchBar={true}  searchArtist={searchArtist} kid={"kid"} updateTempArtist={updateTempArtist}/>
                     {pages?
                     pages === "divisions"?
                         search?
-                        <SearchByDivision>
-                            <DivisionSideBar activeBtn={search} kid={"kid"}/>
+                        <SearchByDivision> 
+                            <Sidebar activeBtn={pages} />
                         </SearchByDivision>
-                        :<Divisions searchDivision={searchDivision} updateTempDivision={updateTempDivision} tempDivision={tempDivision}>
-                            <DivisionSideBar activeBtn={pages} kid={"kid"}/>
+                        :<Divisions searchArtist={searchArtist}>
+                            <Sidebar activeBtn={pages} />
                         </Divisions>
+                    :pages === "categories"?
+                    search?
+                    <SearchByCategories searchArtist={searchArtist}> 
+                        <Sidebar activeBtn={pages} />
+                    </SearchByCategories>
+                    :<Categories searchArtist={searchArtist}>
+                        <Sidebar activeBtn={pages} />
+                    </Categories>
                     :pages === "artists"?
                         search?
                         <SearchByArtist/>
                         :<Artists>
                             <ArtistSideBar kid={"kid"}/>
                         </Artists>
-                    :pages === "illustration-artists"?
-                        search?
-                        <IllustrationArtists data={data}  navList={navList}>
-                            <IllustrationSidebar Filters={Filters} filterChange={filterChange}  kid={"kid"} />
-                        </IllustrationArtists>:<Redirect to="/404"/>
-                    // :pages === "cgi"?
-                    //     <CGI>
-                    //         <DivisionSideBar activeBtn={pages} kid={"kid"}/>
-                    //     </CGI>
-                    // :pages === "photography"?
-                    //     <Photography>
-                    //         <DivisionSideBar activeBtn={pages} kid={"kid"}/>
-                    //     </Photography>
+                    :pages === "MIDDLE-GRADE"?
+                        <NavBarArtist searchArtist={searchArtist} currPage= "Middle Grade Cover">
+                            <Sidebar activeBtn={pages} />
+                        </NavBarArtist>
+                    :pages === "PICTURE-BOOK"?
+                    <NavBarArtist searchArtist={searchArtist} currPage= "Picture Book">
+                        <Sidebar activeBtn={pages} />
+                    </NavBarArtist>
+                    :pages === "MULTICULTURAL"?
+                    <NavBarArtist searchArtist={searchArtist} currPage= "Multicultural">
+                        <Sidebar activeBtn={pages} />
+                    </NavBarArtist>
+                    :pages === "BLACK-AND-WHITE-INTERIOR"?
+                    <NavBarArtist searchArtist={searchArtist} currPage= "Black and White Interior">
+                        <Sidebar activeBtn={pages} />
+                    </NavBarArtist>
+                    :pages === "CHARACTER-DEVELOPMENT"?
+                    <NavBarArtist searchArtist={searchArtist} currPage= "Character Development">
+                        <Sidebar activeBtn={pages} />
+                    </NavBarArtist>
+                    :pages === "EDUCATIONAL"?
+                    <NavBarArtist searchArtist={searchArtist} currPage= "Educational">
+                        <Sidebar activeBtn={pages} />
+                    </NavBarArtist>
                     :pages === "about"?
                         <About/>
                     :pages === "contact"?

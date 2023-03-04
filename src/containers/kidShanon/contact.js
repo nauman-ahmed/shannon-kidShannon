@@ -115,11 +115,11 @@ function Contact() {
 }
   useEffect(()=>{
     function getLocalStorage(){
-      if(localStorage.getItem("artistViewedKidKid") !== null){
-        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKidKid")));
+      if(localStorage.getItem("artistViewedKid_V2") !== null){
+        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V2")));
       }
     }
-    const tempval = JSON.parse(localStorage.getItem("artistViewedKidKid"));
+    const tempval = JSON.parse(localStorage.getItem("artistViewedKid_V2"));
     let tempChecker = {};
     tempval && Object.keys(tempval ).forEach((key)=>{
       tempChecker[tempval[key].id]=false;
@@ -168,14 +168,15 @@ function Contact() {
 
       //For Images     
       let tempArtistImagesData = {};
-      dispatch(ArtistImageSliceData()).then((res)=>{
-        res.payload.map((val,ind)=>{
-          if(temp[val.artistId._id]){
-            tempArtistImagesData[val.artistId._id]  = val.mainImage[0].subImage[1]&&val.mainImage[0].subImage[1].path
-          }
-        })
-        setArtistImages(tempArtistImagesData)
-      })
+      dispatch(ArtistImageSliceData()).then((res) => {
+        res?.payload?.map((val, ind) => {
+          // if (temp[val?.artistId?._id] || tempLocalData[val?.artistId?._id]) {
+            tempArtistImagesData[val?.artistId?._id] =
+              val?.mainImage[0]?.subImage[1]?.path;
+          // }
+        });
+        setArtistImages(tempArtistImagesData);
+      });
     })
 
 
@@ -564,7 +565,7 @@ function Contact() {
                       to={"/artists/" + AddToCart.cartInfo[oneKey].id}
                       className="card_img" >
                       <div className="artistimagethumb" style={{ position: "relative", overflow: "hidden" }}>
-                      
+                        {console.log(artistImages[AddToCart.cartInfo[oneKey].id],AddToCart.cartInfo[oneKey].id,artistImages)}
                         <img
                           src={artistImages[AddToCart.cartInfo[oneKey].id]}
                           loading="lazy"
@@ -575,7 +576,7 @@ function Contact() {
 
                         <div className="nameartistmini">
                           <div className="artistnametxt">{AddToCart.cartInfo[oneKey].Name}</div>
-                        </div> {console.log(AddToCart.cartInfo[oneKey].Name)}
+                        </div> 
                     </div>
                     </Link>
 

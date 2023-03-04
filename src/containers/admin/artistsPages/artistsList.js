@@ -21,7 +21,6 @@ function ArtistsList(props) {
             props.artistUsers.forEach((item,key)=>{
                 if(item.type === payload){
                     temp.push(item);
-                    console.log(payload)
                 }
                 else if(payload === "allArtist"){
                     temp.push(item);

@@ -15,7 +15,6 @@ function ImagesForReview(props) {
     }
 
     const redirectToArtistSubmission = (data) => {
-        console.log('redirectToArtistSubmission',data)   
         historyCurrent.push({
             pathname:"/admin/artists",
             state:data

@@ -6,7 +6,8 @@ import Slider, {
 } from "../../../components/slider/slider";
 
 import { useDispatch, useSelector } from "react-redux";
-// import { IMAGE_ROUTE } from '../../../AxiosFunctions/Axiosfunctionality';
+import { artistImageKidDetailedSliceData } from '../../../AxiosFunctions/Axiosfunctionality';
+
 import { ArtistImageSliceData } from "../../../redux/artistImageDataSlice";
 import { addCart } from "../../../redux/addToCart";
 import { updateMessage, updateOpen } from "../../../redux/message";
@@ -32,6 +33,7 @@ function SearchByArtist(props) {
   const [artistSimilar, setArtistSimilar] = useState(8);
   const [sliderImages, setSliderImages] = useState(null);
   const [sliderIndex, setSliderIndex] = useState(null);
+
   function getWindowSize() {
     const { innerWidth, innerHeight } = window
     return { innerWidth, innerHeight };
@@ -42,10 +44,7 @@ function SearchByArtist(props) {
   }
 
   useEffect(() => {
-
-
     window.addEventListener('resize', handleWindowResize);
-
     return () => {
       window.removeEventListener('resize', handleWindowResize);
     };
@@ -58,7 +57,7 @@ function SearchByArtist(props) {
   };
 
   const dataLocalArtist = (key, _id, firstname, bio, listData, subListData) => {
-    let tempData = localStorage.getItem("artistViewed");
+    let tempData = localStorage.getItem("artistViewedKid_V2");
 
     tempData = JSON.parse(tempData);
     if (tempData === null) {
@@ -69,7 +68,7 @@ function SearchByArtist(props) {
         detail: bio,
         slideList: listData,
       };
-      localStorage.setItem("artistViewed", JSON.stringify(tempData));
+      localStorage.setItem("artistViewedKid_V2", JSON.stringify(tempData));
     } else {
       tempData[key] = {
         id: _id,
@@ -78,7 +77,7 @@ function SearchByArtist(props) {
         slideList: listData,
         subListData: subListData,
       };
-      localStorage.setItem("artistViewed", JSON.stringify(tempData));
+      localStorage.setItem("artistViewedKid_V2", JSON.stringify(tempData));
     }
   };
 
@@ -86,121 +85,140 @@ function SearchByArtist(props) {
     return Math.random() * (max - min) + min;
   }
 
+  const getUserData = async () => {
+    let tempData = await artistImageKidDetailedSliceData({ "artistId": search })
+
+    dataLocalArtist(
+      tempData.activeArtist[search].id,
+      tempData.activeArtist[search].id,
+      tempData.activeArtist[search].firstname + " " + tempData.activeArtist[search].lastname,
+      tempData.activeArtist[search].detail,
+      tempData.activeArtist[search].slideList,
+      tempData.activeArtist[search].subListData
+    );
+
+    setSimilarData(tempData.similarArtist);
+    setData1(tempData.activeArtist);
+
+  }
+
   useEffect(() => {
-    function dataLoader() {
-      if (artistImageDataSlice.artistImages !== undefined) {
-        if (artistImageDataSlice.artistImages.length > 0) {
-          let listData = [];
-          let subListData = [];
-          let tempData = {};
-          let tempSimilarData = {};
-          let count = 0;
-          artistImageDataSlice.artistImages.forEach((item, key) => {
-            listData = [];
-            subListData = [];
-            item.mainImage.forEach((item1, key1) => {
-              listData.push(String(item1.path));
-              subListData.push(String(item1.subImage[1].path));
-            });
-            tempData[item.artistId.firstname] = {
-              id: item.artistId._id,
-              title: item.artistId.firstname + " " + item.artistId.lastname,
-              detail: item.artistId.bio,
-              slideList: listData,
-              subListData: subListData,
-              keywordId: item.mainImage[0].keywordID,
-            };
-            if (item.artistId.firstname === search) {
-              dataLocalArtist(
-                item.artistId._id,
-                item.artistId._id,
-                item.artistId.firstname + " " + item.artistId.lastname,
-                item.artistId.bio,
-                listData
-              );
-              artistImageDataSlice.artistImages.forEach((item1, key1) => {
-                // let rando= getRandomArbitrary(0,res.payload.length);
-                if (count < 12) {
-                  if (item1.artistId.firstname !== search) {
-                    count++;
-                    tempSimilarData[item1.artistId.firstname] = {
-                      firstname: item1.artistId.firstname,
-                      mainImage: item1.mainImage[0].path,
-                    };
-                  }
-                }
+    getUserData()
+
+    // function dataLoader() {
+    //   if (artistImageDataSlice.artistImages !== undefined) {
+    //     if (artistImageDataSlice.artistImages.length > 0) {
+    //       let listData = [];
+    //       let subListData = [];
+    //       let tempData = {};
+    //       let tempSimilarData = {};
+    //       let count = 0;
+    //       artistImageDataSlice.artistImages.forEach((item, key) => {
+    //         listData = [];
+    //         subListData = [];
+    //         item.mainImage.forEach((item1, key1) => {
+    //           listData.push(String(item1.path));
+    //           subListData.push(String(item1.subImage[1].path));
+    //         });
+    //         tempData[item.artistId.firstname] = {
+    //           id: item.artistId._id,
+    //           title: item.artistId.firstname + " " + item.artistId.lastname,
+    //           detail: item.artistId.bio,
+    //           slideList: listData,
+    //           subListData: subListData,
+    //           keywordId: item.mainImage[0].keywordID,
+    //         };
+    //         if (item.artistId.firstname === search) {
+    //           dataLocalArtist(
+    //             item.artistId._id,
+    //             item.artistId._id,
+    //             item.artistId.firstname + " " + item.artistId.lastname,
+    //             item.artistId.bio,
+    //             listData
+    //           );
+    //           artistImageDataSlice.artistImages.forEach((item1, key1) => {
+    //             // let rando= getRandomArbitrary(0,res.payload.length);
+    //             if (count < 12) {
+    //               if (item1.artistId.firstname !== search) {
+    //                 count++;
+    //                 tempSimilarData[item1.artistId.firstname] = {
+    //                   firstname: item1.artistId.firstname,
+    //                   mainImage: item1.mainImage[0].path,
+    //                 };
+    //               }
+    //             }
 
 
-              });
-            }
-          });
-          setData1(tempData);
-        } else {
-          dispatch(ArtistImageSliceData({})).then((res) => {
-            if (res.payload !== undefined) {
-              let listData = [];
-              let tempData = {};
-              let subListData = [];
-              let tempSimilarData = {};
-              let count = 0;
-              res.payload.forEach((item, key) => {
-                listData = [];
-                subListData = [];
-                item.mainImage.forEach((item1, key1) => {
-                  listData.push(String(item1.path));
-                  subListData.push(String(item1.subImage[1].path));
-                });
-                tempData[item.artistId.firstname] = {
-                  id: item.artistId._id,
-                  title: item.artistId.firstname + " " + item.artistId.lastname,
-                  detail: item.artistId.bio,
-                  slideList: listData,
-                  subListData: subListData,
-                  keywordId: item.mainImage[0].keywordID,
-                };
-                if (item.artistId.firstname === search) {
-                  dataLocalArtist(
-                    item.artistId._id,
-                    item.artistId._id,
-                    item.artistId.firstname + " " + item.artistId.lastname,
-                    item.artistId.bio,
-                    listData,
-                    subListData
-                  );
-                  res.payload.forEach((item1, key1) => {
-                    if (count < 12) {
-                      if (item1.artistId.firstname !== search) {
-                        count++;
-                        tempSimilarData[item1.artistId.firstname] = {
-                          firstname: item1.artistId.firstname,
-                          mainImage: item1.mainImage[0].subImage[1].path,
-                        };
-                      }
+    //           });
+    //         }
+    //       });
+    //       setData1(tempData);
+    //     } else {
+    //       dispatch(ArtistImageSliceData({})).then((res) => {
+    //         if (res.payload !== undefined) {
+    //           let listData = [];
+    //           let tempData = {};
+    //           let subListData = [];
+    //           let tempSimilarData = {};
+    //           let count = 0;
+    //           res.payload.forEach((item, key) => {
+    //             listData = [];
+    //             subListData = [];
+    //             item.mainImage.forEach((item1, key1) => {
+    //               listData.push(String(item1.path));
+    //               subListData.push(String(item1.subImage[1].path));
+    //             });
+    //             tempData[item.artistId.firstname] = {
+    //               id: item.artistId._id,
+    //               title: item.artistId.firstname + " " + item.artistId.lastname,
+    //               detail: item.artistId.bio,
+    //               slideList: listData,
+    //               subListData: subListData,
+    //               keywordId: item.mainImage[0].keywordID,
+    //             };
+    //             if (item.artistId.firstname === search) {
+    //               dataLocalArtist(
+    //                 item.artistId._id,
+    //                 item.artistId._id,
+    //                 item.artistId.firstname + " " + item.artistId.lastname,
+    //                 item.artistId.bio,
+    //                 listData,
+    //                 subListData
+    //               );
+    //               res.payload.forEach((item1, key1) => {
+    //                 if (count < 12) {
+    //                   if (item1.artistId.firstname !== search) {
+    //                     count++;
+    //                     tempSimilarData[item1.artistId.firstname] = {
+    //                       firstname: item1.artistId.firstname,
+    //                       mainImage: item1.mainImage[0].subImage[1].path,
+    //                     };
+    //                   }
 
-                    }
+    //                 }
 
-                  });
-                }
-              });
+    //               });
+    //             }
+    //           });
 
-              setSimilarData(tempSimilarData);
-              setData1(tempData);
-            }
+    //           setSimilarData(tempSimilarData);
+    //           setData1(tempData);
+    //         }
 
-          });
+    //       });
 
 
-        }
-      }
-    }
+    //     }
+    //   }
+    // }
     function getLocalStorage() {
-      if (localStorage.getItem("artistViewed") !== null) {
-        setDataViewed(JSON.parse(localStorage.getItem("artistViewed")));
+      if (localStorage.getItem("artistViewedKid_V2") !== null) {
+        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V2")));
       }
     }
     handleWindowResize()
     getLocalStorage();
-    dataLoader();
+    // dataLoader();
   }, []);
 
   const setFullScreenHandler = (route) => {
@@ -233,7 +251,8 @@ function SearchByArtist(props) {
       {data1 !== null ? (
         <>
           <div className="pl-2 left_content">
-            {/* <div <h2 className="h2talent">{data1[search].title}</h2>
+          <h2 className="h2talent">{data1[search].title}</h2>
+            {/* <div 
            
               className="talentp large d-block hide_detail"
               style={{

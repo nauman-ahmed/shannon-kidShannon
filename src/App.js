@@ -35,7 +35,6 @@ function App() {
             name="Kid"
             render={(props) => 
               {
-                console.log(props)
                 if (props.match.params.pages !== "admin" || props.match.params.pages !== "artist") {
                   return <IndexKid/>
                 }
@@ -77,7 +76,7 @@ function App() {
                 if(props.match.params.search){
                   if (props.match.params.pages === "artists") {
                   return <IndexKid/>
-                  }else if (props.match.params.pages === "divisions"){
+                  }else if (props.match.params.pages === "divisions" || props.match.params.pages === "categories" ){
                     return <IndexKid/>
                   }
                   else if (props.match.params.pages === "illustration-artists"){

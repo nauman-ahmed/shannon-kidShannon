@@ -85,7 +85,6 @@ function Artists(props) {
 
     useEffect(()=>{
 
-        console.log('History',historyCurrent.location)
         if(historyCurrent.location.state){
             formChangeEvent(historyCurrent.location.state,true)           
             return

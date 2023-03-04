@@ -33,7 +33,6 @@ function Portfolio(props) {
           return false;
        }
       })
-      console.log(tempData)
       setTempImages(tempData)
     }
     else if(filter==="reset"){
