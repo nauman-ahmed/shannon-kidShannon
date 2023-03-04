@@ -143,13 +143,19 @@ function Categories(props) {
                     {item.ImageData.length > 0 ? (
                       <>
                         <div className="d-flex">
-                          <h4 className="" style={{color:"#ce651e",fontWeight:"500", fontSize:"16.1px" ,display:'flex',whiteSpace:'nowrap'}}>
+                        <h5 className=" mt-0" style={{display:'flex',whiteSpace:'nowrap',
+                            fontFamily: 'Roboto, sans-serif',
+                            color: '#ce651e',
+                            fontSize: '1vw',
+                            lineHeight: 1,
+                            fontWeight: '500',
+                            textAlign: 'left'}}>
                             {
                               item.keyword == '3D Rendering' ? "CGI"
                                 :
                                 item.keyword.toUpperCase()
                             }
-                          </h4> <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"4.5px", marginLeft:6}}></span>
+                          </h5> <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"5.5px", marginLeft:6}}></span>
 
                         </div>
                         <div
@@ -215,14 +221,20 @@ function Categories(props) {
                   {item.ImageData.length > 0 ? (
                     <>
                       <div className="d-flex">
-                        <h4 className="" style={{color:"#ce651e",fontWeight:"500", fontSize:"16.1px" ,display:'flex',whiteSpace:'nowrap'}}>
-                          {
-                            item.keyword == '3D Rendering' ? "CGI"
-                              :
+                      <h5 className="mt-0" style={{display:'flex',whiteSpace:'nowrap',
+                            fontFamily: 'Roboto, sans-serif',
+                            color: '#ce651e',
+                            fontSize: '1vw',
+                            lineHeight: 1,
+                            fontWeight: '500',
+                            textAlign: 'left'}}>
+                            {
+                              item.keyword == '3D Rendering' ? "CGI" 
+                            :
                               item.keyword.toUpperCase()
-                          }
-                        </h4> <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"4.5px", marginLeft:6}}></span>
-                      </div>
+                            } 
+                          </h5> <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"5.5px", marginLeft:6}}></span>
+                        </div>
                       <div
                         id="w-node-f734ee66-0b58-4c14-e08b-49ceded015c9-84f2d081"
                         className="detail_card3"
