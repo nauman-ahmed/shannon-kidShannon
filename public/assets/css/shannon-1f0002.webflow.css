@@ -3479,7 +3479,7 @@ a {
 }
 
 .navmenu {
-  padding-top: 20px;
+  padding-top: 55px;
   /*  text-align: right;
 
   margin-right: -30px;
@@ -3757,11 +3757,11 @@ a {
 }
 
 .logov2 {
-  width: 60%;
+  width: 80%;
   /* width:18.7vw; */
   margin-bottom: 8px;
   margin-top: 14px;
-  margin-left: 3px;
+  margin-left: -4px;
 }
 
 .contactsection {
@@ -5346,7 +5346,7 @@ column-gap:20px ;
   }
 
   .navmenu {
-    padding-bottom: 20px;
+    padding-bottom: 55px;
     background-color: #fff;
   }
 
@@ -5885,7 +5885,7 @@ column-gap:20px ;
   }
 
   .navmenu {
-    padding-bottom: 20px;
+    padding-bottom: 55px;
     background-color: #fff;
   }
 
