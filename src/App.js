@@ -3,17 +3,11 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 import 'react-image-crop/dist/ReactCrop.css'
 
 // Import Resources
-import SignInUp from "./containers/signInUp/signInUp";
-import Artist from "./containers/artist/artist";
-import Image_uploading from "./containers/artist/image_uploading";
-import Admin from "./containers/admin/admin";
 // import Index from "./containers/clientSite";
 import Page404 from "./containers/kidShanon/404";
 import PrivateRoute from "./containers/PrivateRoute";
 import PrivateArtistRoute from "./containers/PrivateArtistRoute";
 import { setAuthToken } from "./AxiosFunctions/setCommonHeader";
-import Admin_update from "./containers/admin/Image_uploading";
-import ForgetPassword from "./containers/signInUp/forgetPassword";
 import { useEffect } from "react";
 
 import IndexKid from "./containers/kidShanon";
@@ -50,17 +44,10 @@ function App() {
             name="Home"
             render={(props) => 
               {
-                if (props.match.params.pages === "admin") {
-                  return <Admin/>
-                }
-                else if (props.match.params.pages === "artist"){
-                  return <Artist/>
-                }
-                else if (props.match.params.pages === "404"){
+                
+              
+                if (props.match.params.pages === "404"){
                   return <Page404/>
-                }
-                else if (!props.match.params.pages){
-                  return <Artist/>
                 }
                 else{
                   return <IndexKid/>
