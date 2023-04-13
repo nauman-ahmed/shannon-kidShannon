@@ -225,7 +225,7 @@ function SearchByArtist(props) {
     handleWindowResize()
     getLocalStorage();
     // dataLoader();
-  }, []);
+  }, [search]);
 
   const setFullScreenHandler = (route) => {
     let temp = { ...fullscreen };
