@@ -188,7 +188,7 @@ function Contact() {
         res?.payload?.map((val, ind) => {
           // if (temp[val?.artistId?._id] || tempLocalData[val?.artistId?._id]) {
             tempArtistImagesData[val?.artistId?._id] =
-              val?.mainImage[0]?.subImage[1]?.path;
+              val?.mainImage[0]?.subImage[0]?.path;
           // }
         });
         setArtistImages(tempArtistImagesData);
