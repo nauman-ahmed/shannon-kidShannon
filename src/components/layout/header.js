@@ -31,7 +31,7 @@ function Header(props) {
             <nav role="navigation" className="navmenu w-nav-menu">
               <span style={{ marginRight: -20 }}>
                 <a 
-                href="http://18.217.201.201//#/" 
+                href="http://3.132.94.46/#/" 
                 target="_blank" 
                 className="navlink v2 w-nav-link ">SHANNON WEBSITE</a>
 
