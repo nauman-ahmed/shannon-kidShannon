@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import Slider, {
   SliderItem,
@@ -11,8 +11,9 @@ import loading from '../../../assets/loading.gif';
 import { useDispatch, useSelector } from "react-redux";
 import { artistImageKidDetailedSliceData } from '../../../AxiosFunctions/Axiosfunctionality';
 import { ArtistImageSliceData } from "../../../redux/artistImageDataSlice";
-import { addCart } from "../../../redux/addToCart";
+import { addCart, saveCartItemMessageKey, getAnEstimateHandler } from "../../../redux/addToCart";
 import { updateMessage, updateOpen } from "../../../redux/message";
+import MyPopup from "../../../components/myPopup/myPopup";
 // import { setImageRoute } from '../../../UserServices/Services';
 
 // import downloadArrow from "../../images/download.png";
@@ -25,7 +26,7 @@ function SearchByArtist(props) {
   const [fullscreen, setFullscreen] = useState({ screen: false, route: null });
   const [fullScreenData, setFullScreenData] = useState({ screen: false, route: null });
   const { search } = useParams();
-  const { artistImageDataSlice } = useSelector((state) => state);
+  const { artistImageDataSlice, AddToCart } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [data1, setData1] = useState(null);
   const [dataViewed, setDataViewed] = useState({});
@@ -35,6 +36,11 @@ function SearchByArtist(props) {
   const [sliderImages, setSliderImages] = useState(null);
   const [sliderIndex, setSliderIndex] = useState(null);
   const [windowSize, setWindowSize] = useState(getWindowSize());
+  const [isPopupShow, setIsPopupShow] = useState(false);
+  const [isPopupShowWithCheckbox, setIsPopupShowWithCheckbox] = useState(true);
+  const [isCheckboxChecked, setIsCheckboxChecked] = useState(false);
+  const [msg, setMsg] = useState("");
+  const myStateRef = useRef(0);
 
   function getWindowSize() {
     const { innerWidth, innerHeight } = window
@@ -56,11 +62,13 @@ function SearchByArtist(props) {
     };
   }, []);
 
-  const addToCartArtist = (id, firstname) => {
+  const addToCartArtist = (id, firstname,getAnEstimate=false) => {
     dispatch(addCart({ key: id, data: { id: id, Name: firstname } }));
-    dispatch(updateOpen(true));
-    dispatch(updateMessage("Add Artist in Cart"));
+    if(getAnEstimate){
+      dispatch(getAnEstimateHandler());
+    }
   };
+
 
   const dataLocalArtist = (key, _id, firstname, bio, listData, subListData) => {
     let tempData = localStorage.getItem("artistViewedKid_V1");
@@ -107,6 +115,66 @@ function SearchByArtist(props) {
     setData1(tempData.activeArtist);
 
   }
+
+  useEffect(() => {
+    let currentSelectedSlider = document.getElementById("firstSlider0");
+    var prev = document.getElementsByClassName('slick-prev')[0];
+    var next = document.getElementsByClassName('slick-next')[0]
+
+    
+    if(currentSelectedSlider){
+      
+      currentSelectedSlider.style.boxShadow = "0 2px 10px #141c2a"
+      if(prev){
+        prev.addEventListener("click", (e) => {
+          console.log("LEFT BUTTON CLICKED",myStateRef.current ,data1[search].pictureTitle.length)
+          
+          if(myStateRef.current == 0 ){
+            setSliderIndexHandler(data1[search].pictureTitle.length-1,myStateRef.current,true)
+          }else{
+            setSliderIndexHandler(myStateRef.current -1 ,myStateRef.current,true)
+          }
+        })
+      }
+      
+      if(next){
+        next.addEventListener("click", (e) => {
+          console.log("RIGHT BUTTON CLICKED",myStateRef ,data1[search].pictureTitle.length)
+  
+          if(myStateRef.current !== data1[search].pictureTitle.length-1){
+            setSliderIndexHandler(myStateRef.current+1,myStateRef.current,true)
+          }else{
+            setSliderIndexHandler(0,data1[search].pictureTitle.length - 1,true)
+          }
+        })
+      }
+    }
+
+  }, [data1]);
+
+  const setSliderIndexHandler = (keys, oldValue = null, clickedSliderButton = false) => {
+    if(clickedSliderButton){
+      
+      console.log("FUNCTION",keys, oldValue)
+
+      let previousSelectedSlider = document.getElementById("firstSlider"+oldValue);
+      let currentSelectedSlider = document.getElementById("firstSlider"+keys);
+
+      currentSelectedSlider.style.boxShadow = "0 2px 10px #141c2a"
+      previousSelectedSlider.style.boxShadow = ""
+      myStateRef.current = keys
+      setSliderIndex(keys)
+    }else{
+      let previousSelectedSlider = document.getElementById(sliderIndex? "firstSlider"+sliderIndex : "firstSlider0");
+      let currentSelectedSlider = document.getElementById("firstSlider"+keys);
+      
+      currentSelectedSlider.style.boxShadow = "0 2px 10px #141c2a"
+      previousSelectedSlider.style.boxShadow = ""
+      myStateRef.current = keys
+      setSliderIndex(keys)
+    }
+
+  };
 
   useEffect(() => {
     getUserData()
@@ -241,6 +309,26 @@ function SearchByArtist(props) {
 
   };
 
+  const saveCartMessage = (msg) =>{
+    dispatch(saveCartItemMessageKey({ messageShow:msg }));
+  }
+
+  const addToCartArtistHandler = (id,title,getAnEstimate=false) =>{
+    console.log(getAnEstimate)
+    let key = Object.keys(AddToCart.cartInfo).find(element => element == id)
+    if(key == undefined){
+      if(AddToCart.cartInfo.messageShow){
+        setMsg("You have added "+ title +" to your list, to view your list visit Contact/My List Page.")
+        setIsPopupShow(true)
+      }
+      addToCartArtist(id, title, getAnEstimate)
+    }else{
+      setMsg("You have already added "+ title +" to your list, to view your list visit Contact/My List Page.")
+      setIsPopupShow(true)
+      setIsPopupShowWithCheckbox(false)
+    }
+  }
+
   if (fullscreen.screen) {
     return (
       <FullScreenSliderItem
@@ -266,49 +354,18 @@ function SearchByArtist(props) {
       {/* <Navbar></Navbar> */}
       <div className="row mt-0 pt-0" style={{
         maxWidth: "100%",
-        justifyContent: "center"
+        justifyContent: "center",
+        margin: "0px"
       }}>
         {data1 !== null ? (
           <>
-            <div className=" pl-2 left_content">
+            <div className="pl-2 left_content">
+              <h2 className="h2talent">{data1[search].title}</h2>
+              {props.children}
+            </div>
+            <div className="pl-2 mid_content">
               <div >
-                <h2 className="h2talent">{data1[search].title}</h2>
-                {/* <div
-              className="talentp large d-block hide_detail"
-              style={{
-                fontSize: "16px",
-
-              }}
-            >
-              <div dangerouslySetInnerHTML={{ __html: data1[search].detail }}>
-              </div>
-            </div> */}
                 {/* <div className="talenttext" style={{ marginBottom: 5 }}>Want to commission this artist?</div> */}
-                <div className="d-flex mt-2">
-                  <Link
-                    to="#"
-                    // style={{ fontSize: "16px", fontWeight: '600', minWidth: "60px", maxWidth: "70px" }}
-                    className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
-                  >
-                    CALL
-                  </Link>
-                  <Link
-                    to="/contact"
-                    // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
-                    className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
-                  >
-                    GET ESTIMATE
-                  </Link>
-                  <Link
-                    data-w-id="e04f643e-f302-16e2-74ee-4bc7e85391d8"
-                    to="#"
-                    // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
-                    className="talentbutton hide "
-                    onClick={() => addToCartArtist(data1[search].id, data1[search].title)}
-                  >
-                    ADD TO MY LIST
-                  </Link>
-                </div>
                 <div
                   data-current="Tab 3"
                   data-easing="ease"
@@ -390,11 +447,11 @@ function SearchByArtist(props) {
                         > */}
                             {
                               data1[search].subListData.map((item, keys) => (
-                                <span className="detail_card5_h " onClick={() => { setSliderIndex(keys) }}>
-                                  <img src={item} className="w-100 h-100" style={{objectFit:"cover"}}
+                                <div id={"firstSlider"+keys} className="detail_card5_h" style={{ overflow: "hidden" }} onClick={() => { setSliderIndexHandler(keys) }}> 
+                                  <img src={item} className="w-100 h-100" 
                                   // style={{ margin: "3px .43vw 3px 0vw"}}
                                   ></img>
-                                </span>
+                                </div>
                               ))
                             }
 
@@ -574,6 +631,25 @@ function SearchByArtist(props) {
 
             </div>
             <div className=" hide_detail right_content">
+              <div className="d-flex mt-2" style={{ justifyContent: "end" }}>
+                    <Link
+                      to="/contact"
+                      // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
+                      className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
+                      onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title, true)}
+                    >
+                      GET ESTIMATE
+                    </Link>
+                    <Link
+                      data-w-id="e04f643e-f302-16e2-74ee-4bc7e85391d8"
+                      to="#"
+                      // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
+                      className="talentbutton hide "
+                      onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title)}
+                    >
+                      ADD TO MY LIST
+                    </Link>
+                </div>
               <div className="rightside">
                 <div className="d-flex" style={{ justifyContent: 'center' }}>
 
@@ -589,24 +665,24 @@ function SearchByArtist(props) {
                       <SliderShow
                         changeIndex={changeIndex}
                         sliderIndex={sliderIndex}
-                        settings={{
-                          arrows: false,
-                          infinite: true,
-                          speed: 500,
-                          slidesToShow: 1,
-                          slidesToScroll: 1,
-                        }}
+                        // settings={{
+                        //   arrows: false,
+                        //   infinite: true,
+                        //   speed: 500,
+                        //   slidesToShow: 1,
+                        //   slidesToScroll: 1,
+                        // }}
                       >
                         {
                           data1[search].slideList.map((item, keys) => (
                             <SliderItems
-                              key={keys}
+                              keys={keys}
                               src={item}
                               data1={data1}
                               search={search}
                               windowSize={windowSize}
                               onClick={setFullScreenHandler}
-
+                              addToCartArtistHandler={addToCartArtistHandler}
                             />
                           ))
                         }
@@ -667,6 +743,52 @@ function SearchByArtist(props) {
               style={{ width: "50px" }}
             />
           </div>
+        }
+      </div>
+      <div className="contactpage mt-5 pt-2" >
+        {isPopupShow && isPopupShowWithCheckbox? (
+          <MyPopup
+            BackClose
+            onClose={() => {
+              saveCartMessage(!isCheckboxChecked) 
+              setIsPopupShow(false);
+            }}
+          >
+            <div className="mx-5 my-4">
+              <div>{msg}</div>
+              <div class="form-check form-switch mt-2"> 
+                <input 
+                  class="form-check-input" 
+                  type="checkbox" 
+                  id="flexSwitchCheckDefault" 
+                  style={{cursor:"pointer",accentColor:"#BC6127"}}
+                  checked={isCheckboxChecked}
+                  onClick={()=> { setIsCheckboxChecked(!isCheckboxChecked); console.log("CLICKED")}}
+                  />
+                <label class="form-check-label" for="flexSwitchCheckDefault" style={{paddingTop:"5px"}}>Do not show this again</label>
+              </div>
+            </div>
+            <div className="cartBadgeSearchArtist" onClick={() => {
+              saveCartMessage(!isCheckboxChecked) 
+              setIsPopupShow(false);
+            }} >x</div>
+          </MyPopup>
+        ) : isPopupShow && !isPopupShowWithCheckbox?
+        <MyPopup
+            BackClose
+            onClose={() => {
+              setIsPopupShowWithCheckbox(true);
+              setIsPopupShow(false);
+            }}
+          >
+            <div className="mx-5 my-4">
+              <div>{msg}</div>
+            </div>
+            <div className="cartBadgeSearchArtist" onClick={() => {
+              saveCartMessage(!isCheckboxChecked) 
+              setIsPopupShow(false);
+            }} >x</div>
+          </MyPopup> : null
         }
       </div>
     </div>

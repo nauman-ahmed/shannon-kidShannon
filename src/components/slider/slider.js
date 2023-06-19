@@ -18,16 +18,39 @@ const images = window.location.origin + "/assets/images";
 
 export const SliderShow=  (props) => {
 
-    const [slider,setSlider] = useState(null)
+  const [slider,setSlider] = useState(null) 
 
-    useEffect(()=>{
-      
-      if(props.sliderIndex !== null){
-        if(slider){
-          slider.slickGoTo(props.sliderIndex)
-        }
+  const setSLiderHeight = () => {
+    var clientHeight = document.getElementsByClassName('slick-current')[0].clientHeight;
+    var image = document.getElementById(props.sliderIndex? 'sliderImage'+props.sliderIndex : 'sliderImage0');
+
+    var prev = document.getElementsByClassName('slick-prev')[0];
+    var next = document.getElementsByClassName('slick-next')[0];
+
+    if(prev){
+      let calc = image.clientHeight / 2
+
+      prev.style.top = calc.toString()+"px"
+      next.style.top = calc.toString()+"px"
+
+      var details = document.getElementById('detailBelowSlider');
+      if(calc == 0){
+        setTimeout(setSLiderHeight, 200);
       }
-    },[props.sliderIndex,slider])
+    }
+  }
+
+  setTimeout(setSLiderHeight, 200);
+
+  useEffect(()=>{
+
+  if(props.sliderIndex !== null){
+    setSLiderHeight()
+    if(slider){
+      slider.slickGoTo(props.sliderIndex)
+    }
+  }
+  },[props.sliderIndex,slider])
     
 
     return(
@@ -36,13 +59,46 @@ export const SliderShow=  (props) => {
           width: "width" in props ? props.width : "90%",
           height: "height" in props ? props.height : "100%",
         }}
-        {...props.settings}
+        {...{
+          arrows: true,
+          infinite: true,
+          speed: 500,
+          slidesToShow: 1,
+          slidesToScroll: 1,
+          nextArrow: <SampleNextArrow />,
+          prevArrow: <SamplePrevArrow />
+        }}
         ref={slider => setSlider(slider)}
         >
           {props.children}
         </Slider>
     )
 };
+
+function SampleNextArrow(props) {
+  const { className, style, onClick } = props;
+
+  return ( <img
+    src={images + "/right.png"}
+    loading="lazy"
+    alt=""
+    className={className}
+  />
+
+  );
+}
+
+function SamplePrevArrow(props) {
+  const { className, style, onClick } = props;
+  return ( <img
+    src={images + "/left.png"}
+    loading="lazy"
+    alt=""
+    className={className}
+  />
+
+  );
+}
 
 export const SliderItems = (props)=>{
   const dispatch = useDispatch();
@@ -59,6 +115,7 @@ export const SliderItems = (props)=>{
           style={{ padding: 1 }}
        >
           <img 
+            id={"sliderImage"+props.keys}
             onClick={() => ("onClick" in props ? props.onClick(props.src) : null)}
             src={props.src}
             alt=""
@@ -68,8 +125,7 @@ export const SliderItems = (props)=>{
                 : { bjectFit: "contain", objectFit: "contain", margin:"auto",height:'auto' }
             }
           />
-
-            <div className="hide_detail mb-1 mt-2 pt-3">
+            <div id='detailBelowSlider' className="hide_detail mb-1 mt-2 pt-3">
                   <h4 className="mb-1" style={{ fontWeight: "500", fontSize: "22px" }}>{props?props.data1[props.search].title:null}</h4>
                   <div
                     className="F large hide_detail pt-2 mt-1"
@@ -78,7 +134,7 @@ export const SliderItems = (props)=>{
                       marginTop: "20px",
                       lineHeight: "2"
                     }}
-                  >
+                  > 
                     <div style={{fontFamily: 'Roboto',fontSize:17,color: '#373530',lineHeight:1.4}} dangerouslySetInnerHTML={{ __html: props ? props?.data1[props.search].detail : null}}>
 
                     </div>
@@ -89,17 +145,18 @@ export const SliderItems = (props)=>{
                     position: "relative",
                     paddingTop: "10px",
                   }}>
-                    <Link
+                    {/* <Link
                       to="#"
                       // style={{ fontSize: "16px", fontWeight: '600', minWidth: "60px", maxWidth: "70px" }}
                       className={props.windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton  mr-3"}
                     >
                       CALL
-                    </Link>
+                    </Link> */}
                     <Link
                       to="/contact"
                       // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
                       className={props.windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton  mr-3"}
+                      onClick={() => props.addToCartArtistHandler(props ? props.data1[props.search].id : null, props ? props.data1[props.search].title : null, true)}
                     >
                       GET ESTIMATE
                     </Link>
@@ -108,7 +165,7 @@ export const SliderItems = (props)=>{
                       to="#"
                       // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
                       className="talentbutton hide "
-                      onClick={() => addToCartArtist(props ? props.data1[props.search].id : null, props ? props.data1[props.search].title : null)}
+                      onClick={() => props.addToCartArtistHandler(props ? props.data1[props.search].id : null, props ? props.data1[props.search].title : null)}
                     >
                       ADD TO MY LIST
                     </Link>
@@ -133,7 +190,7 @@ export function FullScreenSliderItem(props) {
           justifyContent: "center",
         }}
       >
-        <div className="col-5 mt-4 ">
+        {/* <div className="col-5 mt-4 ">
           <h2
             className="h2talent"
             style={{ marginBottom: "5px", width: "70%" }}
@@ -165,24 +222,6 @@ export function FullScreenSliderItem(props) {
             </div>
           </div>
           <div className="d-flex align-items-center mt-5">
-            {/* <div>
-              <button
-                className="text-uppercase"
-                style={{
-                  width: "7vw",
-                  fontFamily: "'Roboto Condensed', sans-serif",
-                  paddingTop: "1.1vh",
-                  paddingBottom: "1.1vh",
-                  borderRadius: "5px",
-                  backgroundColor: "black",
-                  color: "white",
-                  fontSize: "0.7vw",
-                  fontWeight: 600,
-                }}
-              >
-                Learn More
-              </button>
-            </div> */}
             <div>
               <button
                 className=" text-uppercase"
@@ -245,14 +284,12 @@ export function FullScreenSliderItem(props) {
                   fontWeight: 600,
                 }}
                 onClick = {()=>history.push("/contact")}
-                // href="http://localhost:3000/#/contact"
-                // href="http://18.191.86.110/#/contact"
               >
                 Get an estimated
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="col-7">
           <div
             onClick={() => props.onClick()}

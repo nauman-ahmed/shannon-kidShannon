@@ -12,15 +12,21 @@ function NavBarArtist(props) {
   const [dataOriginal,setDataOriginal] = useState(null)
   const [dataLoad,setDataLoad] = useState(true)
   const [tempArtist,setTempArtist]= useState([]);  
+  const [filterHighlighted,setFilterHighlighted]= useState(null);
+  const [filterCond, setFilterCond] = useState(true);
 
   const filterChange= (filter) => {
 
     let tempData = [...data];
     setDataOriginal([...data])
     if(filter==="A-Z"){
+      setFilterCond(false)
+      setFilterHighlighted(2)
       tempData = tempData.sort((a, b) => a.artistId.firstname.normalize().localeCompare(b.artistId.firstname.normalize()));
     }
     else if (dataOriginal){
+      setFilterHighlighted(1)
+      setFilterCond(true)
       tempData = [...dataOriginal];
       // tempData = dataOriginal;
     }
@@ -31,6 +37,7 @@ function NavBarArtist(props) {
 
   useEffect(() => {
     setDataLoad(true)
+    setFilterHighlighted(null)
     artistImageNavSliceData({ keyword: props.currPage, type: 2 }).then((res)=>{
       setData(res)
       setDataLoad(false)
@@ -60,14 +67,14 @@ function NavBarArtist(props) {
 
   return (
     <> 
-        <div class="sortingcont right pt-0 mt-0">
-          <a class="filter-button w-inline-block  mt-0" onClick={()=>filterChange("Default")}>
-            <div >DEFAULT</div>
-          </a>
-          <a class="filter-button w-inline-block  mt-0" onClick={()=>filterChange("A-Z")}>
-            <div >ALPHABETICAL A-Z</div>
-          </a>
-        </div>
+      <div class="sortingcont right pt-0 mt-0">
+        <a class={filterHighlighted == 1 ? "filter-button sort-active w-inline-block  mt-0" : "filter-button w-inline-block  mt-0"} onClick={() => filterChange("Default")}>
+          <div >DEFAULT</div>
+        </a>
+        <a class={filterHighlighted == 2 ? "filter-button sort-active w-inline-block  mt-0" : "filter-button w-inline-block  mt-0"} onClick={() => filterChange("A-Z")}>
+          <div >ALPHABETICAL A-Z</div>
+        </a>
+      </div>
     <div className="_2cols2_" style={{clear:"both"}}>
     {props.children}
     <div id="w-node-_4a165d69-02be-f2c1-10f5-69fa4946403e-576fcec6" className="divisionscolumn">

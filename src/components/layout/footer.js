@@ -1,8 +1,25 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react' 
 import { Link } from 'react-router-dom'
+import { getAllContents } from '../../AxiosFunctions/Axiosfunctionality'
+
 const images = window.location.origin+"/assets/images"
 
 function Footer() {
+
+    const [shannonContent,setShannonContent] = useState([])
+
+    const getAllContent = ()=>{
+        getAllContents({type: "SHANNON"}).then((res)=>{
+            let shannon = res[0].content
+            console.log(shannon[0])
+            setShannonContent(shannon)
+        })
+    }
+
+    useEffect(()=>{
+        getAllContent();
+    },[])
+    
     return (
         <div className="footersection wf-section">
             <div className="footerorange"></div>

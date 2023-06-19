@@ -42,8 +42,10 @@ function  Artists(props) {
   }
 
   useEffect(()=>{
-    dispatch(ArtistImageSliceData("kid")); 
-    dispatch(bannerLoader());
+    if(artistImageDataSlice.artistImages.length == 0){
+      dispatch(ArtistImageSliceData("kid")); 
+      dispatch(bannerLoader());
+    }
   },[])
 
 

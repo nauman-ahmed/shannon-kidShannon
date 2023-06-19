@@ -26,7 +26,7 @@ function Sidebar(props) {
         }
       )
     }
-    else if(props.activeBtn === "divisions"){
+    else if(props.activeBtn === "divisions" || props.activeBtn === "detailedPage"){
       getArtistCategoryTypeTwo({}).then(res => {
         setArtistData(
           sortAlphaOrder(res!==undefined?res.length>0?res:[]:[])
@@ -78,7 +78,7 @@ function Sidebar(props) {
 
   return (
     <div id="w-node-_783b3b4a-9daa-ecbf-356e-d84dbb36f4cc-bb36f4cc" className="respdivhide">
-      <h3 className="homeh3">{
+      <h3 className="homeh3" style={props.activeBtn === "detailedPage" ? {textDecorationLine:"none"} : { color:"#000000", fontFamily: "Montserrat, sans-serif", textUnderlineOffset : "5px", fontWeight: 800 }}>{
         props.activeBtn === "EDUCATIONAL" ? "EDUCATIONAL" 
         : props.activeBtn === "CHARACTER-DEVELOPMENT" ? "CHARACTER DEVELOPMENT" 
         : props.activeBtn === "BLACK-AND-WHITE-INTERIOR" ? "BLACK AND WHITE INTERIOR" 
@@ -86,28 +86,29 @@ function Sidebar(props) {
         : props.activeBtn === "PICTURE-BOOK" ? "PICTURE BOOK" 
         : props.activeBtn === "MIDDLE-GRADE" ? "MIDDLE GRADE" 
         : props.activeBtn === "categories" ? "CATEGORIES" 
+        : props.activeBtn === "detailedPage" ? "SELECT BY CATEGORY" 
         : "DIVISIONS"
         }</h3>
       {pages == "categories"? 
       keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
         <div key={key}>
-        {item.type === 2?(<Link to={"/divisions/"+item.keyword}  className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
+        {item.type === 2?(<Link to={"/categories/"+item._id}  className={"divisionslink"+(search === item._id?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
         
         </div>
      )):"" 
       :
       <div className="allartist v2">
-        <Link to="/illustration-artists" className={"divisionslink"+(props.activeBtn === "illustration-artists"?" w--current":"")}><span className="sidebarlink">MIDDLE GRADE<br /></span></Link>
-        <Link to="/bipoc" className={"divisionslink"+(props.activeBtn === "bipoc"?" w--current":"")}><span className="sidebarlink">PICTURE BOOK<br /></span></Link>
-        <Link to="/cgi" className={"divisionslink"+(props.activeBtn === "cgi"?" w--current":"")}><span className="sidebarlink">MULTICULTURAL</span></Link>
+        <Link to="/MIDDLE-GRADE" className={"divisionslink"+(props.activeBtn === "MIDDLE-GRADE"?" w--current":"")}><span className="sidebarlink">MIDDLE GRADE<br /></span></Link>
+        <Link to="/PICTURE-BOOK" className={"divisionslink"+(props.activeBtn === "PICTURE-BOOK"?" w--current":"")}><span className="sidebarlink">PICTURE BOOK<br /></span></Link>
+        <Link to="/MULTICULTURAL" className={"divisionslink"+(props.activeBtn === "MULTICULTURAL"?" w--current":"")}><span className="sidebarlink">MULTICULTURAL</span></Link>
         <span className="sidebarlink"><br /></span>
-        <span className="sidebarlink">BLACK AND WHITE INTERIOR<br /></span>
-        <Link to="/medical" className={"divisionslink"+(props.activeBtn === "medical"?" w--current":"")}><span className="sidebarlink">CHARACTER DEVELOPMENT<br /></span></Link>
-        <Link to="/motion" className={"divisionslink"+(props.activeBtn === "motion"?" w--current":"")}><span className="sidebarlink">EDUCATIONAL</span></Link>
+        <Link to="/BLACK-AND-WHITE-INTERIOR" className={"divisionslink"+(props.activeBtn === "BLACK-AND-WHITE-INTERIOR"?" w--current":"")}><span className="sidebarlink">BLACK AND WHITE INTERIOR<br /></span></Link>
+        <Link to="/CHARACTER-DEVELOPMENT" className={"divisionslink"+(props.activeBtn === "CHARACTER-DEVELOPMENT"?" w--current":"")}><span className="sidebarlink">CHARACTER DEVELOPMENT<br /></span></Link>
+        <Link to="/EDUCATIONAL" className={"divisionslink"+(props.activeBtn === "EDUCATIONAL"?" w--current":"")}><span className="sidebarlink">EDUCATIONAL</span></Link>
         <br /><br /><br /><br />
        {pages == "categories" && keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
           <div key={key}>
-          {item.type === 2?(<Link to={"/divisions/"+item.keyword}  className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
+          {item.type === 2?(<Link to={"/divisions/"+item.keyword}  className={"divisionslink"+(search === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
           
           </div>
        )):""}
@@ -120,7 +121,7 @@ function Sidebar(props) {
             {item}<br/>
             {artistData[item].map((item1,key1)=>(
               <div key={key1}>
-               <Link to={"/artists/"+item1._id} className="sidebarlink">{item1.firstname.toUpperCase()} {item1.lastname.toUpperCase()}<br/></Link>
+               <Link to={"/artists/"+item1._id} className="sidebarlink" style={search === item1._id ? {color: "#fa8e37"} : {}}>{item1.firstname.toUpperCase()} {item1.lastname.toUpperCase()}<br/></Link>
               </div>
             ))}
             <br/>

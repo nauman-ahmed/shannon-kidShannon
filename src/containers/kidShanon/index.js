@@ -133,7 +133,9 @@ function IndexKid(props) {
                     </Categories>
                     :pages === "artists"?
                         search?
-                        <SearchByArtist/>
+                        <SearchByArtist>
+                            <Sidebar activeBtn="detailedPage" />
+                        </SearchByArtist>
                         :<Artists>
                             <ArtistSideBar kid={"kid"}/>
                         </Artists>

@@ -11,6 +11,7 @@ const images = window.location.origin + "/assets/images"
 function Divisions(props) {
   const [tempArtist,setTempArtist]= useState([]);
   const [filterCond,setFilterCond]= useState(true);
+  const [filterHighlighted,setFilterHighlighted]= useState(null);
 
 
   const dispatch = useDispatch();
@@ -77,14 +78,14 @@ function Divisions(props) {
 
 
   return (<>
-  <div class="sortingcont right pt-0 mt-0">
-          <a class="filter-button w-inline-block  mt-0" onClick={()=>filterChange("Default")}>
-            <div >DEFAULT</div>
-          </a>
-          <a class="filter-button w-inline-block  mt-0" onClick={()=>filterChange("A-Z")}>
-            <div >ALPHABETICAL A-Z</div>
-          </a>
-        </div>
+    <div class="sortingcont right pt-0 mt-0">
+      <a class={filterHighlighted == 1 ? "filter-button sort-active w-inline-block  mt-0" : "filter-button w-inline-block  mt-0"} onClick={() => filterChange("Default")}>
+          <div >DEFAULT</div>
+        </a>
+        <a class={filterHighlighted == 2 ? "filter-button sort-active w-inline-block  mt-0" : "filter-button w-inline-block  mt-0"} onClick={() => filterChange("A-Z")}>
+          <div >ALPHABETICAL A-Z</div>
+        </a>
+    </div>
     <div className="_2cols2_">
       {props.children}
       <div
@@ -155,7 +156,8 @@ function Divisions(props) {
                             :
                               item.keyword.toUpperCase()
                             } 
-                          </h5> <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"5.5px", marginLeft:6}}></span>
+                          </h5> 
+                          {/* <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"5.5px", marginLeft:6}}></span> */}
                         </div>
                         <div
                          id="w-node-a284be2a-4b91-3177-03eb-6614b24879c1-4bf2d022"
@@ -203,7 +205,7 @@ function Divisions(props) {
                             </>
                           ))}
                         </div>
-                        <div className="divisionbuttoncontainer mb-5">
+                        <div className="divisionbuttoncontainer " style={{ justifyContent: "flex-end" }}>
                           <Link
                             to={ 
                               item.keyword == "Middle Grade Cover" ? "MIDDLE-GRADE"
@@ -214,10 +216,10 @@ function Divisions(props) {
                               : item.keyword == "Educational" ? "EDUCATIONAL"
                               : null
                             }
-                            className="talentbutton w-button seemoreText"
+                            className="talentbuttonSeeMore"
                             style={{ textDecoration: "none" }}
                           >
-                            SEE MORE
+                            SEE MORE <div className="mx-2"> <img src={images+"/seeMore.svg"} style={{width:"6px"}}/> </div>
                           </Link>
                         </div>
                       </>
@@ -245,7 +247,8 @@ function Divisions(props) {
                             :
                               item.keyword.toUpperCase()
                             } 
-                          </h5> <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"5.5px", marginLeft:6}}></span>
+                          </h5> 
+                          {/* <span style={{width:"100%", height:"1px", color:"#ce651e", border:"1px solid #ce651e", marginTop:"5.5px", marginLeft:6}}></span> */}
                         </div>
                       <div
                         id="w-node-f734ee66-0b58-4c14-e08b-49ceded015c9-84f2d081"
@@ -293,7 +296,7 @@ function Divisions(props) {
                           </>
                         ))}
                       </div>
-                      <div className="divisionbuttoncontainer mb-5">
+                      <div className="divisionbuttoncontainer" style={{ justifyContent: "flex-end" }}>
                         <Link
                           to={ 
                             item.keyword == "Middle Grade Cover" ? "MIDDLE-GRADE"
@@ -304,10 +307,10 @@ function Divisions(props) {
                             : item.keyword == "Educational" ? "EDUCATIONAL"
                             : null
                           }
-                          className="talentbutton w-button seemoreText"
+                          className="talentbuttonSeeMore"
                           style={{ textDecoration: "none" }}
                         >
-                          SEE MORE
+                          SEE MORE <div className="mx-2"> <img src={images+"/seeMore.svg"} style={{width:"6px"}}/> </div>
                         </Link>
                       </div>
                     </>
