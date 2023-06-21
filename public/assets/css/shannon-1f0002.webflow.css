@@ -292,6 +292,15 @@ a {
   justify-items: center;
 }
 
+.left_content {
+  /* margin-top: 14vh; */
+  /* float: left; */
+  width: 20%;
+  padding-right: 1.8vw;
+  padding-left: 2px;
+  margin-left: -20px;
+}
+
 @media (min-width: 768px) {
 
   .left_content-contact {
@@ -303,15 +312,14 @@ a {
   }
 
   .left_content {
-    margin-top: 14vh;
     width: 20%;
     /* float: left; */
     padding-right: 1.8vw;
     padding-left: 2px;
+  
   }
 
   .mid_content {
-    margin-top: 8vh;
     width: 40%;
     /* float: left; */
     padding-right: 1.8vw;
@@ -1360,7 +1368,7 @@ a {
 
 .h2talent {
   /* color: #ce651e; */
-  margin-top: 0px;
+  margin-top: 10px;
   margin-bottom: 5vh;
   padding-bottom: 6px;
   /* border-bottom: 2px solid #000; */
