@@ -115,6 +115,13 @@ function Contact() {
             setHolder(false);
             setIsPopupShow(true);
             setMsg(tempMsg);
+            setName("")
+            setCompany("")
+            setEmail("")
+            setPhone("")
+            setPurposeOfInquiry("")
+            setFindUs("")
+            setMessage("")
           }
         });
       }
@@ -359,7 +366,7 @@ function Contact() {
                         </div>
                       </div>
 
-                      <div className="row mr-0">
+                      {/* <div className="row mr-0">
                         <div className="col-sm-6 mr-0 pr-0">
                           <label htmlFor="Address" className="contactformlabel ">
                             Address:
@@ -396,9 +403,9 @@ function Contact() {
                             id="City"
                           />
                         </div>
-                      </div>
+                      </div> */}
 
-                      <div className="row mr-0">
+                      {/* <div className="row mr-0">
                         <div className="col-sm-6 mr-0 pr-0">
                           <label htmlFor="State" className="contactformlabel ">
                             State
@@ -458,7 +465,7 @@ function Contact() {
                             id="Zip"
                           />
                         </div>
-                      </div>
+                      </div> */}
 
                       <div className="row mr-0">
                         <div className="col-sm-6 mr-0 pr-0">
@@ -478,7 +485,7 @@ function Contact() {
                             data-name="Purpose of Inquiry"
                             className="text-field text_h w-100 w-select"
                           >
-                            <option value="">Select</option>
+                            <option value="" selected={purposeOfInquiry == "" ? true : false}>Select</option>
                             <option value="Get an estimate" selected={getAnEstimate} >Get an estimate</option>
                             <option value="Commission an artist">
                               Commission an artist
