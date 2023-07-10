@@ -19,6 +19,7 @@ function  Artists(props) {
   const  {bannerImages} = useSelector(state=>state);
   const [filterCond,setFilterCond]= useState(true);
   const [tempArtist,setTempArtist]= useState([]);
+  const [filterHighlighted,setFilterHighlighted]= useState(null);
 
   const filterChange= (filter) => {
 
@@ -29,9 +30,11 @@ function  Artists(props) {
       let tempImage = [...artistImageDataSlice.artistImages]
       temp = tempImage.sort((a, b) => a.artistId.firstname.normalize().localeCompare(b.artistId.firstname.normalize()));
       setTempArtist(temp)
+      setFilterHighlighted(2)
       // tempData = tempData.sort((a, b) => a.artistId.firstname.normalize().localeCompare(b.artistId.firstname.normalize()));
     }
     else{
+      setFilterHighlighted(1)
       setFilterCond(true)
       // tempData = [...dataOriginal];
       // tempData = dataOriginal;
@@ -60,6 +63,7 @@ function  Artists(props) {
         }
         return checker;
       })
+      setFilterHighlighted(null)
       setTempArtist(temp)
     }
   }
@@ -71,13 +75,15 @@ function  Artists(props) {
   return ( 
     <>
      <div class="sortingcont right pt-0  me-0 ">
-          <a class="filter-button w-inline-block  mt-0" onClick={()=>filterChange("Default")}>
+        <div className="d-flex right-filter-button">
+          <a class={filterHighlighted == 1 ? "filter-button sort-active w-inline-block  mt-0" : "filter-button w-inline-block  mt-0"} style={{ marginLeft: "0px" }} onClick={()=>filterChange("Default")}>
             <div >DEFAULT</div>
           </a>
-          <a class="filter-button  mt-0 me-0" onClick={()=>filterChange("A-Z")}>
+          <a class={filterHighlighted == 2 ? "filter-button sort-active mt-0 me-0" : "filter-button mt-0 me-0"} onClick={()=>filterChange("A-Z")}>
             <div >ALPHABETICAL A-Z</div>
           </a>
         </div>
+    </div>
     <div className="_2cols" style={{clear:"both"}} >
       {props.children}
       <div id="w-node-a284be2a-4b91-3177-03eb-6614b24879c1-4bf2d022" className="_4cols-v2">

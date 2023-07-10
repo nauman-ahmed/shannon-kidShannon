@@ -18,39 +18,44 @@ const images = window.location.origin + "/assets/images";
 
 export const SliderShow=  (props) => {
 
-  const [slider,setSlider] = useState(null) 
+    const [slider,setSlider] = useState(null) 
 
-  const setSLiderHeight = () => {
-    var clientHeight = document.getElementsByClassName('slick-current')[0].clientHeight;
-    var image = document.getElementById(props.sliderIndex? 'sliderImage'+props.sliderIndex : 'sliderImage0');
+    const setSLiderHeight = () => {
+      var clientHeight = document.getElementsByClassName('slick-current')[0].clientHeight;    
+      var image = document.getElementById(props.sliderIndex? 'sliderImage'+props.sliderIndex : 'sliderImage0');
+      var sliderHeight = document.getElementsByClassName('slider')[0];    
 
-    var prev = document.getElementsByClassName('slick-prev')[0];
-    var next = document.getElementsByClassName('slick-next')[0];
+      var prev = document.getElementsByClassName('slick-prev')[0];
+      var next = document.getElementsByClassName('slick-next')[0];
 
-    if(prev){
-      let calc = image.clientHeight / 2
+      if(prev){
+        let calc = image.clientHeight / 2
+        // let calc = 50
+        prev.style.height = image.clientHeight.toString()+"px"
+        next.style.height = image.clientHeight.toString()+"px"
+        prev.style.top = calc.toString()+"px"
+        next.style.top = calc.toString()+"px"
+ 
+        sliderHeight.style.height = (clientHeight - 24).toString()+"px"
 
-      prev.style.top = calc.toString()+"px"
-      next.style.top = calc.toString()+"px"
-
-      var details = document.getElementById('detailBelowSlider');
-      if(calc == 0){
-        setTimeout(setSLiderHeight, 200);
+        var details = document.getElementById('detailBelowSlider');
+        if(calc == 0){
+          setTimeout(setSLiderHeight, 200);
+        }
       }
     }
-  }
 
-  setTimeout(setSLiderHeight, 200);
+    setTimeout(setSLiderHeight, 200);
 
-  useEffect(()=>{
+    useEffect(()=>{
 
-  if(props.sliderIndex !== null){
-    setSLiderHeight()
-    if(slider){
-      slider.slickGoTo(props.sliderIndex)
+    if(props.sliderIndex !== null){
+      setSLiderHeight()
+      if(slider){
+        slider.slickGoTo(props.sliderIndex)
+      }
     }
-  }
-  },[props.sliderIndex,slider])
+    },[props.sliderIndex,slider])
     
 
     return(
@@ -78,25 +83,25 @@ export const SliderShow=  (props) => {
 function SampleNextArrow(props) {
   const { className, style, onClick } = props;
 
-  return ( <img
+  return ( <div className={className} ><img
     src={images + "/right.png"}
     loading="lazy"
     alt=""
-    className={className}
+    style={{position:"absolute", top:"50px"}}
   />
-
+</div>
   );
 }
 
 function SamplePrevArrow(props) {
   const { className, style, onClick } = props;
-  return ( <img
+  return ( <div className={className} ><img
     src={images + "/left.png"}
     loading="lazy"
     alt=""
-    className={className}
-  />
-
+    style={{position:"absolute", top:"50px"}}
+/>
+</div>
   );
 }
 
