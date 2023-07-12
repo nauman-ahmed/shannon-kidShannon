@@ -4687,7 +4687,7 @@ column-gap:20px ;
 .divisionHeading {
   display:flex;
   white-space : nowrap;
-  font-family: 'Roboto, sans-serif';
+  font-family: Roboto, sans-serif;
   color: #ce651e;
   font-size: 1vw;
   line-height: 1;
