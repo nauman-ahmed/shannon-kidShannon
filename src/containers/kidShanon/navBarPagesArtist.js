@@ -8,6 +8,8 @@ const images = window.location.origin + "/assets/images"
 
 function NavBarArtist(props) {
 
+  const { pages } = useParams()
+
   const [data,setData] = useState(null)
   const [dataOriginal,setDataOriginal] = useState(null)
   const [dataLoad,setDataLoad] = useState(true)
@@ -54,14 +56,16 @@ function NavBarArtist(props) {
               checker = true
           }
           return checker;
-  
+   
       }):[]);
     }
 }
 
   useEffect(() => {
+    localStorage.setItem("Category",pages)
+    console.log("kidShannon",pages)
     updateTempArtist(props.searchArtist)
-  }, [props.searchArtist]);
+  }, [props.searchArtist,pages]);
 
 
 
