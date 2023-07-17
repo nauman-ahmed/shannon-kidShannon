@@ -137,6 +137,8 @@ function Categories(props) {
                           alt=""
                           className="image"
                         // style={{ width:"100%", height:"100%"}}
+                        onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "CGI" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
+
                         />
                         <div className="artistnamediv">
                             <div className="artistnametext-v3">

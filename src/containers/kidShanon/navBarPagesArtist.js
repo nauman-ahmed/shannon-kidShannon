@@ -62,7 +62,7 @@ function NavBarArtist(props) {
 }
 
   useEffect(() => {
-    localStorage.setItem("Category",pages)
+    localStorage.setItem("Category",props.currPage)
     console.log("kidShannon",pages)
     updateTempArtist(props.searchArtist)
   }, [props.searchArtist,pages]);

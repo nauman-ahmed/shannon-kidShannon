@@ -97,10 +97,13 @@ function SearchByArtist(props) {
 
   function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
-  }
+  } 
 
   const getUserData = async () => {
-    let tempData = await artistImageKidDetailedSliceData({ "artistId": search })
+    let localPrevCate = localStorage.getItem("Category")
+    console.log(localPrevCate)
+
+    let tempData = await artistImageKidDetailedSliceData({ "artistId": search, "category": localPrevCate  })
 
     dataLocalArtist(
       tempData.activeArtist[search].id,

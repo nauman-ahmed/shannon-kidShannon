@@ -98,13 +98,13 @@ function Sidebar(props) {
      )):"" 
       :
       <div className="allartist v2">
-        <Link to="/MIDDLE-GRADE" className={"divisionslink"+(props.activeBtn === "MIDDLE-GRADE" || localStorage.getItem("Category") == "MIDDLE-GRADE" ?" w--current":"")}><span className="sidebarlink">MIDDLE GRADE<br /></span></Link>
-        <Link to="/PICTURE-BOOK" className={"divisionslink"+(props.activeBtn === "PICTURE-BOOK" || localStorage.getItem("Category") == "PICTURE-BOOK" ?" w--current":"")}><span className="sidebarlink">PICTURE BOOK<br /></span></Link>
-        <Link to="/MULTICULTURAL" className={"divisionslink"+(props.activeBtn === "MULTICULTURAL" || localStorage.getItem("Category") == "MULTICULTURAL" ?" w--current":"")}><span className="sidebarlink">MULTICULTURAL</span></Link>
+        <Link to="/MIDDLE-GRADE" className={"divisionslink"+(props.activeBtn === "MIDDLE-GRADE" || localStorage.getItem("Category") == "Middle Grade Cover" ?" w--current":"")}><span className="sidebarlink">MIDDLE GRADE<br /></span></Link>
+        <Link to="/PICTURE-BOOK" className={"divisionslink"+(props.activeBtn === "PICTURE-BOOK" || localStorage.getItem("Category") == "Picture Book" ?" w--current":"")}><span className="sidebarlink">PICTURE BOOK<br /></span></Link>
+        <Link to="/MULTICULTURAL" className={"divisionslink"+(props.activeBtn === "MULTICULTURAL" || localStorage.getItem("Category") == "Multicultural" ?" w--current":"")}><span className="sidebarlink">MULTICULTURAL</span></Link>
         <span className="sidebarlink"><br /></span>
-        <Link to="/BLACK-AND-WHITE-INTERIOR" className={"divisionslink"+(props.activeBtn === "BLACK-AND-WHITE-INTERIOR" || localStorage.getItem("Category") == "BLACK-AND-WHITE-INTERIOR" ?" w--current":"")}><span className="sidebarlink">BLACK AND WHITE INTERIOR<br /></span></Link>
-        <Link to="/CHARACTER-DEVELOPMENT" className={"divisionslink"+(props.activeBtn === "CHARACTER-DEVELOPMENT" || localStorage.getItem("Category") == "CHARACTER-DEVELOPMENT" ?" w--current":"")}><span className="sidebarlink">CHARACTER DEVELOPMENT<br /></span></Link>
-        <Link to="/EDUCATIONAL" className={"divisionslink"+(props.activeBtn === "EDUCATIONAL" || localStorage.getItem("Category") == "EDUCATIONAL" ?" w--current":"")}><span className="sidebarlink">EDUCATIONAL</span></Link>
+        <Link to="/BLACK-AND-WHITE-INTERIOR" className={"divisionslink"+(props.activeBtn === "BLACK-AND-WHITE-INTERIOR" || localStorage.getItem("Category") == "Black and White Interior" ?" w--current":"")}><span className="sidebarlink">BLACK AND WHITE INTERIOR<br /></span></Link>
+        <Link to="/CHARACTER-DEVELOPMENT" className={"divisionslink"+(props.activeBtn === "CHARACTER-DEVELOPMENT" || localStorage.getItem("Category") == "Character Development" ?" w--current":"")}><span className="sidebarlink">CHARACTER DEVELOPMENT<br /></span></Link>
+        <Link to="/EDUCATIONAL" className={"divisionslink"+(props.activeBtn === "EDUCATIONAL" || localStorage.getItem("Category") == "Educational" ?" w--current":"")}><span className="sidebarlink">EDUCATIONAL</span></Link>
         <br /><br /><br /><br />
        {pages == "categories" && keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
           <div key={key}>
