@@ -80,7 +80,7 @@ function Header(props) {
               className="brand w-nav-brand w--current"
             >
               <img
-                src={images + "/Frame.png"}
+                src={images + "/FrameLogo.png"}
                 loading="lazy"
                 alt=""
                 className="logov2"
