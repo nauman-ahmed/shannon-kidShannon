@@ -42,6 +42,15 @@ function Navbar(props) {
                     <div className='w-100 d-flex align-items-center justify-content-center' style={{marginTop:10}}>
                         <Link to="/EDUCATIONAL" className={"filterhomelink v2 "+(props.aciveBtn === "EDUCATIONAL"?"w--current":"")}>EDUCATIONAL</Link>
                     </div>
+                    {props.searchBar && props.aciveBtn == undefined?
+                      <div className="form-block-2 search">
+                        <form id="email-form" name="email-form" data-name="Email Form" method="get" className="form-2"> 
+                          <input onChange={(e) => { props.updateTempArtist(e) }} value={props.searchArtist} type="text" className="searchbarhome w-input" maxLength="256" name="Search" data-name="Search" placeholder="SEARCH" id="Search" />
+                          <Link to="#" className="link-block-3 w-inline-block"></Link>
+                        </form>
+                      </div> 
+                    : 
+                    null}
               </div>
 
               <div className='fullViewNavbar'>

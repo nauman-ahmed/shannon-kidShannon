@@ -355,26 +355,26 @@ function SearchByArtist(props) {
   return (
     <div>
     {data1 !== null ? 
-      <div className="d-flex" style={windowSize.innerWidth < 479 ? { justifyContent: "space-around" } : { justifyContent: "space-between", marginTop: "-10px" }} > 
-          <h2 className="h2talent">{data1[search].title}</h2> 
-          <div className="d-flex" style={windowSize.innerWidth < 479 ? { justifyContent: "space-around", width: "20%" } :  { justifyContent: "space-between", width: "20%" }}>
-              <Link
-                to="/contact"
-                className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
-                onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title, true)}
-              >
-                GET ESTIMATE
-              </Link>
-              <Link
-                data-w-id="e04f643e-f302-16e2-74ee-4bc7e85391d8"
-                to="#"
-                className="talentbutton hide "
-                onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title)}
-                style={{ marginRight: "0px" }}
-              >
-                ADD TO MY LIST
-              </Link>
-          </div>
+      <div className={windowSize.innerWidth < 479 ? "" : "d-flex"} style={windowSize.innerWidth < 479 ? { marginLeft: "8%" } : { justifyContent: "space-between", marginTop: "-10px" }} > 
+        <h2 className="h2talent">{data1[search].title}</h2> 
+        <div className="d-flex" style={windowSize.innerWidth < 479 ? { } :  { justifyContent: "space-between", width: "20%" }}>
+            <Link
+              to="/contact"
+              className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearchDetailed  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
+              onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title, true)}
+            >
+              GET ESTIMATE
+            </Link>
+            <Link
+              data-w-id="e04f643e-f302-16e2-74ee-4bc7e85391d8"
+              to="#"
+              className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearchDetailed  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
+              onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title)}
+              style={{ marginRight: "0px" }}
+            >
+              ADD TO MY LIST
+            </Link>
+        </div>
       </div>
     : "" }
     
@@ -531,14 +531,31 @@ function SearchByArtist(props) {
                       {Object.keys(similarData).length > 0 ?
                         Object.keys(similarData).map((key, i) =>
                           i < artistSimilar ?
-                            <div className="talentthumbslide resp">
-                              <img
-                                src={similarData[key].mainImage}
-                                loading="lazy"
-                                alt=""
-                                className="image"
-                              />
-                            </div>
+                          <div className="talentthumbslide resp">
+                            <Link
+                              id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022"
+                              data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7"
+                              className="card_img3"
+                              // style={{ position: "relative" }}
+                              to={"/artists/" + key}
+                            >
+                              <div className="detail_card6_h">
+                                <img
+                                  src={String(similarData[key].mainImage)}
+                                  loading="lazy"
+                                  alt=""
+                                  className="image"
+                                  style={{ width: "100%", }} />
+                                <div className="artistnamediv">
+                                  <div className="artistnametext-v3" style={{padding:"6px 0px"}}>
+                                    {similarData[key].lastname} {similarData[key].firstname}
+                                  </div>
+                                </div>
+                                {/* <p className="card_img_text3 pb-3 pt-1">
+                                  {similarData[key].lastname} {similarData[key].firstname}</p> */}
+                              </div>
+                            </Link>
+                         </div>
                             : null
                         )
                         : "NO SIMILAR IMAGES FOUND"

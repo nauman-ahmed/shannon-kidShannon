@@ -49,10 +49,15 @@ function Contact() {
   const [deletedImages,setDeletedImages]= useState([]);
   const [tempArtist,setTempArtist]= useState([]);
   const [filterHighlighted,setFilterHighlighted]= useState(null);
+  const [windowSize, setWindowSize] = useState(getWindowSize());
 
   const { AddToCart } = useSelector((state) => state);
   const { artistImageDataSlice } = useSelector((state) => state);
 
+  function getWindowSize() {
+    const { innerWidth, innerHeight } = window
+    return { innerWidth, innerHeight };
+  }
 
   const filterChange= (filter) => {
 
@@ -177,6 +182,20 @@ function Contact() {
     dispatch(updateOpen(true));
     dispatch(updateMessage("Add Artist in Cart"));
   };
+
+
+  function handleWindowResize() {
+    setWindowSize(getWindowSize());
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize',handleWindowResize);
+    
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+      window.removeEventListener('scroll', function(){});
+    };
+  }, []);
 
 
   useEffect(() => {
@@ -573,7 +592,7 @@ function Contact() {
 
           </div> 
         </div>
-        <div className="right_content mt-0 mx-0 contact_w"
+        <div className="right_content_contact mt-0 mx-0 contact_w"
           style={{ paddingTop: "24px", paddingRight: "0", paddingLef: "1vw" }}>
           <h2 className="contactLabel hide">MY LIST</h2>
           <p className=" hide">Selected favorites from portfolio pages and/or below</p>
@@ -617,7 +636,7 @@ function Contact() {
                   dots: false,
                   infinite: false,
                   speed: 500,
-                  slidesToShow: 5,
+                  slidesToShow: windowSize.innerWidth < 479 ? 3 : 5,
                   slidesToScroll: 1,
                   nextArrow: <SampleNextArrow />,
                   prevArrow: <SamplePrevArrow />
