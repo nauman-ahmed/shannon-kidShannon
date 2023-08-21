@@ -48,8 +48,8 @@ function SearchByDivision(props) {
   }, [])
   return (<>
     <div class="sortingcont right pt-0 mt-0">
-      <a class="filter-button w-inline-block  mt-0" >
-        <div >DEFAULT</div>
+      <a class="filter-button  sort-active w-inline-block  mt-0" >
+        <div >FEATURED</div>
       </a>
       <a class="filter-button w-inline-block  mt-0" >
         <div >ALPHABETICAL A-Z</div>

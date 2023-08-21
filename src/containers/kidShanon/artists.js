@@ -77,8 +77,8 @@ function  Artists(props) {
     <>
      <div class="sortingcont right pt-0  me-0 ">
         <div className="d-flex right-filter-button">
-          <a class={filterHighlighted == 1 ? "filter-button sort-active w-inline-block  mt-0" : "filter-button w-inline-block  mt-0"} style={{ marginLeft: "0px" }} onClick={()=>filterChange("Default")}>
-            <div >DEFAULT</div>
+          <a class={filterHighlighted == 1 ? "filter-button w-inline-block  mt-0" : "filter-button sort-active w-inline-block  mt-0"} style={{ marginLeft: "0px" }} onClick={()=>filterChange("Default")}>
+            <div >FEATURED</div>
           </a>
           <a class={filterHighlighted == 2 ? "filter-button sort-active mt-0 me-0" : "filter-button mt-0 me-0"} onClick={()=>filterChange("A-Z")}>
             <div >ALPHABETICAL A-Z</div>
@@ -103,10 +103,10 @@ function  Artists(props) {
               <div className="artistnametext-v3">{val.artistId.firstname} {val.artistId.lastname}</div>
             </div>
           </Link>
-          {ind===35 ?bannerImages.bannerData.length > 0? 
+          {/* {ind===35 ?bannerImages.bannerData.length > 0? 
             <Link id="w-node-a284be2a-4b91-3177-03eb-6614b24879ea-4bf2d022" to="#" className="banner _1 v2 w-inline-block-banner">
             <div className="bannerletters _1 v2" style={{backgroundImage: "url(" + images +"/BIPOC.png)"}}></div>
-            {/* <img id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" alt="banner " src={IMAGE_ROUTE+bannerImages.bannerData[0].imagePath}  className="bannerletters _1 v2"/> */}
+            <img id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" alt="banner " src={IMAGE_ROUTE+bannerImages.bannerData[0].imagePath}  className="bannerletters _1 v2"/> THIS LINE SHOULD BE COMMENTED
             <div id="w-node-a284be2a-4b91-3177-03eb-6614b24879ec-4bf2d022" className="bannerhome _1 v2"  style={{backgroundImage: "url(" + setImageRoute(bannerImages.bannerData[0].imagePath) + ")"}} ></div>
           </Link>         
           :
@@ -144,7 +144,7 @@ function  Artists(props) {
             </Link>
             </>
           :
-          "":""}
+          "":""} */}
         </>
         )
         :

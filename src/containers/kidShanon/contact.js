@@ -674,8 +674,8 @@ function Contact() {
               <h5 style={{ float: "left" }} >Additional Artists</h5>
               <div className="sortingcont right mt-0 pt-0  me-0 ">
                 <div className="d-flex right-filter-button">
-                  <a class={filterHighlighted == 1 ? "filter-button sort-active w-inline-block  mt-0" : "filter-button w-inline-block  mt-0"} style={{ marginLeft: "0px" }} onClick={()=>filterChange("Default")}>
-                    <div >DEFAULT</div>
+                  <a class={filterHighlighted == 1 ? "filter-button w-inline-block  mt-0" : "filter-button sort-active w-inline-block  mt-0"} style={{ marginLeft: "0px" }} onClick={()=>filterChange("Default")}>
+                    <div >FEATURED</div>
                   </a>
                   <a class={filterHighlighted == 2 ? "filter-button sort-active mt-0 me-0" : "filter-button mt-0 me-0"} onClick={()=>filterChange("A-Z")}>
                     <div >ALPHABETICAL A-Z</div>
