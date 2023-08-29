@@ -71,7 +71,7 @@ function SearchByArtist(props) {
 
 
   const dataLocalArtist = (key, _id, firstname, bio, listData, subListData) => {
-    let tempData = localStorage.getItem("artistViewedKid_V1");
+    let tempData = localStorage.getItem("artistViewedKid_V2");
 
     tempData = JSON.parse(tempData);
     if (tempData === null) {
@@ -82,7 +82,7 @@ function SearchByArtist(props) {
         detail: bio,
         slideList: listData,
       };
-      localStorage.setItem("artistViewedKid_V1", JSON.stringify(tempData));
+      localStorage.setItem("artistViewedKid_V2", JSON.stringify(tempData));
     } else {
       tempData[key] = {
         id: _id,
@@ -91,7 +91,7 @@ function SearchByArtist(props) {
         slideList: listData,
         subListData: subListData,
       };
-      localStorage.setItem("artistViewedKid_V1", JSON.stringify(tempData));
+      localStorage.setItem("artistViewedKid_V2", JSON.stringify(tempData));
     }
   };
 
@@ -289,8 +289,8 @@ function SearchByArtist(props) {
     //   }
     // }
     function getLocalStorage() {
-      if (localStorage.getItem("artistViewedKid_V1") !== null) {
-        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V1")));
+      if (localStorage.getItem("artistViewedKid_V2") !== null) {
+        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V2")));
       }
     }
     handleWindowResize()
@@ -576,7 +576,6 @@ function SearchByArtist(props) {
                   <div className="detail_card2 my-2">
                     {Object.keys(similarData).length > 0
                       ? Object.keys(similarData).map((key, i) => 
-                      i<=5 ?  
                       (
                         <Link
                           id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022"
@@ -601,7 +600,7 @@ function SearchByArtist(props) {
                               {similarData[key].lastname} {similarData[key].firstname}</p> */}
                           </div>
                         </Link>
-                      ): null)
+                      ))
                       : "NO SIMILAR IMAGES FOUND"
                     }
                     </div>
@@ -633,7 +632,9 @@ function SearchByArtist(props) {
                     <div className="detail_card2 my-2">
 
                       {Object.keys(dataViewed).length > 0
-                        ? Object.keys(dataViewed).map((key, i) => (
+                        ? Object.keys(dataViewed).map((key, i) => 
+                        i<=18 && dataViewed[key].subListData?
+                        (
 
                           <Link
                           id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022"
@@ -643,7 +644,7 @@ function SearchByArtist(props) {
                         >
                           <div className="detail_card6_h">
                             <img
-                              src={String(dataViewed[key].slideList[0])}
+                              src={String(dataViewed[key].subListData[0])}
                               loading="lazy"
                               alt=""
                               className="image"
@@ -655,7 +656,7 @@ function SearchByArtist(props) {
                             </div>
                           </div>
                         </Link>
-                        ))
+                        ): null)
                         : ""
                       }
 
