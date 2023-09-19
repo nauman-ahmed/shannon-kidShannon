@@ -142,7 +142,7 @@ function Header(props) {
                 </Link>
               </span>
               <div className="menuinfo v2">
-                {shannonContent.length > 0 ? shannonContent[0].name : "INFO@SHANNONASSOCIATES.COM • 212.333.2551"}
+                {shannonContent.length > 0 ? "INFO@SHANNONASSOCIATES.COM • 212.333.2551" : "INFO@SHANNONASSOCIATES.COM • 212.333.2551"}
               </div>
             </nav>
             <div className="menu-button w-nav-button">
