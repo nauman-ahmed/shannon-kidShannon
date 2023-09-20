@@ -27,7 +27,7 @@ function Sidebar(props) {
       )
     }
     else if(props.activeBtn === "divisions" || props.activeBtn === "detailedPage"){
-      getArtistCategoryTypeTwo({}).then(res => {
+      getArtistCategoryTypeTwo({type:2}).then(res => {
         setArtistData(
           sortAlphaOrder(res!==undefined?res.length>0?res:[]:[])
           )
