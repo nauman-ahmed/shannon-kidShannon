@@ -69,6 +69,7 @@ function Divisions(props) {
   }
 
   useEffect(() => {
+    localStorage.setItem("Category","none")
     updateTempArtist(props.searchArtist)
   }, [artistImageDivisionDataSlice,props.searchArtist]);
 
@@ -170,7 +171,7 @@ function Divisions(props) {
                                     data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7"
                                     to={"/artists/" + item1.artistId._id}
                                     className="artistcard w-inline-block"
-                                    
+                                    onClick={()=> localStorage.setItem("Category",item.keyword)}
                                   >
                                     {/* <div className="detail_card4_h" style={{ position: "relative", overflow: "hidden" }}> */}
                                     <img
@@ -255,7 +256,7 @@ function Divisions(props) {
                                     data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7"
                                     to={"/artists/" + item1.artistId._id}
                                     className="artistcard w-inline-block"
-                                    
+                                    onClick={()=> localStorage.setItem("Category",item.keyword)}
                                   >
                                     {/* <div className="detail_card4_h" style={{ position: "relative", overflow: "hidden" }}> */}
                                     <img
