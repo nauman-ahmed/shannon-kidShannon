@@ -104,7 +104,6 @@ function IndexKid(props) {
 
     useEffect(() => {
         filterChange()
-        dispatch(ArtistDataAPI("kid"));
         dispatch(keywordDataApi("kid"));
     }, [])
 

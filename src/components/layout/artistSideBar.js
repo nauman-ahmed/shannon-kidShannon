@@ -6,12 +6,12 @@ import { sortAlphaOrder } from '../../UserServices/Services'
 
 function ArtistSideBar(props) {
 
-  const {ArtistDataAPI} = useSelector(state=>state)
+  const {artistDataAPI} = useSelector(state=>state)
   const [artistData, setArtistData]  = useState([])
   let alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
   useEffect(() => {
-    setArtistData(sortAlphaOrder(ArtistDataAPI!==undefined?ArtistDataAPI.artistData.length>0?ArtistDataAPI.artistData:[]:[]))
-  }, [ArtistDataAPI])
+    setArtistData(sortAlphaOrder(artistDataAPI!==undefined?artistDataAPI.artistData.length>0?artistDataAPI.artistData:[]:[]))
+  }, [artistDataAPI])
 
 
   return (

@@ -4,7 +4,7 @@ import loginReducer  from './signInUpSlice'
 import artistReducer  from './artistSlice'
 import keywordReducer from './keywordSlice'
 import artistImageReducer from './artistImageSlice'
-import ArtistDataAPI from './artistDataSlice';
+import artistDataAPI from './artistDataSlice';
 import artistImageDataSlice from './artistImageDataSlice';
 import artistImageKeywordDataSlice from './artistImageKeywordDataSlice';
 import artistImageDivisionDataSlice from './artistImageDivisionDataSlice';
@@ -22,7 +22,7 @@ export const store = configureStore({
     artistReducer,
     keywordReducer,
     artistImageReducer,
-    ArtistDataAPI,
+    artistDataAPI,
     artistImageDataSlice,
     artistImageKeywordDataSlice,
     artistImageDivisionDataSlice,

@@ -9,6 +9,8 @@ import PrivateRoute from "./containers/PrivateRoute";
 import PrivateArtistRoute from "./containers/PrivateArtistRoute";
 import { setAuthToken } from "./AxiosFunctions/setCommonHeader";
 import { useEffect } from "react";
+import { ArtistDataAPI } from './redux/artistDataSlice';
+import { useDispatch,useSelector } from 'react-redux'
 
 import IndexKid from "./containers/kidShanon";
 
@@ -18,6 +20,14 @@ import IndexKid from "./containers/kidShanon";
 
 
 function App() {
+  const dispatch = useDispatch();
+  const {artistDataAPI} = useSelector(state=>state)
+
+  useEffect(()=>{
+    if(artistDataAPI.artistData.length == 0){
+      dispatch(ArtistDataAPI("kid"));
+    }
+  },[])
 
   return ( 
   <>

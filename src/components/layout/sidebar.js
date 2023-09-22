@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector} from 'react-redux';
 import { Link, useParams } from 'react-router-dom'
 import { keywordDataApi } from '../../redux/keywordSlice';
+import { ArtistDataAPI } from '../../redux/artistDataSlice';
 import { getCategoryTypeTwo, getArtistCategoryTypeTwo } from '../../AxiosFunctions/Axiosfunctionality';
 import { sortAlphaOrder } from '../../UserServices/Services'
 
@@ -11,23 +12,26 @@ function Sidebar(props) {
   const { pages } = useParams()
   const { search } = useParams()
 
+  const {artistDataAPI} = useSelector(state=>state)
   const dispatch = useDispatch();
   // const  {keywordReducer} = useSelector(state=>state);
   const  [keywordReducer,setKeywordReducer] = useState([]);
   const [artistData, setArtistData]  = useState([])
   let alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-  
+
+  useEffect(() => {
+    if(props.activeBtn === "divisions" || props.activeBtn === "detailedPage"){
+      if(artistDataAPI.artistData.length > 0){
+        setArtistData(sortAlphaOrder(artistDataAPI!==undefined?artistDataAPI.artistData.length>0?artistDataAPI.artistData:[]:[]))
+      }else{
+        dispatch(ArtistDataAPI("kid"));
+      }
+    }
+  },[artistDataAPI])
+
   useEffect(()=>{
     if(props.activeBtn === "EDUCATIONAL"){
       getArtistCategoryTypeTwo({keyword:"Educational", type: 2}).then(res => {
-        setArtistData(
-          sortAlphaOrder(res!==undefined?res.length>0?res:[]:[])
-          )
-        }
-      )
-    }
-    else if(props.activeBtn === "divisions" || props.activeBtn === "detailedPage"){
-      getArtistCategoryTypeTwo({type:2}).then(res => {
         setArtistData(
           sortAlphaOrder(res!==undefined?res.length>0?res:[]:[])
           )

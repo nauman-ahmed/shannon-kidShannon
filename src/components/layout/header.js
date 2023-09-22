@@ -14,7 +14,6 @@ function Header(props) {
   const getAllContent = ()=>{
     getAllContents({type: "SHANNON"}).then((res)=>{
         let shannon = res[0].content
-        console.log(shannon[0])
         setShannonContent(shannon)
     })
   }
