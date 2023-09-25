@@ -108,7 +108,7 @@ function NavBarArtist(props) {
                 className="artistcard  w-inline-block"
               >
                 <img
-                  src={String(val.ImageData[0].mainImage[0].subImage[0].path)}
+                  src={String(val.mainImage[0].subImage[0].path)}
                   loading="lazy"
                   alt=""
                   className="image"
@@ -139,7 +139,7 @@ function NavBarArtist(props) {
                 className="artistcard  w-inline-block"
               >
                 <img
-                  src={String(val.ImageData[0].mainImage[0].subImage[0].path)}
+                  src={String(val.mainImage[0].subImage[0].path)}
                   loading="lazy"
                   alt=""
                   className="image"

@@ -120,7 +120,6 @@ function Categories(props) {
                 (item, key) => (
                   item.ImageData.length > 0 && item.ImageData[0]?.mainImage[0]?.subImage[0]?.path? 
                     <>
-                    <>
                       <Link
                         key={key}
                         id="w-node-f734ee66-0b58-4c14-e08b-49ceded015ca-84f2d081"
@@ -155,7 +154,6 @@ function Categories(props) {
                       </p>   </div>  */}
                       </Link>
                     </>
-                </>
                     : null
 
                   

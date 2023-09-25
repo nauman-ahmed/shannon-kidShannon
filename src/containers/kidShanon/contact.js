@@ -81,7 +81,7 @@ function Contact() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     let Id = [];
     Object.keys(AddToCart.cartInfo).forEach((key, value) => {
-      if(key !== "messageShow" && key !== "count" ){
+      if(key !== "messageShow" && key !== "count" && key !== "getAnEstimate"){
         Id.push(AddToCart.cartInfo[key].id);
       }
     }); 
@@ -113,6 +113,7 @@ function Contact() {
             tempMsg = <p> Hi {data.Name}, Thank you for your submission. <br></br><br></br> We appreciate your interest in Shannon Associates. Due to the extremely high volume of applicants we receive, we are unfortunately unable to reply to all. Please feel free to try again if you have new samples to present. We hope you understand and wish you the best in all that is ahead.<br></br><br></br> Your Friends at Shannon Associates</p>
           } 
         }
+        console.log("DATA",data)
         createContact(data).then((res) => {
           if(res == "Email is an Issue"){
             tempMsg = <p> ERROR IN CONTACT DETAILS SUBMISSION</p>
