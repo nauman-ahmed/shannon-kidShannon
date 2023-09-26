@@ -30,12 +30,12 @@ function Footer() {
                     <Link to="/contact" className="footerlink">CONTACT</Link>
                 </div>
                 <div className="mediafooterdiv">
-                    <Link to="https://www.facebook.com/shannonassociates/" className="mediafooterlink w-inline-block"><img src={images+"/brandico_facebook-rect.svg"} loading="lazy" alt=""/></Link>
-                    <Link to="https://twitter.com/shannonassoc" className="mediafooterlink w-inline-block"><img src={images+"/fa_twitter-square.svg"} loading="lazy" alt=""/></Link>
-                    <Link to="https://www.instagram.com/shannonassociates/" className="mediafooterlink w-inline-block"><img src={images+"/Frame-6.svg"} loading="lazy" alt=""/></Link>
-                    <Link to="https://shannonassociates.tumblr.com/" className="mediafooterlink w-inline-block"><img src={images+"/brandico_tumblr-rect.svg"} loading="lazy" alt=""/></Link>
-                    <Link to="https://www.behance.net/shannonassociates" className="mediafooterlink w-inline-block"><img src={images+"/wpf_behance.svg"} loading="lazy" alt=""/></Link>
-                    <Link to="http://www.linkedin.com/in/shannonassociates" className="mediafooterlink w-inline-block"><img src={images+"/brandico_linkedin-rect.svg"} loading="lazy" alt=""/></Link>
+                    <a href="https://www.facebook.com/shannonassociates/" className="mediafooterlink w-inline-block"><img src={images+"/brandico_facebook-rect.svg"} loading="lazy" alt=""/></a>
+                    <a href="https://twitter.com/shannonassoc" className="mediafooterlink w-inline-block"><img src={images+"/fa_twitter-square.svg"} loading="lazy" alt=""/></a>
+                    <a href="https://www.instagram.com/shannonassociates/" className="mediafooterlink w-inline-block"><img src={images+"/Frame-6.svg"} loading="lazy" alt=""/></a>
+                    <a href="https://shannonassociates.tumblr.com/" className="mediafooterlink w-inline-block"><img src={images+"/brandico_tumblr-rect.svg"} loading="lazy" alt=""/></a>
+                    <a href="https://www.behance.net/shannonassociates" className="mediafooterlink w-inline-block"><img src={images+"/wpf_behance.svg"} loading="lazy" alt=""/></a>
+                    <a href="http://www.linkedin.com/in/shannonassociates" className="mediafooterlink w-inline-block"><img src={images+"/brandico_linkedin-rect.svg"} loading="lazy" alt=""/></a>
                 </div>
                 <div className="footertext">
                     {  
