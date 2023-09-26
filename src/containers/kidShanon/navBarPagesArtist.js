@@ -24,7 +24,7 @@ function NavBarArtist(props) {
     if(filter==="A-Z"){
       setFilterCond(false)
       setFilterHighlighted(2)
-      tempData = tempData.sort((a, b) => a.artistId.firstname.normalize().localeCompare(b.artistId.firstname.normalize()));
+      tempData = tempData.sort((a, b) => a.artistId.lastname.normalize().localeCompare(b.artistId.lastname.normalize()));
     }
     else if (dataOriginal){
       setFilterHighlighted(1)

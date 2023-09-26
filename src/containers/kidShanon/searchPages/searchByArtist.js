@@ -71,7 +71,7 @@ function SearchByArtist(props) {
 
 
   const dataLocalArtist = (key, _id, firstname, bio, listData, subListData) => {
-    let tempData = localStorage.getItem("artistViewedKid_V2");
+    let tempData = localStorage.getItem("artistViewedKid_V3");
 
     tempData = JSON.parse(tempData);
     if (tempData === null) {
@@ -82,7 +82,7 @@ function SearchByArtist(props) {
         detail: bio,
         slideList: listData,
       };
-      localStorage.setItem("artistViewedKid_V2", JSON.stringify(tempData));
+      localStorage.setItem("artistViewedKid_V3", JSON.stringify(tempData));
     } else {
       tempData[key] = {
         id: _id,
@@ -91,7 +91,7 @@ function SearchByArtist(props) {
         slideList: listData,
         subListData: subListData,
       };
-      localStorage.setItem("artistViewedKid_V2", JSON.stringify(tempData));
+      localStorage.setItem("artistViewedKid_V3", JSON.stringify(tempData));
     }
   };
 
@@ -108,7 +108,7 @@ function SearchByArtist(props) {
     dataLocalArtist(
       tempData.activeArtist[search].id,
       tempData.activeArtist[search].id,
-      tempData.activeArtist[search].firstname + " " + tempData.activeArtist[search].lastname,
+      tempData.activeArtist[search].lastname + " " + tempData.activeArtist[search].firstname,
       tempData.activeArtist[search].detail,
       tempData.activeArtist[search].slideList,
       tempData.activeArtist[search].subListData
@@ -289,8 +289,8 @@ function SearchByArtist(props) {
     //   }
     // }
     function getLocalStorage() {
-      if (localStorage.getItem("artistViewedKid_V2") !== null) {
-        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V2")));
+      if (localStorage.getItem("artistViewedKid_V3") !== null) {
+        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V3")));
       }
     }
     handleWindowResize()
