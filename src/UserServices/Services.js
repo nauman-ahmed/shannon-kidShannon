@@ -38,7 +38,12 @@ export const findSingleContact =(contacts,id) => {
 
 export const sortAlphaOrder=(Artist)=>{
     let arrayForSort = [...Artist]
-    arrayForSort = arrayForSort.sort((a, b) => a.lastname.normalize().localeCompare(b.lastname.normalize()));
+    arrayForSort = arrayForSort.sort((a, b) => {
+        if(a.lastname.normalize().localeCompare(b.lastname.normalize()) === 0){
+            return a.firstname.normalize().localeCompare(b.firstname.normalize())
+        }
+        return a.lastname.normalize().localeCompare(b.lastname.normalize())
+    });
     let alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
     let tempArtist= {}
     alpha.forEach((item,key)=>{

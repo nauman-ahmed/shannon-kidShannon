@@ -32,7 +32,12 @@ function Divisions(props) {
       setFilterCond(false)
       artistImageDivisionDataSlice.artistKeywordImages.map((val,ind) => {
         let tempImage = [...val.ImageData]
-        tempImage = tempImage.sort((a, b) => a.artistId.lastname.normalize().localeCompare(b.artistId.lastname.normalize()));
+        tempImage = tempImage.sort((a, b) => {
+          if(a.lastname.normalize().localeCompare(b.lastname.normalize()) === 0){
+              return a.firstname.normalize().localeCompare(b.firstname.normalize())
+          }
+          return a.lastname.normalize().localeCompare(b.lastname.normalize())
+      });
         temp.push({...val,ImageData:tempImage})
       })
       setTempArtist(temp)
