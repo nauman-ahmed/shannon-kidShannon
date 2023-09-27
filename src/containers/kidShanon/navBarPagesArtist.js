@@ -18,7 +18,7 @@ function NavBarArtist(props) {
   const [filterCond, setFilterCond] = useState(true);
 
   const filterChange= (filter) => {
-
+    console.log("W")
     let tempData = [...data];
     setDataOriginal([...data])
     if(filter==="A-Z"){
