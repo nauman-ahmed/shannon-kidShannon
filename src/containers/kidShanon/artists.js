@@ -28,12 +28,7 @@ function  Artists(props) {
       let temp = []
       setFilterCond(false)
       let tempImage = [...artistImageDataSlice.artistImages]
-      temp = tempImage.sort((a, b) => {
-        if(a.lastname.normalize().localeCompare(b.lastname.normalize()) === 0){
-            return a.firstname.normalize().localeCompare(b.firstname.normalize())
-        }
-        return a.lastname.normalize().localeCompare(b.lastname.normalize())
-    });
+      temp = tempImage.sort((a, b) => a.artistId.lastname.normalize().localeCompare(b.artistId.lastname.normalize()));
       setTempArtist(temp)
       setFilterHighlighted(2)
       // tempData = tempData.sort((a, b) => a.artistId.firstname.normalize().localeCompare(b.artistId.firstname.normalize()));

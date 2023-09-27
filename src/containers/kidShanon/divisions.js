@@ -33,13 +33,15 @@ function Divisions(props) {
       artistImageDivisionDataSlice.artistKeywordImages.map((val,ind) => {
         let tempImage = [...val.ImageData]
         tempImage = tempImage.sort((a, b) => {
-          if(a.lastname.normalize().localeCompare(b.lastname.normalize()) === 0){
-              return a.firstname.normalize().localeCompare(b.firstname.normalize())
+          if(a.artistId.lastname.normalize().localeCompare(b.artistId.lastname.normalize()) === 0){
+            return a.artistId.firstname.normalize().localeCompare(b.artistId.firstname.normalize())
+          }else{
+            return a.artistId.lastname.normalize().localeCompare(b.artistId.lastname.normalize());
           }
-          return a.lastname.normalize().localeCompare(b.lastname.normalize())
-      });
+        });
         temp.push({...val,ImageData:tempImage})
       })
+      setFilterHighlighted(2)
       setTempArtist(temp)
       // tempData = tempData.sort((a, b) => a.artistId.firstname.normalize().localeCompare(b.artistId.firstname.normalize()));
     }
