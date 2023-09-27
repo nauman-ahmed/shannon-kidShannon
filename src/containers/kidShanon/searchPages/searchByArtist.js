@@ -355,8 +355,7 @@ function SearchByArtist(props) {
   return (
     <div>
     {data1 !== null ? 
-      <div className={windowSize.innerWidth < 479 ? "" : "d-flex"} style={windowSize.innerWidth < 479 ? { marginLeft: "8%" } : { justifyContent: "space-between", marginTop: "-10px" }} > 
-        <h2 className="h2talent">{data1[search].title}</h2> 
+      <div className={windowSize.innerWidth < 479 ? "" : "d-flex"} style={windowSize.innerWidth < 479 ? { marginLeft: "8%" } : { justifyContent: "end", marginTop: "-10px" }} > 
         <div className="d-flex" style={windowSize.innerWidth < 479 ? { } :  { justifyContent: "space-between", width: "20%" }}>
             <Link
               to="/contact"
@@ -390,6 +389,12 @@ function SearchByArtist(props) {
           </div>
           <div className="row mid_full_content">
             <div className="pl-2 mid_content">
+
+            <div className={windowSize.innerWidth < 479 ? "" : "d-flex"} style={windowSize.innerWidth < 479 ? { marginLeft: "8%" } : { justifyContent: "space-between", marginTop: "-10px", marginBottom:"10px", width:"98.4%" }} > 
+                <h2 className="h2talent">{data1[search].title}</h2> 
+                <a href={"http://3.132.94.46/#/artists/"+data1[search].id} target="_blank" className="linkToKS">Visit Main Portfolio</a> 
+            </div>
+
               {windowSize.innerWidth < 479 ?
                 <div className="tabs-menu w-tab-menu">
                   <div
