@@ -106,6 +106,7 @@ function Contact() {
           message: message,
           zip:zip,
           artistId: Id,
+          kidShannon:true
         };
         setHolder(true);
         let tempMsg = `Thank you ${data.Name}. A Shannon Associates representative will be responding to your inquiry as soon as possible.`
