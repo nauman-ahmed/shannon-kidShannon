@@ -2,6 +2,23 @@ import axios from "axios";
 
 //for Contacts Functionality
 
+// PRODUCTION URL BACKEND
+
+// export const BASE_URL = "3.128.113.172/api/"
+// export const IMAGE_ROUTE = "3.128.113.172/";
+
+
+// PRODUCTION URL FRONTEND
+
+// export const BASE_URL = "http://3.143.107.63:5000/api/"
+// export const IMAGE_ROUTE = "http://3.143.107.63:5000/";
+
+
+// export const BASE_URL = "http://127.0.0.1:5001/api/"
+// export const IMAGE_ROUTE = "http://127.0.0.1:5001/";
+
+
+
 
 // export const BASE_URL = "http://127.0.0.1:5001/api/"
 // export const IMAGE_ROUTE = "http://127.0.0.1:5001/";
