@@ -5,7 +5,7 @@ import { createContact } from "../../AxiosFunctions/Axiosfunctionality";
 import { updateMessage, updateOpen } from "../../redux/message";
 import loading from "../../assets/loading.gif";
 import { Redirect, Link, useHistory } from "react-router-dom";
-import { addCart, removeCartItem } from "../../redux/addToCart";
+import { addCart, emptyCart,removeCartItem } from "../../redux/addToCart";
 import SnackbarCustom from "../../components/snackBar/SnackbarCustom";
 import { ArtistDataAPI } from "../../redux/artistDataSlice";
 import { ArtistImageSliceData } from "../../redux/artistImageDataSlice";
@@ -53,6 +53,8 @@ function Contact() {
 
   const { AddToCart } = useSelector((state) => state);
   const { artistImageDataSlice } = useSelector((state) => state);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [referesh, setReferesh] = useState(true);
 
   function getWindowSize() {
     const { innerWidth, innerHeight } = window
@@ -93,6 +95,18 @@ function Contact() {
         // dispatch(updateOpen(true))
         // dispatch(updateMessage("Please Fill Required Fields"));
       } else {
+        const contactCreate = new FormData()
+        contactCreate.append('Name',Name)
+        contactCreate.append('company',company)
+        contactCreate.append('email',email)
+        contactCreate.append('phone',phone)
+        contactCreate.append('address',address)
+        contactCreate.append('purposeOfInquiry',purposeOfInquiry)
+        contactCreate.append('findUs',findUs)
+        contactCreate.append('message',message)
+        contactCreate.append('artistId',Id)
+        contactCreate.append('kidShannon',true)
+        contactCreate.append('contactFile',selectedFile)
         let data = {
           Name: Name,
           company: company,
@@ -109,18 +123,19 @@ function Contact() {
           kidShannon:true
         };
         setHolder(true);
-        let tempMsg = `Thank you ${data.Name}. A Shannon Associates representative will be responding to your inquiry as soon as possible.`
-        if (data.purposeOfInquiry) {
-          if (data.purposeOfInquiry == "Looking for representation") {
-            tempMsg = <p> Hi {data.Name}, Thank you for your submission. <br></br><br></br> We appreciate your interest in Shannon Associates. Due to the extremely high volume of applicants we receive, we are unfortunately unable to reply to all. Please feel free to try again if you have new samples to present. We hope you understand and wish you the best in all that is ahead.<br></br><br></br> Your Friends at Shannon Associates</p>
+        let tempMsg = <p>
+          Thank you {Name}. <br/>
+          A Shannon Associates representative will be responding to your inquiry as soon as possible.
+        </p>
+        if (purposeOfInquiry) {
+          if (purposeOfInquiry == "Looking for representation") {
+            tempMsg = <p> Hi {Name}, Thank you for your submission. <br></br><br></br> We appreciate your interest in Shannon Associates. Due to the extremely high volume of applicants we receive, we are unfortunately unable to reply to all. <br></br><br></br> Please feel free to try again if you have new samples to present. We hope you understand and wish you the best in all that is ahead.<br></br><br></br> Your Friends at Shannon Associates</p>
           } 
         }
-        console.log("DATA",data)
-        createContact(data).then((res) => {
+        createContact(contactCreate).then((res) => {
           if(res == "Email is an Issue"){
             tempMsg = <p> ERROR IN CONTACT DETAILS SUBMISSION</p>
-            setMsg(tempMsg);
-          }else{
+            dispatch(emptyCart());
             setHolder(false);
             setIsPopupShow(true);
             setMsg(tempMsg);
@@ -131,7 +146,22 @@ function Contact() {
             setPurposeOfInquiry("")
             setFindUs("")
             setMessage("")
+            setSelectedFile(null)
+          }else{
+            dispatch(emptyCart());
+            setHolder(false);
+            setIsPopupShow(true);
+            setMsg(tempMsg);
+            setName("")
+            setCompany("")
+            setEmail("")
+            setPhone("")
+            setPurposeOfInquiry("")
+            setFindUs("")
+            setMessage("")
+            setSelectedFile(null)
           }
+          setReferesh(!referesh)
         });
       }
     } else {
@@ -288,7 +318,19 @@ function Contact() {
     // setIsChecked(tempChecker);
     // getLocalStorage();
     return () => console.log("NAUMAN");
-  }, [localStorageChecked]);
+  }, [localStorageChecked,referesh]);
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    
+    if (file && file.size <= 25 * 1024 * 1024) {
+      // File is within the size limit
+      setSelectedFile(file);
+    } else {
+      // File is too large
+      alert('File size exceeds 25MB limit.');
+    }
+  };
 
   return (
     <>
@@ -508,6 +550,9 @@ function Contact() {
                             id="Purpose-of-Inquiry"
                             name="Purpose-of-Inquiry"
                             onChange={(e) => {
+                              if(e.target.value !== "Get an estimate"){
+                                setSelectedFile(null)
+                              }
                               setPurposeOfInquiry(e.target.value);
                             }}
                             data-name="Purpose of Inquiry"
@@ -587,6 +632,18 @@ function Contact() {
                           ></textarea>
                         </div>
                       </div>
+                      {purposeOfInquiry == "Get an estimate" ?
+                        <div className=" row mr-0 ">
+                          <div className="col-12 mr-0 pr-0">
+                            <input
+                              type="file"
+                              accept=".jpg, .jpeg, .png, .pdf" // Set allowed file types
+                              onChange={handleFileChange}
+                            />
+                          </div>
+                        </div>
+                        :null
+                        }
                     </div>
                   </div>
                 </div>
@@ -785,7 +842,7 @@ function Contact() {
               setIsPopupShow(false);
             }}
           >
-            <div className="mx-5 my-4" style={{ wordWrap: "break-word", width: "500px" }}>{msg}</div>
+            <div className="mx-5 my-4" style={{ wordWrap: "break-word", width: "max-content" }}>{msg}</div>
           </MyPopup>
         ) : null}
       </div>

@@ -21,7 +21,7 @@ export const getAllContents = async (data) => {
 }
 
 export const logouter = () => {
-    localStorage.removeItem('authorization');
+    // localStorage.removeItem('authorization');
     // window.location.href = '/#/admin/signin/'
 }
 
