@@ -31,7 +31,7 @@ function App() {
 
   return ( 
   <>
-    <BrowserRouter>
+    <HashRouter>
       <Switch>
         <Route
             exact
@@ -90,7 +90,7 @@ function App() {
           />
          
       </Switch>
-    </BrowserRouter>
+    </HashRouter>
   </>
   );
 }
