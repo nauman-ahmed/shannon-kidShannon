@@ -1,5 +1,5 @@
 // Import Libraries
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch, BrowserRouter } from "react-router-dom";
 import 'react-image-crop/dist/ReactCrop.css'
 
 // Import Resources
@@ -31,7 +31,7 @@ function App() {
 
   return ( 
   <>
-    <HashRouter>
+    <BrowserRouter>
       <Switch>
         <Route
             exact
@@ -90,7 +90,7 @@ function App() {
           />
          
       </Switch>
-    </HashRouter>
+    </BrowserRouter>
   </>
   );
 }
