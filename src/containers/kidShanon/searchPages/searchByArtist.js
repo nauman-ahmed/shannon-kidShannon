@@ -392,7 +392,7 @@ function SearchByArtist(props) {
 
             <div className={windowSize.innerWidth < 479 ? "" : "d-flex"} style={windowSize.innerWidth < 479 ? { marginLeft: "8%" } : { justifyContent: "space-between", marginTop: "-10px", marginBottom:"10px", width:"98.4%" }} > 
                 <h2 className="h2talent">{data1[search].title}</h2> 
-                <a href={"https://www.shannonassociates.com/artists/"+data1[search].id} target="_blank" className="linkToKS">Visit Main Portfolio</a> 
+                <a href={"https://www.shannonassociates.com/#/artists/"+data1[search].id} target="_blank" className="linkToKS">Visit Main Portfolio</a> 
             </div>
 
               {windowSize.innerWidth < 479 ?
