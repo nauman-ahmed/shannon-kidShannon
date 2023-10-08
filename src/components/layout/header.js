@@ -88,7 +88,7 @@ function Header(props) {
             <nav role="navigation" className="navmenu w-nav-menu">
               <span>
                 <a 
-                href="https://www.shannonassociates.com/#/" 
+                href="https://www.shannonassociates.com" 
                 target="_blank" 
                 className="navlink v2 w-nav-link "  onClick={()=>localStorageAddToCart()} >SHANNON WEBSITE</a>
 

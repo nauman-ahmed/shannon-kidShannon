@@ -26,7 +26,7 @@ function Navbar(props) {
             <div className=" div-block-5">
                 <div className='mobileViewNavbar'>
                     <div className='w-100 d-flex align-items-center justify-content-between flex-wrap'>
-                    <a href="https://www.shannonassociates.com/#/bipoc" target="_blank" className={"filterhomelink v2 " + (props.aciveBtn === "kidshannon" ? "w--current" : "")} onClick={()=>localStorageAddToCart()}>BIPOC</a>
+                    <a href="https://www.shannonassociates.com/bipoc" target="_blank" className={"filterhomelink v2 " + (props.aciveBtn === "kidshannon" ? "w--current" : "")} onClick={()=>localStorageAddToCart()}>BIPOC</a>
                     <Link to="/MIDDLE-GRADE" className={"filterhomelink v2 "+(props.aciveBtn === "MIDDLE-GRADE"?"w--current":"")}>MIDDLE GRADE</Link>
                     <Link to="/PICTURE-BOOK" className={"filterhomelink v2 "+(props.aciveBtn === "PICTURE-BOOK"?"w--current":"")}>PICTURE BOOK</Link>              
                     </div>
@@ -55,7 +55,7 @@ function Navbar(props) {
 
               <div className='fullViewNavbar'>
                 <div className="div-block-5">
-                <a href="https://www.shannonassociates.com/#/bipoc" target="_blank" className={"filterhomelink v2 " + (props.aciveBtn === "kidshannon" ? "w--current" : "")} onClick={()=>localStorageAddToCart()}>BIPOC</a>
+                <a href="https://www.shannonassociates.com/bipoc" target="_blank" className={"filterhomelink v2 " + (props.aciveBtn === "kidshannon" ? "w--current" : "")} onClick={()=>localStorageAddToCart()}>BIPOC</a>
                 <Link to="/MIDDLE-GRADE" className={"filterhomelink v2 "+(props.aciveBtn === "MIDDLE-GRADE"?"w--current":"")}>MIDDLE GRADE</Link>
                 <Link to="/PICTURE-BOOK" className={"filterhomelink v2 "+(props.aciveBtn === "PICTURE-BOOK"?"w--current":"")}>PICTURE BOOK</Link>              
                 <Link to="/MULTICULTURAL" className={"filterhomelink v2 "+(props.aciveBtn === "MULTICULTURAL"?"w--current":"")}>MULTICULTURAL</Link>

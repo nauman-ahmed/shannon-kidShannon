@@ -30,6 +30,7 @@ export const SliderShow=  (props) => {
         var next = document.getElementsByClassName('slick-next')[0];
   
         if(prev){
+          props.setSliderTriggerred(true)
           let calc = image.clientHeight / 2
           // let calc = 50
           prev.style.height = image.clientHeight.toString()+"px"
@@ -331,7 +332,7 @@ export function FullScreenSliderItem(props) {
             <img
               onClick={() => ("onClick" in props ? props.onClick() : null)}
               src={props.fullscreen.route}
-              alt=""
+              alt="Loading"
               style={
                 "fillMode" in props
                   ? { OObjectFit: props.fillMode, objectFit: props.fillMode }
