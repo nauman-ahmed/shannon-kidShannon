@@ -318,7 +318,7 @@ function SearchByArtist(props) {
       justifyContent: "space-around",
       margin: "0px"
     }}>
-      {data1 !== null ? (
+      {data1 !== null && data1[search] ? (
         <>
           <div className="pl-2 left_content">
             {props.children}
@@ -639,14 +639,14 @@ function SearchByArtist(props) {
         >
           <div className="mx-5 my-4">
             <div>{msg}</div>
-            <div class="form-check form-switch mt-2"> 
+            <div class="form-check form-switch mt-2" style={{ display: "flex" }}> 
               <input 
                 class="form-check-input" 
                 type="checkbox" 
                 id="flexSwitchCheckDefault" 
                 style={{cursor:"pointer",accentColor:"#BC6127"}}
                 checked={isCheckboxChecked}
-                onClick={()=> { setIsCheckboxChecked(!isCheckboxChecked); console.log("CLICKED")}}
+                // onClick={()=> { setIsCheckboxChecked(!isCheckboxChecked); console.log("CLICKED")}}
                 />
               <label class="form-check-label" for="flexSwitchCheckDefault" style={{paddingTop:"5px"}}>Do not show this again</label>
             </div>
