@@ -135,10 +135,10 @@ export const SliderItems = (props)=>{
                 ? { objectFit: "contain", objectFit: "contain", margin:"auto",width:"100%",height:"auto" }
                 : { bjectFit: "contain", objectFit: "contain", margin:"auto",height:'auto' }
             }
-            loading="lazy"
+            loading={props.keys === 0 ? "lazy" : ""}
             role="presentation"
-            decoding= "async"
-            fetchpriority= "high"
+            decoding= {props.keys === 0 ? "async" : ""}
+            fetchpriority= {props.keys === 0 ? "high" : "low"}
           />
             <div id='detailBelowSlider' className="hide_detail mb-1 mt-2 pt-3">
                   <h4 className="mb-1" style={{ fontWeight: "500", fontSize: "22px" }}>{props?props.data1[props.search].title:null}</h4>
