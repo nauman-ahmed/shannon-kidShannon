@@ -94,7 +94,6 @@ function SearchByArtist(props) {
   useEffect(()=>{
     return () => {
       setData1(null)
-      console.log("EXITING")
       localStorage.setItem("Category","none")
     };
   },[])
@@ -390,8 +389,14 @@ function SearchByArtist(props) {
                           {
                             data1[search].subListData.map((item, keys) => (
                               <div id={"firstSlider"+keys} className="detail_card5_h" style={windowSize.innerWidth <= 991 ? { overflow: "hidden", height:"8vh" } : { overflow: "hidden", height:"14.5vh" }} onClick={() => { setSliderIndexHandler(keys) }}> 
-                                <img src={item} className="w-100 h-100" 
-                                style={{objectFit: "cover"}}
+                                <img 
+                                  src={item} 
+                                  className="w-100 h-100" 
+                                  style={{objectFit: "cover"}}
+                                  loading="lazy"
+                                  role="presentation"
+                                  decoding= "async"
+                                  fetchpriority= "high"
                                 ></img>
                               </div>
                             ))
@@ -645,7 +650,7 @@ function SearchByArtist(props) {
                 id="flexSwitchCheckDefault" 
                 style={{cursor:"pointer",accentColor:"#BC6127"}}
                 checked={isCheckboxChecked}
-                onClick={()=> { setIsCheckboxChecked(!isCheckboxChecked); console.log("CLICKED")}}
+                onClick={()=> { setIsCheckboxChecked(!isCheckboxChecked);}}
                 />
               <label class="form-check-label" for="flexSwitchCheckDefault" style={{paddingTop:"5px"}}>Do not show this again</label>
             </div>

@@ -128,13 +128,17 @@ export const SliderItems = (props)=>{
           <img 
             id={"sliderImage"+props.keys}
             onClick={() => ("onClick" in props ? props.onClick(props.src) : null)}
-            src={props.src}
-            alt=""
+            srcSet={props.src}
+            alt="Loading"
             style={
               "col" in props
                 ? { objectFit: "contain", objectFit: "contain", margin:"auto",width:"100%",height:"auto" }
                 : { bjectFit: "contain", objectFit: "contain", margin:"auto",height:'auto' }
             }
+            loading="lazy"
+            role="presentation"
+            decoding= "async"
+            fetchpriority= "high"
           />
             <div id='detailBelowSlider' className="hide_detail mb-1 mt-2 pt-3">
                   <h4 className="mb-1" style={{ fontWeight: "500", fontSize: "22px" }}>{props?props.data1[props.search].title:null}</h4>
@@ -156,13 +160,6 @@ export const SliderItems = (props)=>{
                     position: "relative",
                     paddingTop: "10px",
                   }}>
-                    {/* <Link
-                      to="#"
-                      // style={{ fontSize: "16px", fontWeight: '600', minWidth: "60px", maxWidth: "70px" }}
-                      className={props.windowSize.innerWidth < 479 ? "talentbuttonArtistSearch  col-lg-2 col-md-3 mr-1" : "talentbutton  mr-3"}
-                    >
-                      CALL
-                    </Link> */}
                     <Link
                       to="/contact"
                       // style={{ fontSize: "16px", fontWeight: '600', minWidth: "110px", maxWidth: "120px" }}
