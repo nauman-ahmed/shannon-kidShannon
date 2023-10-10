@@ -93,7 +93,6 @@ function SearchByArtist(props) {
 
   useEffect(()=>{
     return () => {
-      setData1(null)
       localStorage.setItem("Category","none")
     };
   },[])
@@ -213,8 +212,8 @@ function SearchByArtist(props) {
   };
 
   useEffect(() => {
-    getUserData()
-
+    setSliderTriggerred(false)
+    setData1(null)
     
     function getLocalStorage() {
       if (localStorage.getItem("artistViewedKid_V3") !== null) {
@@ -223,6 +222,8 @@ function SearchByArtist(props) {
     }
     handleWindowResize()
     getLocalStorage();
+    getUserData()
+
     setIsLoading(false)
   }, [search]);
 
