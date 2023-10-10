@@ -93,6 +93,7 @@ function SearchByArtist(props) {
 
   useEffect(()=>{
     return () => {
+      setData1(null)
       console.log("EXITING")
       localStorage.setItem("Category","none")
     };
@@ -136,6 +137,7 @@ function SearchByArtist(props) {
   } 
 
   const getUserData = async () => {
+    setIsLoading(true)
     let localPrevCate = localStorage.getItem("Category") || "none"
 
     let tempData = await artistImageKidDetailedSliceData({ "artistId": search, "category": localPrevCate  })
@@ -151,7 +153,6 @@ function SearchByArtist(props) {
 
     setSimilarData(tempData.similarArtist);
     setData1(tempData.activeArtist);
-    setIsLoading(false)
 
   }
 
@@ -223,7 +224,7 @@ function SearchByArtist(props) {
     }
     handleWindowResize()
     getLocalStorage();
-    // dataLoader();
+    setIsLoading(false)
   }, [search]);
 
   const setFullScreenHandler = (route) => {
@@ -282,7 +283,6 @@ function SearchByArtist(props) {
             className="mb-3"
             alt="loading"
             src={loading}
-            style={{ width: "50px" }}
           />
         </div>
     )
@@ -615,7 +615,6 @@ function SearchByArtist(props) {
             className="mb-3"
             alt="loading"
             src={loading}
-            style={{ width: "50px" }}
           />
         </div>
       }
@@ -646,7 +645,7 @@ function SearchByArtist(props) {
                 id="flexSwitchCheckDefault" 
                 style={{cursor:"pointer",accentColor:"#BC6127"}}
                 checked={isCheckboxChecked}
-                // onClick={()=> { setIsCheckboxChecked(!isCheckboxChecked); console.log("CLICKED")}}
+                onClick={()=> { setIsCheckboxChecked(!isCheckboxChecked); console.log("CLICKED")}}
                 />
               <label class="form-check-label" for="flexSwitchCheckDefault" style={{paddingTop:"5px"}}>Do not show this again</label>
             </div>

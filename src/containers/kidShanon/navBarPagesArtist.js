@@ -95,7 +95,6 @@ function NavBarArtist(props) {
               className="mb-3"
               alt="loading"
               src={loading}
-              style={{ width: "50px" }}
             />
           </div>
         ) :

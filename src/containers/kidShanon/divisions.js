@@ -143,7 +143,6 @@ function Divisions(props) {
                 className="mb-0"
                 alt="loading"
                 src={loading}
-                style={{ width: "50px" }}
               />
             </div>
           ) : artistImageDivisionDataSlice.artistKeywordImages !== undefined ? (
