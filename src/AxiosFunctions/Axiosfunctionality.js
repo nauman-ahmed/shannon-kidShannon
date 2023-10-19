@@ -101,6 +101,14 @@ export const getWorldData = async (data) => {
     }
 }
 
+export const artistIfExist = async (data) => {
+    try {
+        const response = await axios.post(BASE_URL + 'artistUser/artistIfExist', data);
+        return response.data;
+    } catch (error) {
+        logouter();
+    }
+}
 
 export const getBipocBlack = async (data) => {
     try {

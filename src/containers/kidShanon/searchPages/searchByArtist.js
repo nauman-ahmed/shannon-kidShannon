@@ -27,7 +27,7 @@ function SearchByArtist(props) {
   const [tab, setTab] = useState(0);
   const [fullscreen, setFullscreen] = useState({ screen: false, route: null });
   const [fullScreenData, setFullScreenData] = useState({ screen: false, route: null });
-  const { search } = useParams();
+  const { pages } = useParams();
   const { artistImageDataSlice, AddToCart } = useSelector((state) => state);
   const dispatch = useDispatch();
   const [data1, setData1] = useState(null);
@@ -44,10 +44,13 @@ function SearchByArtist(props) {
   const [msg, setMsg] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [sliderTriggerred, setSliderTriggerred] = useState(false);
+  const [displayedImages, setDisplayedImages] = useState([]);
+  const [imageIndexDisplayed, setImageIndexDisplayed] = useState(true);
   
+
   const myStateRef = useRef(0);
   const queryParams = new URLSearchParams(history.location.search);
-  const imageIndex = queryParams.get('imageIndex');
+  const imageIndex = queryParams.get('image');
   const fullscreenCond = queryParams.get('fullscreen');
   
   function getWindowSize() {
@@ -69,15 +72,15 @@ function SearchByArtist(props) {
     let imageInd
 
     if(data1){
-      if(data1[search].slideList.length < parseInt(imageIndex, 10)){
-        imageInd = data1[search].slideList.length - 1
-        history.push("/artists/" + search +"?imageIndex="+imageInd)
+      if(data1[pages].slideList.length < parseInt(imageIndex, 10)){
+        imageInd = data1[pages].slideList.length - 1
+        history.push(pages +"?imageIndex="+imageInd)
       }else{
         imageInd = parseInt(imageIndex, 10)
       }
       let tempObj = {...fullScreenData}
       tempObj.screen = fullscreenCond=="true" ? true : false
-      tempObj.route = data1[search].slideList[imageInd]
+      tempObj.route = data1[pages].slideList[imageInd]
       setFullscreen(tempObj)
     }
 
@@ -92,6 +95,24 @@ function SearchByArtist(props) {
   }, [data1]);
 
   useEffect(()=>{
+    if(!fullscreenCond){
+      if(!imageIndex){
+        history.push(pages +"?image=0")
+      }else{
+        history.push(pages +"?image="+imageIndex)
+      }
+    }
+    
+    return () => {
+      localStorage.setItem("Category","none")
+    };
+  },[fullscreenCond])
+
+
+  useEffect(()=>{
+    if(!imageIndex){
+      history.push(pages +"?image=0")
+    }
     return () => {
       localStorage.setItem("Category","none")
     };
@@ -104,9 +125,8 @@ function SearchByArtist(props) {
     }
   };
 
-
   const dataLocalArtist = (key, _id, firstname, bio, listData, subListData) => {
-    let tempData = localStorage.getItem("artistViewedKid_V3");
+    let tempData = localStorage.getItem("artistViewedKid_V4");
 
     tempData = JSON.parse(tempData);
     if (tempData === null) {
@@ -117,7 +137,7 @@ function SearchByArtist(props) {
         detail: bio,
         slideList: listData,
       };
-      localStorage.setItem("artistViewedKid_V3", JSON.stringify(tempData));
+      localStorage.setItem("artistViewedKid_V4", JSON.stringify(tempData));
     } else {
       tempData[key] = {
         id: _id,
@@ -126,7 +146,20 @@ function SearchByArtist(props) {
         slideList: listData,
         subListData: subListData,
       };
-      localStorage.setItem("artistViewedKid_V3", JSON.stringify(tempData));
+
+      let tempDataOnlySix = {}
+
+      // Convert the object into an array of key-value pairs
+      const entries = Object.entries(tempData);
+      // Reverse the array
+      const reversedEntries = entries.reverse();
+
+      // Loop over the reversed array
+      reversedEntries.forEach(([key, value],index) => {
+          tempDataOnlySix[key] = value
+      });
+
+      localStorage.setItem("artistViewedKid_V4", JSON.stringify(tempDataOnlySix));
     }
   };
 
@@ -138,17 +171,21 @@ function SearchByArtist(props) {
     setIsLoading(true)
     let localPrevCate = localStorage.getItem("Category") || "none"
 
-    let tempData = await artistImageKidDetailedSliceData({ "artistId": search, "category": localPrevCate  })
+    let tempData = await artistImageKidDetailedSliceData({ "fullName": pages, "category": localPrevCate  })
 
     dataLocalArtist(
-      tempData.activeArtist[search].id,
-      tempData.activeArtist[search].id,
-      tempData.activeArtist[search].lastname + " " + tempData.activeArtist[search].firstname,
-      tempData.activeArtist[search].detail,
-      tempData.activeArtist[search].slideList,
-      tempData.activeArtist[search].subListData
+      tempData.activeArtist[pages].fullName,
+      tempData.activeArtist[pages].id,
+      tempData.activeArtist[pages].lastname + " " + tempData.activeArtist[pages].firstname,
+      tempData.activeArtist[pages].detail,
+      tempData.activeArtist[pages].slideList,
+      tempData.activeArtist[pages].subListData
     );
 
+    let tempImage = []
+    tempImage.push(tempData.activeArtist[pages].subListData[0])
+
+    setDisplayedImages(tempImage)
     setSimilarData(tempData.similarArtist);
     setData1(tempData.activeArtist);
 
@@ -156,35 +193,36 @@ function SearchByArtist(props) {
 
   useEffect(() => {
 
-    if(sliderTriggerred){
-      let currentSelectedSlider = document.getElementById("firstSlider"+imageIndex);
-      var prev = document.getElementsByClassName('slick-prev')[0];
-      var next = document.getElementsByClassName('slick-next')[0]
-  
-      if(currentSelectedSlider){
-        
-        currentSelectedSlider.style.boxShadow = "0 2px 10px #141c2a"
-        if(prev){
-          prev.addEventListener("click", (e) => {
-            if(myStateRef.current == 0 ){
-              setSliderIndexHandler(data1[search].pictureTitle.length-1,myStateRef.current,true)
-            }else{
-              setSliderIndexHandler(myStateRef.current -1 ,myStateRef.current,true)
-            }
-          })
-        }
-         
-        if(next){
-          next.addEventListener("click", (e) => {
-            if(myStateRef.current !== data1[search].pictureTitle.length-1){
-              setSliderIndexHandler(myStateRef.current+1,myStateRef.current,true)
-            }else{
-              setSliderIndexHandler(0,data1[search].pictureTitle.length - 1,true)
-            }
-          })
+      if(sliderTriggerred){
+        let currentSelectedSlider = document.getElementById("firstSlider"+imageIndex);
+        var prev = document.getElementsByClassName('slick-prev')[0];
+        var next = document.getElementsByClassName('slick-next')[0]
+    
+        if(currentSelectedSlider){
+          
+          currentSelectedSlider.style.boxShadow = "0 2px 10px #141c2a"
+          if(prev){
+            prev.addEventListener("click", (e) => {
+              if(myStateRef.current == 0 ){
+                setSliderIndexHandler(data1[pages].pictureTitle.length-1,myStateRef.current,true)
+              }else{
+                setSliderIndexHandler(myStateRef.current -1 ,myStateRef.current,true)
+              }
+            })
+          }
+           
+          if(next){
+            next.addEventListener("click", (e) => {
+              if(myStateRef.current !== data1[pages].pictureTitle.length-1){
+                setSliderIndexHandler(myStateRef.current+1,myStateRef.current,true)
+              }else{
+                setSliderIndexHandler(0,data1[pages].pictureTitle.length - 1,true)
+              }
+            })
+          }
         }
       }
-    }
+
 
   }, [sliderTriggerred]);
 
@@ -208,7 +246,7 @@ function SearchByArtist(props) {
       myStateRef.current = keys
       setSliderIndex(keys)
     }
-    history.push("/artists/" + search +"?imageIndex="+keys)
+    history.push(pages +"?imageIndex="+keys)
   };
 
   useEffect(() => {
@@ -216,8 +254,8 @@ function SearchByArtist(props) {
     setData1(null)
     
     function getLocalStorage() {
-      if (localStorage.getItem("artistViewedKid_V3") !== null) {
-        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V3")));
+      if (localStorage.getItem("artistViewedKid_V4") !== null) {
+        setDataViewed(JSON.parse(localStorage.getItem("artistViewedKid_V4")));
       }
     }
     handleWindowResize()
@@ -225,23 +263,24 @@ function SearchByArtist(props) {
     getUserData()
 
     setIsLoading(false)
-  }, [search]);
+  }, [pages]);
 
-  const setFullScreenHandler = (route) => {
+  const setFullScreenHandler = (route, key) => {
     let temp = { ...fullscreen };
 
     if (!temp.screen) {
       temp.route = route;
+      temp.key = key
     }
 
     temp.resposive = windowSize.innerWidth < 479 ? true : false
     temp.screen = !temp.screen;
     setFullscreen(temp);
-    setFullScreenData(data1[search])
+    setFullScreenData(data1[pages])
     if(temp.screen){
-      history.push("/artists/" + search +"?imageIndex="+imageIndex+"&fullscreen=true")
+      history.push(pages +"?imageIndex="+imageIndex+"&fullscreen=true")
     }else{
-      history.push("/artists/" + search +"?imageIndex="+imageIndex)
+      history.push(pages +"?imageIndex="+imageIndex)
     }
 
   };
@@ -262,6 +301,14 @@ function SearchByArtist(props) {
       setMsg("You have already added "+ title +" to your list, to view your list visit Contact/My List Page.")
       setIsPopupShow(true)
       setIsPopupShowWithCheckbox(false)
+    }
+  }
+
+  const onImageLoad = (index) => {
+    if(data1[pages].subListData[index+1]){
+      let tempImage = [...displayedImages]
+      tempImage.push(data1[pages].subListData[index+1])
+      setDisplayedImages(tempImage)
     }
   }
 
@@ -296,7 +343,7 @@ function SearchByArtist(props) {
             <Link
               to="/contact"
               className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearchDetailed  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
-              onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title, true)}
+              onClick={() => addToCartArtistHandler(data1[pages].id, data1[pages].title, true)}
             >
               GET ESTIMATE
             </Link>
@@ -304,7 +351,7 @@ function SearchByArtist(props) {
               data-w-id="e04f643e-f302-16e2-74ee-4bc7e85391d8"
               to="#"
               className={windowSize.innerWidth < 479 ? "talentbuttonArtistSearchDetailed  col-lg-2 col-md-3 mr-1" : "talentbutton mr-3"}
-              onClick={() => addToCartArtistHandler(data1[search].id, data1[search].title)}
+              onClick={() => addToCartArtistHandler(data1[pages].id, data1[pages].title)}
               style={{ marginRight: "0px" }}
             >
               ADD TO MY LIST
@@ -318,7 +365,7 @@ function SearchByArtist(props) {
       justifyContent: "space-around",
       margin: "0px"
     }}>
-      {data1 !== null && data1[search] ? (
+      {data1 !== null && data1[pages] ? (
         <>
           <div className="pl-2 left_content">
             {props.children}
@@ -327,8 +374,8 @@ function SearchByArtist(props) {
             <div className="pl-2 mid_content">
 
             <div className={windowSize.innerWidth < 479 ? "" : "d-flex"} style={windowSize.innerWidth < 479 ? { marginLeft: "8%" } : { justifyContent: "space-between", marginTop: "-10px", marginBottom:"10px", width:"98.4%" }} > 
-                <h2 className="h2talent">{data1[search].title}</h2> 
-                <a href={"https://www.shannonassociates.com/artists/"+data1[search].id} target="_blank" className="linkToKS">Visit Main Portfolio</a> 
+                <h2 className="h2talent">{data1[pages].title}</h2> 
+                <a href={"https://www.shannonassociates.com/"+data1[pages].fullName} target="_blank" className="linkToKS">Visit Main Portfolio</a> 
             </div>
 
               {windowSize.innerWidth < 479 ?
@@ -361,7 +408,7 @@ function SearchByArtist(props) {
                         className="imagecont"
                         style={{ marginTop: 10 }}
                       >
-                        {data1[search].subListData.map((item, keys) =>
+                        {data1[pages].subListData.map((item, keys) =>
                           keys < artistImages ?
                             <div className="talentthumbslide resp">
                               <img
@@ -388,19 +435,27 @@ function SearchByArtist(props) {
                     : (
                         <div className="detail_card w-inline-block ">
                           {
-                            data1[search].subListData.map((item, keys) => (
+                            displayedImages.map((item, keys) => (
                               <div id={"firstSlider"+keys} className="detail_card5_h" style={windowSize.innerWidth <= 991 ? { overflow: "hidden", height:"8vh" } : { overflow: "hidden", height:"14.5vh" }} onClick={() => { setSliderIndexHandler(keys) }}> 
-                                <img 
-                                  src={item} 
-                                  className="w-100 h-100" 
-                                  style={{objectFit: "cover"}}
-                                  loading="lazy"
-                                  role="presentation"
-                                  decoding= "async"
-                                  fetchpriority= {keys+1}
+                                <img srcSet={item} className="w-100 h-100" 
+                                style={{objectFit: "cover"}}
+                                loading="lazy"
+                                fetchpriority = {"high"}
+                                // onLoad={() => onImageLoad(keys)}
+                                onLoadCapture={()=> onImageLoad(keys)}
                                 ></img>
                               </div>
                             ))
+                          }
+                          {data1[pages].subListData[displayedImages.length] ?
+                            <div  style={windowSize.innerWidth <= 991 ? { overflow: "hidden", height:"8vh" } : { overflow: "hidden", height:"14.5vh" }}> 
+                              <img
+                                className="mb-3"
+                                alt="loading"
+                                src={loading}
+                              />
+                            </div> 
+                            :null
                           }
                         </div>
                     ) : null}
@@ -422,7 +477,7 @@ function SearchByArtist(props) {
                   {fullscreen.screen ? (
                     <FullScreenSliderItem
                       onClick={setFullScreenHandler}
-                      currentData={data1[search]}
+                      currentData={data1[pages]}
                       fullscreen={fullscreen}
                       />
                   ) : (
@@ -433,12 +488,12 @@ function SearchByArtist(props) {
                         setSliderTriggerred={setSliderTriggerred}
                       >
                         {
-                          data1[search].slideList.map((item, keys) => (
+                          data1[pages].slideList.map((item, keys) => (
                             <SliderItems
                               keys={keys}
                               src={item}
                               data1={data1}
-                              search={search}
+                              search={pages}
                               windowSize={windowSize}
                               onClick={setFullScreenHandler}
                               addToCartArtistHandler={addToCartArtistHandler}
@@ -484,7 +539,7 @@ function SearchByArtist(props) {
                               data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7"
                               className="card_img3"
                               // style={{ position: "relative" }}
-                              to={"/artists/" + key+"?imageIndex=0"}
+                              to={key}
                             >
                               <div className="detail_card6_h">
                                 <img
@@ -528,7 +583,7 @@ function SearchByArtist(props) {
                           data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7"
                           className="card_img3"
                           // style={{ position: "relative" }}
-                          to={"/artists/" + key+"?imageIndex=0"}
+                          to={key}
                         >
                           <div className="detail_card6_h">
                             <img
@@ -586,7 +641,7 @@ function SearchByArtist(props) {
                           id="w-node-a284be2a-4b91-3177-03eb-6614b24879c7-4bf2d022"
                           data-w-id="a284be2a-4b91-3177-03eb-6614b24879c7"
                           className="card_img3"
-                          to={"/artists/" + key+"?imageIndex=0"}
+                          to={key}
                         >
                           <div className="detail_card6_h">
                             <img

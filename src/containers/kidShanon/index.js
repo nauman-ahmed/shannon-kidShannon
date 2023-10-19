@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Redirect, useParams } from 'react-router-dom'
+import { Redirect, useParams, useHistory } from 'react-router-dom'
 import ArtistSideBar from '../../components/layout/artistSideBar'
 import DivisionSideBar from '../../components/layout/divisionSideBar'
 import Footer from '../../components/layout/footer'
@@ -14,6 +14,7 @@ import NavBarArtist from './navBarPagesArtist'
 import SearchByArtist from './searchPages/searchByArtist'
 import SearchByDivision from './searchPages/searchByDivision'
 import SearchByCategories from './searchPages/searchByCategories'
+import { artistIfExist } from "../../AxiosFunctions/Axiosfunctionality"
 
 
 import { useSelector } from 'react-redux'
@@ -38,6 +39,7 @@ function IndexKid(props) {
     ];
     const { pages } = useParams()
     const { search } = useParams()
+    const history = useHistory()
 
     const [data,setData] = useState(null)
 
@@ -102,11 +104,20 @@ function IndexKid(props) {
 
     }
 
+    const artistIfExistHandler = async () => {
+        await artistIfExist({fullName: pages}).then((res) => {
+            if(res.length > 0){
+                return true
+            }
+            history.push("/404")
+        })
+    }
+
     useEffect(() => {
         filterChange()
         dispatch(keywordDataApi("kid"));
     }, [])
-
+    console.log("INDEX",pages)
     return (
         <>
             <Header aciveBtn={pages} kid={"kid"} />
@@ -125,7 +136,7 @@ function IndexKid(props) {
                     :pages === "categories"?
                     search?
                     <SearchByCategories searchArtist={searchArtist}> 
-                        <Sidebar activeBtn={pages} />
+                        <Sidebar activeBtn={search} />
                     </SearchByCategories>
                     :<Categories searchArtist={searchArtist}>
                         <Sidebar activeBtn={pages} />
@@ -166,8 +177,10 @@ function IndexKid(props) {
                         <About/>
                     :pages === "contact"?
                         <Contact/>
-                    // :pages === "bipoc"?
-                    //     <Bipoc/>
+                    :artistIfExistHandler()?
+                        <SearchByArtist>
+                            <Sidebar activeBtn="detailedPage" />
+                        </SearchByArtist>
                     :<Redirect to="/404"/>
                     :<Artists  tempArtist={tempArtist} searchArtist={searchArtist}>
                         <ArtistSideBar activeBtn={pages} kid={"kid"}/>

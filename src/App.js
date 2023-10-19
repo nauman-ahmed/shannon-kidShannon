@@ -28,6 +28,9 @@ function App() {
       dispatch(ArtistDataAPI("kid"));
     }
   },[])
+  localStorage.removeItem("artistViewedKid_V1");
+  localStorage.removeItem("artistViewedKid_V2");
+  localStorage.removeItem("artistViewedKid_V3");
 
   return ( 
   <>

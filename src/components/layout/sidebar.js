@@ -96,7 +96,14 @@ function Sidebar(props) {
       {pages == "categories"? 
       keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
         <div key={key}>
-        {item.type === 2?(<Link to={"/categories/"+item._id} onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "CGI" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}} className={"divisionslink"+(search === item._id?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
+        {item.type === 2?(
+          <Link 
+            to={item.keyword.includes("/") ?  "/categories/"+item.keyword.replace(/\//g, '_') : "/categories/"+item.keyword.replace(/\s/g, '_')}
+            onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "CGI" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}} 
+            className={"divisionslink"+(localStorage.getItem("Category") === item.keyword?" w--current":"")}>
+            <span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span>
+          </Link>)
+          :""}
         
         </div>
      )):"" 
@@ -125,7 +132,7 @@ function Sidebar(props) {
             {item}<br/>
             {artistData[item].map((item1,key1)=>(
               <div key={key1}>
-               <Link to={"/artists/"+item1._id+"?imageIndex=0"} className="sidebarlink" style={search === item1._id ? {color: "#fa8e37"} : {}}>{item1.firstname.toUpperCase()} {item1.lastname.toUpperCase()}<br/></Link>
+               <Link to={item1.fullName} className="sidebarlink" style={pages === item1.fullName ? {color: "#fa8e37"} : {}}>{item1.firstname.toUpperCase()} {item1.lastname.toUpperCase()}<br/></Link>
               </div>
             ))}
             <br/>

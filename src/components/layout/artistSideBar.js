@@ -27,7 +27,10 @@ function ArtistSideBar(props) {
             {item}<br/>
             {artistData[item].map((item1,key1)=>(
               <div key={key1}>
-               <Link to={"/artists/"+item1._id+"?imageIndex=0"} className="sidebarlink">{item1.firstname.toUpperCase()} {item1.lastname.toUpperCase()}<br/></Link>
+               <Link 
+                to={item1.fullName} 
+                className="sidebarlink">{item1.firstname.toUpperCase()} {item1.lastname.toUpperCase()}<br/>
+               </Link>
               </div>
             ))}
             <br/>

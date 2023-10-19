@@ -122,7 +122,7 @@ function Categories(props) {
                       <Link
                         key={key}
                         id="w-node-f734ee66-0b58-4c14-e08b-49ceded015ca-84f2d081"
-                        to={"categories/" + item.Id}
+                        to={item.keyword.includes("/") ?  "/categories/"+item.keyword.replace(/\//g, '_') : "/categories/"+item.keyword.replace(/\s/g, '_')}
                         className="artistcard w-inline-block"
                         
                       >
@@ -134,8 +134,8 @@ function Categories(props) {
                           loading="lazy"
                           alt=""
                           className="image"
-                        // style={{ width:"100%", height:"100%"}}
-                        onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "CGI" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
+                          // style={{ width:"100%", height:"100%"}}
+                          onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "CGI" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
 
                         />
                         <div className="artistnamediv">
@@ -173,7 +173,7 @@ function Categories(props) {
                       <Link
                         key={key}
                         id="w-node-f734ee66-0b58-4c14-e08b-49ceded015ca-84f2d081"
-                        to={"categories/" + item.Id}
+                        to={item.keyword.includes("/") ?  "/categories/"+item.keyword.replace(/\//g, '_') : "/categories/"+item.keyword.replace(/\s/g, '_')}
                         className="artistcard w-inline-block"
                         
                       >
@@ -185,7 +185,8 @@ function Categories(props) {
                           loading="lazy"
                           alt=""
                           className="image"
-                        // style={{ width:"100%", height:"100%"}}
+                          onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "3D Rendering" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
+                          // style={{ width:"100%", height:"100%"}}
                         />
                         <div className="artistnamediv">
                             <div className="artistnametext-v3">
