@@ -108,8 +108,11 @@ function IndexKid(props) {
         await artistIfExist({fullName: pages}).then((res) => {
             if(res.length > 0){
                 return true
+            }else if(res.length == 0){
+                return false
+            }else{
+                history.push("/404")
             }
-            history.push("/404")
         })
     }
 
@@ -121,8 +124,8 @@ function IndexKid(props) {
     return (
         <>
             <Header aciveBtn={pages} kid={"kid"} />
-            <div className={(pages === "artists"?"talentsection":"homesection")+" wf-section "+(pages?"divisions":"")}>
-                <div className={"containerhome "+(pages !== "artists"?"home":"")}>
+            <div className={(artistIfExistHandler()?"talentsection":"homesection")+" wf-section "+(pages?"divisions":"")}>
+                <div className={"containerhome "+(artistIfExistHandler()?"":"home")}>
                     <Navbar navList={navList} aciveBtn={pages} searchBar={true}  searchArtist={searchArtist} kid={"kid"} updateTempArtist={updateTempArtist}/>
                     {pages?
                     pages === "divisions"?
