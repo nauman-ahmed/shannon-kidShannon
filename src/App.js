@@ -22,7 +22,7 @@ import IndexKid from "./containers/kidShanon";
 function App() {
   const dispatch = useDispatch();
   const {artistDataAPI} = useSelector(state=>state)
-
+  console.log("TESTING")
   useEffect(()=>{
     if(artistDataAPI.artistData.length == 0){
       dispatch(ArtistDataAPI("kid"));
