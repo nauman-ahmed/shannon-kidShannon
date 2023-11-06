@@ -47,7 +47,10 @@ function SearchByArtist(props) {
   const [displayedImages, setDisplayedImages] = useState([]);
   const [imageIndexDisplayed, setImageIndexDisplayed] = useState(true);
   
-
+  const fullscreenCondRef = useRef({
+    full:false,
+    imageInd:0
+  });
   const myStateRef = useRef(0);
   const queryParams = new URLSearchParams(history.location.search);
   const imageIndex = queryParams.get('image');
@@ -74,7 +77,7 @@ function SearchByArtist(props) {
     if(data1){
       if(data1[pages].slideList.length < parseInt(imageIndex, 10)){
         imageInd = data1[pages].slideList.length - 1
-        history.push(pages +"?imageIndex="+imageInd)
+        history.push(pages +"?image="+imageInd)
       }else{
         imageInd = parseInt(imageIndex, 10)
       }
@@ -82,6 +85,8 @@ function SearchByArtist(props) {
       tempObj.screen = fullscreenCond=="true" ? true : false
       tempObj.route = data1[pages].slideList[imageInd]
       setFullscreen(tempObj)
+      fullscreenCondRef.current.full = tempObj.screen
+      fullscreenCondRef.current.imageInd = parseInt(imageInd, 10)
     }
 
     myStateRef.current = imageInd; 
@@ -103,19 +108,42 @@ function SearchByArtist(props) {
       }
     }
     
-    return () => {
-      localStorage.setItem("Category","none")
-    };
+    // return () => {
+    //   localStorage.setItem("Category","none")
+    // };
   },[fullscreenCond])
 
+  useEffect(() => {
+    const unlisten = history.listen((location, action) => {
+      if(history.action == "POP"){
+        if(fullscreenCondRef.current.full){
+          let temp = { ...fullscreen };
+
+          temp.resposive = windowSize.innerWidth < 479 ? true : false
+          temp.screen = false;
+          fullscreenCondRef.current.full = false
+          fullscreenCondRef.current.imageInd = parseInt(imageIndex, 10)
+          setFullscreen(temp);
+        }else{
+          history.goBack()
+        }
+  
+      }
+    });
+  
+    // Return a cleanup function to remove the listener when the component unmounts.
+    return () => {
+      unlisten();
+    };
+  }, [history]);
 
   useEffect(()=>{
     if(!imageIndex){
       history.push(pages +"?image=0")
     }
-    return () => {
-      localStorage.setItem("Category","none")
-    };
+    // return () => {
+    //   localStorage.setItem("Category","none")
+    // };
   },[])
 
   const addToCartArtist = (id, firstname,getAnEstimate=false) => {
@@ -193,38 +221,34 @@ function SearchByArtist(props) {
 
   useEffect(() => {
 
-      if(sliderTriggerred){
-        let currentSelectedSlider = document.getElementById("firstSlider"+imageIndex);
-        var prev = document.getElementsByClassName('slick-prev')[0];
-        var next = document.getElementsByClassName('slick-next')[0]
-    
-        if(currentSelectedSlider){
-          
-          currentSelectedSlider.style.boxShadow = "0 2px 10px #141c2a"
-          if(prev){
-            prev.addEventListener("click", (e) => {
-              if(myStateRef.current == 0 ){
-                setSliderIndexHandler(data1[pages].pictureTitle.length-1,myStateRef.current,true)
-              }else{
-                setSliderIndexHandler(myStateRef.current -1 ,myStateRef.current,true)
-              }
-            })
+    let currentSelectedSlider = document.getElementById("firstSlider"+imageIndex);
+    var prev = document.getElementsByClassName('slick-prev')[0];
+    var next = document.getElementsByClassName('slick-next')[0]
+
+    if(currentSelectedSlider){
+      
+      currentSelectedSlider.style.boxShadow = "0 2px 10px #141c2a"
+      if(prev){
+        prev.addEventListener("click", (e) => {
+          if(myStateRef.current == 0 ){
+            setSliderIndexHandler(data1[pages].pictureTitle.length-1,myStateRef.current,true)
+          }else{
+            setSliderIndexHandler(myStateRef.current -1 ,myStateRef.current,true)
           }
-           
-          if(next){
-            next.addEventListener("click", (e) => {
-              if(myStateRef.current !== data1[pages].pictureTitle.length-1){
-                setSliderIndexHandler(myStateRef.current+1,myStateRef.current,true)
-              }else{
-                setSliderIndexHandler(0,data1[pages].pictureTitle.length - 1,true)
-              }
-            })
-          }
-        }
+        })
       }
-
-
-  }, [sliderTriggerred]);
+        
+      if(next){
+        next.addEventListener("click", (e) => {
+          if(myStateRef.current !== data1[pages].pictureTitle.length-1){
+            setSliderIndexHandler(myStateRef.current+1,myStateRef.current,true)
+          }else{
+            setSliderIndexHandler(0,data1[pages].pictureTitle.length - 1,true)
+          }
+        })
+      }
+    }
+  }, [imageIndexDisplayed]);
 
   const setSliderIndexHandler = (keys, oldValue = null, clickedSliderButton = false) => {
     if(clickedSliderButton){
@@ -246,7 +270,7 @@ function SearchByArtist(props) {
       myStateRef.current = keys
       setSliderIndex(keys)
     }
-    history.push(pages +"?imageIndex="+keys)
+    history.push(pages +"?image="+keys)
   };
 
   useEffect(() => {
@@ -275,12 +299,15 @@ function SearchByArtist(props) {
 
     temp.resposive = windowSize.innerWidth < 479 ? true : false
     temp.screen = !temp.screen;
+    fullscreenCondRef.current.full = temp.screen
+    fullscreenCondRef.current.imageInd = parseInt(imageIndex, 10)
     setFullscreen(temp);
     setFullScreenData(data1[pages])
     if(temp.screen){
-      history.push(pages +"?imageIndex="+imageIndex+"&fullscreen=true")
+      history.push(pages +"?image="+imageIndex+"&fullscreen=true")
     }else{
-      history.push(pages +"?imageIndex="+imageIndex)
+      setImageIndexDisplayed(!imageIndexDisplayed)
+      history.push(pages +"?image="+imageIndex)
     }
 
   };
@@ -305,10 +332,14 @@ function SearchByArtist(props) {
   }
 
   const onImageLoad = (index) => {
-    if(data1[pages].subListData[index+1]){
+    if(index+1 == displayedImages.length && data1[pages].subListData.length !== index+1){
       let tempImage = [...displayedImages]
       tempImage.push(data1[pages].subListData[index+1])
       setDisplayedImages(tempImage)
+    }
+
+    if(displayedImages.length == imageIndex+1){
+      setImageIndexDisplayed(!imageIndexDisplayed)
     }
   }
 
