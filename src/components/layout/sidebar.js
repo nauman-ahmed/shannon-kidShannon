@@ -91,7 +91,8 @@ function Sidebar(props) {
         : props.activeBtn === "MIDDLE-GRADE" ? "MIDDLE GRADE" 
         : props.activeBtn === "categories" ? "CATEGORIES" 
         : props.activeBtn === "detailedPage" ? "SELECT BY CATEGORY" 
-        : "DIVISIONS"
+        : props.activeBtn === "divisions" ? "DIVISIONS" 
+        : "CATEGORIES"
         }</h3>
       {pages == "categories"? 
       keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
