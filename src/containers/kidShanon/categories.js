@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { IMAGE_ROUTE } from '../../AxiosFunctions/Axiosfunctionality';
 import { artistKeyword } from '../../redux/artistImageKeywordDataSlice';
 import loading from '../../assets/loading.gif';
+import DUMMY from '../../assets/1695387962634--sub_image_0.jpg';
 
 const images = window.location.origin + "/assets/images"
 
@@ -77,6 +78,7 @@ function Categories(props) {
 
   useEffect(() => {
     dispatch(artistKeyword({type:2}));
+    localStorage.setItem("Category","");
   }, []);
 
   return (<>
@@ -117,25 +119,23 @@ function Categories(props) {
             >
               {artistImageKeywordDataSlice.artistKeywordImages.map(
                 (item, key) => (
-                  item.ImageData.length > 0 && item.ImageData[0]?.mainImage[0]?.subImage[0]?.path? 
                     <>
                       <Link
                         key={key}
                         id="w-node-f734ee66-0b58-4c14-e08b-49ceded015ca-84f2d081"
                         to={item.keyword.includes("/") ?  "/categories/"+item.keyword.replace(/\//g, '_') : "/categories/"+item.keyword.replace(/\s/g, '_')}
                         className="artistcard w-inline-block"
-                        
+                        onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "CGI" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
                       >
                         {/* <div className="detail_card4_h" style={{ position: "relative", overflow: "hidden" }}> */}
                         <img
                           src={String(
-                            item.ImageData[0]?.mainImage[0]?.subImage[0]?.path
+                            item.imagePath == "Dummy" ? DUMMY : item.imagePath
                           )}
                           loading="lazy"
                           alt=""
                           className="image"
                           // style={{ width:"100%", height:"100%"}}
-                          onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "CGI" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
 
                         />
                         <div className="artistnamediv">
@@ -153,9 +153,6 @@ function Categories(props) {
                       </p>   </div>  */}
                       </Link>
                     </>
-                    : null
-
-                  
                 )
               )}
               </div>
@@ -167,25 +164,22 @@ function Categories(props) {
               // style={{ paddingTop: "10px" }}
             >
               {tempArtist.map((item, key) => (
-                item.ImageData.length > 0 && item.ImageData[0]?.mainImage[0]?.subImage[0]?.path ? 
-                    <>
                     <>
                       <Link
                         key={key}
                         id="w-node-f734ee66-0b58-4c14-e08b-49ceded015ca-84f2d081"
                         to={item.keyword.includes("/") ?  "/categories/"+item.keyword.replace(/\//g, '_') : "/categories/"+item.keyword.replace(/\s/g, '_')}
                         className="artistcard w-inline-block"
-                        
+                        onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "3D Rendering" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
                       >
                         {/* <div className="detail_card4_h" style={{ position: "relative", overflow: "hidden" }}> */}
                         <img
                           src={String(
-                            item.ImageData[0]?.mainImage[0]?.subImage[0]?.path
+                            item.imagePath == "Dummy" ? DUMMY : item.imagePath
                           )}
                           loading="lazy"
                           alt=""
                           className="image"
-                          onClick={()=>{localStorage.setItem("Category",item.keyword == '3D Rendering' ? "3D Rendering" : item.keyword.charAt(0).toUpperCase() + item.keyword.slice(1) )}}
                           // style={{ width:"100%", height:"100%"}}
                         />
                         <div className="artistnamediv">
@@ -203,8 +197,6 @@ function Categories(props) {
                       </p>   </div>  */}
                       </Link>
                     </>
-                </>
-                    : null
               ))}</div>
             )
           ) : (

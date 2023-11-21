@@ -18,6 +18,7 @@ function Sidebar(props) {
   const  [keywordReducer,setKeywordReducer] = useState([]);
   const [artistData, setArtistData]  = useState([])
   let alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
+  const pagesWithSideMenu = ["Educational","Character Development","Black and White Interior","Multicultural","Picture Book","Middle Grade Cover"];
 
   useEffect(() => {
     if(props.activeBtn === "divisions" || props.activeBtn === "detailedPage"){
@@ -25,6 +26,17 @@ function Sidebar(props) {
         setArtistData(sortAlphaOrder(artistDataAPI!==undefined?artistDataAPI.artistData.length>0?artistDataAPI.artistData:[]:[]))
       }else{
         dispatch(ArtistDataAPI("kid"));
+      }
+    }
+
+    return () => {
+      if(localStorage.getItem("routePaths")){
+        let route = JSON.parse(localStorage.getItem("routePaths"))
+        if(route.find((obj) => obj.artistExist == true)){
+          route.pop()
+          // route.push({val:tempData.activeArtist[pages].firstname + " " + tempData.activeArtist[pages].lastname,artistExist:true})
+          localStorage.setItem("routePaths",JSON.stringify(route))
+        }
       }
     }
   },[artistDataAPI])
@@ -90,9 +102,9 @@ function Sidebar(props) {
         : props.activeBtn === "PICTURE-BOOK" ? "PICTURE BOOK" 
         : props.activeBtn === "MIDDLE-GRADE" ? "MIDDLE GRADE" 
         : props.activeBtn === "categories" ? "CATEGORIES" 
-        : props.activeBtn === "detailedPage" ? "SELECT BY CATEGORY" 
-        : props.activeBtn === "divisions" ? "DIVISIONS" 
-        : "CATEGORIES"
+        : localStorage.getItem("routePaths") && JSON.parse(localStorage.getItem("routePaths"))[1]?.val === "Categories" ? "CATEGORIES - "+localStorage.getItem("Category").toUpperCase()
+        : props.activeBtn === "detailedPage" ? "SELECT BY DIVISION" 
+        : "DIVISIONS"
         }</h3>
       {pages == "categories"? 
       keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
@@ -110,20 +122,31 @@ function Sidebar(props) {
      )):"" 
       :
       <div className="allartist v2">
-        <Link to="/MIDDLE-GRADE" className={"divisionslink"+(props.activeBtn === "MIDDLE-GRADE" || localStorage.getItem("Category") == "Middle Grade Cover" ?" w--current":"")}><span className="sidebarlink">MIDDLE GRADE<br /></span></Link>
-        <Link to="/PICTURE-BOOK" className={"divisionslink"+(props.activeBtn === "PICTURE-BOOK" || localStorage.getItem("Category") == "Picture Book" ?" w--current":"")}><span className="sidebarlink">PICTURE BOOK<br /></span></Link>
-        <Link to="/MULTICULTURAL" className={"divisionslink"+(props.activeBtn === "MULTICULTURAL" || localStorage.getItem("Category") == "Multicultural" ?" w--current":"")}><span className="sidebarlink">MULTICULTURAL</span></Link>
-        <span className="sidebarlink"><br /></span>
-        <Link to="/BLACK-AND-WHITE-INTERIOR" className={"divisionslink"+(props.activeBtn === "BLACK-AND-WHITE-INTERIOR" || localStorage.getItem("Category") == "Black and White Interior" ?" w--current":"")}><span className="sidebarlink">BLACK AND WHITE INTERIOR<br /></span></Link>
-        <Link to="/CHARACTER-DEVELOPMENT" className={"divisionslink"+(props.activeBtn === "CHARACTER-DEVELOPMENT" || localStorage.getItem("Category") == "Character Development" ?" w--current":"")}><span className="sidebarlink">CHARACTER DEVELOPMENT<br /></span></Link>
-        <Link to="/EDUCATIONAL" className={"divisionslink"+(props.activeBtn === "EDUCATIONAL" || localStorage.getItem("Category") == "Educational" ?" w--current":"")}><span className="sidebarlink">EDUCATIONAL</span></Link>
-        <br /><br /><br /><br />
-       {pages == "categories" && keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
+        {
+              localStorage.getItem("Category") !== "none" && !pagesWithSideMenu.includes(localStorage.getItem("Category"))? 
+              <div>
+                <Link to={JSON.parse(localStorage.getItem("routePaths"))[2]?.link} className={"divisionslink w--current"}><span className="sidebarlink">{localStorage.getItem("Category").toUpperCase()}<br /></span></Link>
+                <br /><br />
+              </div>
+              :
+              <div>
+                <Link to="/MIDDLE-GRADE" className={"divisionslink"+(props.activeBtn === "MIDDLE-GRADE" || localStorage.getItem("Category") == "Middle Grade Cover" ?" w--current":"")}><span className="sidebarlink">MIDDLE GRADE<br /></span></Link>
+                <Link to="/PICTURE-BOOK" className={"divisionslink"+(props.activeBtn === "PICTURE-BOOK" || localStorage.getItem("Category") == "Picture Book" ?" w--current":"")}><span className="sidebarlink">PICTURE BOOK<br /></span></Link>
+                <Link to="/MULTICULTURAL" className={"divisionslink"+(props.activeBtn === "MULTICULTURAL" || localStorage.getItem("Category") == "Multicultural" ?" w--current":"")}><span className="sidebarlink">MULTICULTURAL</span></Link>
+                <span className="sidebarlink"><br /></span>
+                <Link to="/BLACK-AND-WHITE-INTERIOR" className={"divisionslink"+(props.activeBtn === "BLACK-AND-WHITE-INTERIOR" || localStorage.getItem("Category") == "Black and White Interior" ?" w--current":"")}><span className="sidebarlink">BLACK AND WHITE INTERIOR<br /></span></Link>
+                <Link to="/CHARACTER-DEVELOPMENT" className={"divisionslink"+(props.activeBtn === "CHARACTER-DEVELOPMENT" || localStorage.getItem("Category") == "Character Development" ?" w--current":"")}><span className="sidebarlink">CHARACTER DEVELOPMENT<br /></span></Link>
+                <Link to="/EDUCATIONAL" className={"divisionslink"+(props.activeBtn === "EDUCATIONAL" || localStorage.getItem("Category") == "Educational" ?" w--current":"")}><span className="sidebarlink">EDUCATIONAL</span></Link>
+                <br /><br /><br /><br />
+              </div>
+        }
+
+       {/* {pages == "categories" && keywordReducer?.length > 0 ? keywordReducer?.map((item,key)=>(
           <div key={key}>
           {item.type === 2?(<Link to={"/divisions/"+item.keyword}  className={"divisionslink"+(search === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
           
           </div>
-       )):""}
+       )):""} */}
        <h3 className="homeh3" style={{textDecorationLine:"none"}}>SELECT BY ARTIST</h3>
         {alpha.map((item,key)=>
        (

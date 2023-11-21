@@ -40,6 +40,7 @@ function IndexKid(props) {
     const { pages } = useParams()
     const { search } = useParams()
     const history = useHistory()
+    const divisions = ["MIDDLE-GRADE","PICTURE-BOOK","MULTICULTURAL","BLACK-AND-WHITE-INTERIOR","CHARACTER-DEVELOPMENT","EDUCATIONAL"]
 
     const [data,setData] = useState(null)
 
@@ -73,6 +74,41 @@ function IndexKid(props) {
     
     useEffect(() => {
         setSearchArtist("")
+
+        if(pages == undefined){
+            localStorage.setItem("Category","none")
+            localStorage.setItem("Bipoc","none")
+            localStorage.removeItem("routePaths");
+        }
+
+        // if(pages == "divisions"){
+        //     const route = [{val:"Home",link:"./"},{val:"Divisions",link:"./divisions"}]
+
+        //     localStorage.setItem("routePaths",JSON.stringify(route))
+        //     localStorage.setItem("Category","none")
+        //     localStorage.setItem("Bipoc","none")
+        // }
+        // if(divisions.includes(pages)){
+        //     localStorage.setItem("Category",pages.charAt(0).toUpperCase() + pages.slice(1) )
+        //     const letter = pages.charAt(0).toUpperCase() + pages.slice(1);
+        //     const route = [{val:"Home",link:"./"},{val:"Divisions",link:"./divisions"},{val:letter,link:"./"+pages}]
+        //     localStorage.setItem("routePaths",JSON.stringify(route))
+        //     localStorage.setItem("Bipoc","none")
+        // }
+
+        if(pages == "categories"){
+            console.log(localStorage.getItem("Category"))
+            const route = [{val:"Home",link:"./"},{val:"Categories",link:"./categories"}]
+            localStorage.setItem("routePaths",JSON.stringify(route))
+            localStorage.setItem("Bipoc","none")
+            if(search){
+                const path = localStorage.getItem("Category")
+                const route = [{val:"Home",link:"./"},{val:"Categories",link:"./categories"},{val:path,link:"./categories/"+search}]
+                localStorage.setItem("routePaths",JSON.stringify(route))
+                localStorage.setItem("Bipoc","none")
+            }
+        }
+
     }, [pages,search])
 
     const dispatch = useDispatch();
@@ -120,7 +156,7 @@ function IndexKid(props) {
         filterChange()
         dispatch(keywordDataApi("kid"));
     }, [])
-    console.log("INDEX",pages)
+
     return (
         <>
             <Header aciveBtn={pages} kid={"kid"} />
@@ -139,7 +175,7 @@ function IndexKid(props) {
                     :pages === "categories"?
                     search?
                     <SearchByCategories searchArtist={searchArtist}> 
-                        <Sidebar activeBtn={search} />
+                        <Sidebar activeBtn={"categories"} />
                     </SearchByCategories>
                     :<Categories searchArtist={searchArtist}>
                         <Sidebar activeBtn={pages} />

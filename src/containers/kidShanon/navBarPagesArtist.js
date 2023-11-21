@@ -39,12 +39,19 @@ function NavBarArtist(props) {
   }
 
   useEffect(() => {
+    localStorage.setItem("Category",props.currPage )
+    const letter = props.currPage
+    const route = [{val:"Home",link:"./"},{val:"Divisions",link:"./divisions"},{val:letter,link:"./"+pages}]
+    localStorage.setItem("routePaths",JSON.stringify(route))
+    localStorage.setItem("Bipoc","none")
+
     setDataLoad(true)
     setFilterHighlighted(null)
     artistImageNavSliceData({ keyword: props.currPage, type: 2 }).then((res)=>{
       setData(res)
       setDataLoad(false)
     })
+
   }, [props.currPage]);
 
 

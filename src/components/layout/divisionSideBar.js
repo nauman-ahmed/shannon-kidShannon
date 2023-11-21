@@ -10,6 +10,18 @@ function DivisionSideBar(props) {
   const  {keywordReducer} = useSelector(state=>state);
   useEffect(()=>{
     dispatch(keywordDataApi())
+
+    return () => {
+      if(localStorage.getItem("routePaths")){
+        let route = JSON.parse(localStorage.getItem("routePaths"))
+        if(route.find((obj) => obj.artistExist == true)){
+          route.pop()
+          // route.push({val:tempData.activeArtist[pages].firstname + " " + tempData.activeArtist[pages].lastname,artistExist:true})
+          localStorage.setItem("routePaths",JSON.stringify(route))
+        }
+      }
+    }
+    
   },[])
 
   return (
@@ -33,7 +45,7 @@ function DivisionSideBar(props) {
         <span className="sidebarlink spacing"><br /></span>
         {keywordReducer.keyword!==null?keywordReducer.map((item,key)=>(
           <div key={key}>
-          {item.type === 1?(<Link to={props.kid?"/divisions/"+item._id:"/divisions/"+item._id} className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
+          {item.type === 2?(<Link to={props.kid?"/divisions/"+item._id:"/divisions/"+item._id} className={"divisionslink"+(props.activeBtn === item.keyword?" w--current":"")}><span className="sidebarlink">{item.keyword.toUpperCase()}<br /></span></Link>):""}
           
           </div>
        )):""}
