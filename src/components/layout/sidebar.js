@@ -18,7 +18,7 @@ function Sidebar(props) {
   const  [keywordReducer,setKeywordReducer] = useState([]);
   const [artistData, setArtistData]  = useState([])
   let alpha = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"];
-  const pagesWithSideMenu = ["Educational","Character Development","Black and White Interior","Multicultural","Picture Book","Middle Grade Cover"];
+  const pagesWithSideMenu = ["Educational","Character Development","Black and White Interior","Multicultural","Picture Book","Middle Grade Cover","MIDDLE-GRADE"];
 
   useEffect(() => {
     if(props.activeBtn === "divisions" || props.activeBtn === "detailedPage"){
