@@ -102,7 +102,7 @@ function Sidebar(props) {
         : props.activeBtn === "PICTURE-BOOK" ? "PICTURE BOOK" 
         : props.activeBtn === "MIDDLE-GRADE" ? "MIDDLE GRADE" 
         : props.activeBtn === "categories" ? "CATEGORIES" 
-        : localStorage.getItem("routePaths") && JSON.parse(localStorage.getItem("routePaths"))[1]?.val === "Categories" ? "CATEGORIES - "+localStorage.getItem("Category").toUpperCase()
+        : localStorage.getItem("routePaths") && JSON.parse(localStorage.getItem("routePaths"))[1]?.val === "Categories" ? null
         : props.activeBtn === "detailedPage" ? "SELECT BY DIVISION" 
         : "DIVISIONS"
         }</h3>
@@ -125,7 +125,8 @@ function Sidebar(props) {
         {
               localStorage.getItem("Category") !== "none" && !pagesWithSideMenu.includes(localStorage.getItem("Category"))? 
               <div>
-                <Link to={JSON.parse(localStorage.getItem("routePaths"))[2]?.link} className={"divisionslink w--current"}><span className="sidebarlink">{localStorage.getItem("Category").toUpperCase()}<br /></span></Link>
+                <Link to={"/categories"}><span className="homeh3" style={{color:"#000000",fontFamily: "Montserrat, sans-serif", textUnderlineOffset : "5px", fontWeight: 800}} >CATEGORIES<br /></span></Link>
+                <Link to={JSON.parse(localStorage.getItem("routePaths"))[2]?.link}><span className="homeh3" style={{fontFamily: "Montserrat, sans-serif", textUnderlineOffset : "5px", fontWeight: 800}} >{localStorage.getItem("Category").toUpperCase()}<br /></span></Link>
                 <br /><br />
               </div>
               :
