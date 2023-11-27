@@ -458,7 +458,8 @@ function Contact() {
                             required
                           />
                         </div>
-                        <div className="col-sm-6 mr-0 pr-0">
+                        {purposeOfInquiry === 'Looking for representation'?
+                          <div className="col-sm-6 mr-0 pr-0">
                           <label htmlFor="Company" className="contactformlabel ">
                             Company
                           </label>
@@ -475,7 +476,10 @@ function Contact() {
                             placeholder=""
                             id="Company"
                           />
-                        </div>
+                          </div>
+                          :null
+                        }
+                        
                       </div>
 
                       <div className="row mr-0">
