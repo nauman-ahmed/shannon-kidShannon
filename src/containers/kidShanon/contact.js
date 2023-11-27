@@ -458,7 +458,7 @@ function Contact() {
                             required
                           />
                         </div>
-                        {purposeOfInquiry === 'Looking for representation'?
+                        {purposeOfInquiry !== 'Looking for representation'?
                           <div className="col-sm-6 mr-0 pr-0">
                           <label htmlFor="Company" className="contactformlabel ">
                             Company
